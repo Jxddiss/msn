@@ -15,6 +15,12 @@
             <li (click)="onClickWindow('msn')">
               <div class="start-icon"><img src="../../assets/images/buddy.png" alt="">MSN</div>
             </li>
+            <li>
+              <a class="start-icon" href="https://www.google.ca" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png" alt="">
+                Chrome
+              </a>
+            </li>
         </ul>
         <ul id="links">
             <li class="icon"><img src="../../assets/images/folder.png" alt=""></li>
@@ -25,9 +31,12 @@
         </ul>
       </div>
       <div id="pined-items">
-        <div class="pined-icon" data-window="msn" (click)="onClickWindow('msn')">
+        <div class="pined-icon" data-window="msn" (click)="onClickWindow('msn')" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
           <img src="../assets/images/buddy.png" alt="">
         </div>
+        <a class="pined-icon" href="https://www.google.ca" target="_blank">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Google_Chrome_icon_%282011%29.png" alt="">
+        </a>
       </div>
       <div id="datetime">
         <span class="time"></span>

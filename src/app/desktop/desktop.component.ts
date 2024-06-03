@@ -7,9 +7,10 @@ import { MsnApp } from '../msn-app/msn-app.component';
   styleUrl: './desktop.component.css'
 })
 export class DesktopComponent{
-  @ViewChild('windowContainer',{read: ViewContainerRef}) 
+  @ViewChild('windowContainer',{read: ViewContainerRef})
   entry : ViewContainerRef | undefined;
-  windowOpened  = false
+  msnOpened  = false
+  startOpened = false
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {} 
   @ViewChild('startMenu') startMenu : ElementRef | undefined
@@ -26,11 +27,11 @@ export class DesktopComponent{
     })
     componentRef?.instance.minimize.subscribe(()=>componentRef?.instance.minimizeOrResume())
     this.componentsRefs['msn'] = componentRef
-    this.windowOpened = true
+    this.msnOpened = true
   }
 
   onCloseWindow(){
-    this.windowOpened = false
+    this.msnOpened = false
     this.entry?.clear()
     delete this.componentsRefs['msn']
   }
@@ -47,6 +48,13 @@ export class DesktopComponent{
   onOpenStartMenu(){
     this.startMenu?.nativeElement.classList.toggle('open')
     this.startIcon?.nativeElement.classList.toggle('start-icon-active')
+    this.startOpened = !this.startOpened
+  }
+
+  @HostListener('document:click', ['$event']) onDocumentClick(event: MouseEvent) {
+    if(!this.startMenu?.nativeElement.contains(event.target as Node) && !this.startIcon?.nativeElement.contains(event.target as Node)){
+      if(this.startOpened) this.onOpenStartMenu()
+    }
   }
 
 }

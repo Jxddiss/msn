@@ -4,13 +4,13 @@
       <div class="title-bar-text"><img src="../../assets/images/buddy.png" class="title-icon" alt=""> Windows Live Messenger </div>
       <div class="title-bar-controls">
         <button aria-label="Minimize" (click)="onMinimize()"></button>
-        <button aria-label="Maximize"></button>
+        <button aria-label="Maximize" disabled></button>
         <button aria-label="Close" (click)="onQuitWindow()"></button>
       </div>
     </div>
     <div class="window-body has-space">
-      <div class="login">
-        <div class="login-card">
+      <div class="content-container">
+        <div class="content-card">
             <h3>Connectez-vous à <br> Windows Live <span>Messenger</span></h3>
             <div class="login-form-container">
                 <div class="buddy-container glass">

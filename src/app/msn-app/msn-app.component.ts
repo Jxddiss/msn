@@ -45,24 +45,21 @@ export class MsnApp implements OnInit, OnDestroy{
     const tl = gsap.timeline()
 
     gsap.to('.window',{display:'block',opacity:1,})
-    tl.from('.login',{
+    
+    tl.from('.content-container',{
       height: 0,
       width:0,
       opacity:0,
-    })
-
-    tl.to('.login',{
+    }).to('.content-container',{
       width: '500px',
       height: '450px',
       opacity:1,
       ease:'back',
     },0)
 
-    tl.from('.login-card',{
+    tl.from('.content-card',{
       opacity:0,
-    })
-
-    tl.to('.login-card',{
+    }).to('.content-card',{
       opacity:1,
       ease:'power1',
     })
@@ -73,14 +70,14 @@ export class MsnApp implements OnInit, OnDestroy{
   disparition() : void{
     const tl = gsap.timeline()
 
-    tl.to('.login-card',{
+    tl.to('.content-card',{
       opacity:0,
     },0)
 
-    tl.from('.login',{
+    tl.from('.content-container',{
       width: '500px',
       height: '450px',
-    }).to('.login',{
+    }).to('.content-container',{
       width: 0,
       height: 0,
       ease:'back',
