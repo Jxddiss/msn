@@ -6,7 +6,7 @@ import gsap from 'gsap';
   templateUrl: './msn-app.component.html',
   styleUrl: './msn-app.component.css'
 })
-export class MsnApp implements OnDestroy{
+export class MsnApp implements OnInit, OnDestroy{
   close = new EventEmitter();
   minimize = new EventEmitter();
   isMinimized = false
@@ -35,6 +35,7 @@ export class MsnApp implements OnDestroy{
       this.disparition()
       this.isMinimized = true
     }
+    
   }
 
   ngOnDestroy(){
@@ -59,15 +60,37 @@ export class MsnApp implements OnDestroy{
 
     tl.from('.login-card',{
       opacity:0,
+    })
+
+    tl.to('.login-card',{
+      opacity:1,
       ease:'power1',
     })
+
+    tl.duration(1)
   }
 
   disparition() : void{
     const tl = gsap.timeline()
 
+    tl.to('.login-card',{
+      opacity:0,
+    },0)
+
+    tl.from('.login',{
+      width: '500px',
+      height: '450px',
+    }).to('.login',{
+      width: 0,
+      height: 0,
+      ease:'back',
+    })
+
     tl.to('.window',{
       opacity:0,
-    },0).set('.window',{display:'none'})
+      display:'none'
+    })
+
+    tl.duration(0.7)
   }
 }

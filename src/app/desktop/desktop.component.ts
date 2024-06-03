@@ -1,4 +1,4 @@
-import { Component, ComponentRef, HostListener, TemplateRef, ViewChild, ViewContainerRef, signal } from '@angular/core';
+import { Component, ComponentRef, ElementRef, HostListener, TemplateRef, ViewChild, ViewContainerRef, signal } from '@angular/core';
 import { MsnApp } from '../msn-app/msn-app.component';
 
 @Component({
@@ -12,7 +12,9 @@ export class DesktopComponent{
   windowOpened  = false
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {} 
-
+  @ViewChild('startMenu') startMenu : ElementRef | undefined
+  @ViewChild('startIcon') startIcon : ElementRef | undefined
+  
   constructor(){}
 
   openMsn(){
@@ -38,8 +40,13 @@ export class DesktopComponent{
       console.log(type)
       this.componentsRefs[type]?.instance.minimizeOrResume()
     }else{
-      this.openMsn()
+      if(type == 'msn') this.openMsn()
     }
+  }
+
+  onOpenStartMenu(){
+    this.startMenu?.nativeElement.classList.toggle('open')
+    this.startIcon?.nativeElement.classList.toggle('start-icon-active')
   }
 
 }
