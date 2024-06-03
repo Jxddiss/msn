@@ -44,7 +44,7 @@ export class MsnApp implements OnInit, OnDestroy{
   apparition() : void{
     const tl = gsap.timeline()
 
-    gsap.to('.window',{display:'block',opacity:1,})
+    gsap.to('.window',{display:'block',opacity:1,translateY:0,})
     tl.from('.login',{
       height: 0,
       width:0,
@@ -87,6 +87,7 @@ export class MsnApp implements OnInit, OnDestroy{
     })
 
     tl.to('.window',{
+      translateY:'100vh',
       opacity:0,
       display:'none'
     })
