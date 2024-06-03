@@ -10,11 +10,8 @@ export class DesktopComponent{
   @ViewChild('windowContainer',{read: ViewContainerRef})
   entry : ViewContainerRef | undefined;
   msnOpened  = false
-  startOpened = false
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {} 
-  @ViewChild('startMenu') startMenu : ElementRef | undefined
-  @ViewChild('startIcon') startIcon : ElementRef | undefined
   
   constructor(){}
 
@@ -45,16 +42,5 @@ export class DesktopComponent{
     }
   }
 
-  onOpenStartMenu(){
-    this.startMenu?.nativeElement.classList.toggle('open')
-    this.startIcon?.nativeElement.classList.toggle('start-icon-active')
-    this.startOpened = !this.startOpened
-  }
-
-  @HostListener('document:click', ['$event']) onDocumentClick(event: MouseEvent) {
-    if(!this.startMenu?.nativeElement.contains(event.target as Node) && !this.startIcon?.nativeElement.contains(event.target as Node)){
-      if(this.startOpened) this.onOpenStartMenu()
-    }
-  }
 
 }

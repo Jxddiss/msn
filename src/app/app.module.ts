@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import {CdkDrag, CdkDragHandle} from '@angular/cdk/drag-drop';
 import { MsnApp } from './msn-app/msn-app.component';
 import { DesktopComponent } from './desktop/desktop.component';
+import { TaskbarComponent } from './desktop/taskbar/taskbar.component';
 
 
 
@@ -13,7 +14,8 @@ import { DesktopComponent } from './desktop/desktop.component';
   declarations: [
     AppComponent,
     MsnApp,
-    DesktopComponent
+    DesktopComponent,
+    TaskbarComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +24,6 @@ import { DesktopComponent } from './desktop/desktop.component';
     CdkDragHandle
   ],
   providers: [
-    provideClientHydration()
   ],
   bootstrap: [AppComponent]
 })
