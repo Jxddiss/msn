@@ -1,0 +1,126 @@
+:host{
+    background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/f8cbba04-d884-4dc3-b9ef-9979145c22d1/d68d6tc-70c2835d-c837-4d81-ab0f-5d185d6d592a.jpg');
+    height: 100vh;
+    width: 100vw;
+    display: block;
+    background-position: center;
+}
+
+
+  .violet{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+  }
+
+  .title-icon{
+    height: 15pt;
+    object-fit: contain;
+    margin-right: 5px;
+  }
+
+  .login{
+    width: 500px;
+    height: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .login-card{
+    width: 70%;
+    height: 100%;
+    padding-top: 2em;
+  }
+
+  .login-card h3{
+    font-size: 1.7rem;
+    font-weight: 300;
+    margin-bottom: 1em;
+  }
+
+  .login-card span{
+    font-weight: 600;
+  }
+
+  .login-form-container{
+    display: flex;
+    gap: 3em;
+  }
+
+  .login-form-container form{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2em;
+  }
+
+  .text-input{
+    width: 100%;
+    margin: 0;
+  }
+
+  .buddy-container{
+    position: relative;
+    z-index: 0;
+    padding: 7px;
+    border: 1px solid rgba(0, 0, 0, .7);
+    border-radius: 10px;
+    height: 100px;
+    width: 100px;
+  }
+
+  .buddy-container::before{
+    background: linear-gradient(transparent 20%, #ffffffb3 40%, transparent 41%), linear-gradient(90deg, #ffffff66, #0000001a, #ffffff33), #62dd3e;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 1px #fffd;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+  }
+
+  .buddy-container::after{
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border: none;
+    border-radius: 10px;
+    content: "";
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -10;
+  }
+
+  .buddy-body{
+    background-color: #B0C9CF;
+    border-radius: 3px;
+    height: 100%;
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, .7);
+  }
+
+  .buddy-body img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .window-body{
+    background: rgb(154,220,246);
+    background: linear-gradient(180deg, rgba(154,220,246,1) 0%, rgba(236,247,251,1) 37%, rgba(255,255,255,1) 100%);
+  }
+
+  .button-container{
+    display: flex;
+    gap: 1em;
+    margin-top: 1em;
+  }
