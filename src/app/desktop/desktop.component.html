@@ -1,0 +1,20 @@
+<div id="desktop">
+    <div  class="msn-icon icon-desk" data-label="MSN" cdkDrag (click)="onClickWindow('msn')"></div>
+    <ng-template #windowContainer>
+        <ng-container></ng-container>
+      </ng-template>
+    <div id="task-bar">
+      <div id="blur-overlay"></div>
+      <div id="menu-button"></div>
+      <div id="pined-items">
+        <div class="pined-icon" data-window="msn" (click)="onClickWindow('msn')">
+          <img src="../assets/images/buddy.png" alt="">
+        </div>
+      </div>
+      <div id="datetime">
+        <span class="time"></span>
+        <span class="date"></span>
+      </div>
+      <div id="show-desktop"></div>
+    </div>
+  </div>

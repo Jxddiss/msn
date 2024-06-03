@@ -1,11 +1,11 @@
-<div class="window active violet glass" cdkDrag>
+<div class="window active violet glass" #window cdkDrag>
     <div class="title-bar" cdkDragHandle>
         
       <div class="title-bar-text"><img src="../../assets/images/buddy.png" class="title-icon" alt=""> Windows Live Messenger </div>
       <div class="title-bar-controls">
-        <button aria-label="Minimize"></button>
+        <button aria-label="Minimize" (click)="onMinimize()"></button>
         <button aria-label="Maximize"></button>
-        <button aria-label="Close"></button>
+        <button aria-label="Close" (click)="onQuitWindow()"></button>
       </div>
     </div>
     <div class="window-body has-space">
@@ -18,7 +18,7 @@
                         <img id="buddy-img" src="../../assets/images/buddy2.png" alt="">
                     </div>
                 </div>
-                <form action="POST">
+                <form>
                     <div class="field-row">
                         <label for="email"></label>
                         <input class="text-input" type="email" placeholder="exemple@email.ca" name="email" required>

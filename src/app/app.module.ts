@@ -5,13 +5,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {CdkDrag, CdkDragHandle} from '@angular/cdk/drag-drop';
 import { MsnApp } from './msn-app/msn-app.component';
+import { DesktopComponent } from './desktop/desktop.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    MsnApp
+    MsnApp,
+    DesktopComponent
   ],
   imports: [
     BrowserModule,
