@@ -6,6 +6,7 @@
     background-position: center;
 }
 
+/* Source pour la barre de tâche, les icones : https://codepen.io/legarth/pen/jrKLqd*/
 #task-bar {
     position: absolute;
     right: 0;
@@ -168,6 +169,8 @@
     pointer-events: none;
 }
 
+
+/* Source pour le menu démarer : http://www.htmldrive.net/edit_media/2010/201007/20100712/win7startmenu/index.html#*/
 #startmenu {
   border: solid 1px #102a3e;
   overflow: visible;
