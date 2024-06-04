@@ -1,0 +1,105 @@
+.content-container{
+    width: 430px;
+    height: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* overflow: auto;
+    resize: both; */
+  }
+  
+  .content-card{
+    width: 70%;
+    height: 100%;
+    padding-top: 2em;
+  }
+  
+  .login-form-container{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3em;
+    }
+  
+    h3{
+      font-size: 1.7rem;
+      font-weight: 300;
+      margin-bottom: 1em;
+    }
+  
+    
+   span{
+      font-weight: 600;
+    }
+  
+    .login-form-container form{
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2em;
+    }
+  
+  .text-input{
+      width: 100%;
+      margin: 0;
+    }
+  
+    .buddy-container{
+      position: relative;
+      z-index: 0;
+      padding: 7px;
+      border: 1px solid rgba(0, 0, 0, .7);
+      border-radius: 10px;
+      height: 100px;
+      width: 100px;
+    }
+  
+    .buddy-container::before{
+      background: linear-gradient(transparent 20%, #ffffffb3 40%, transparent 41%), linear-gradient(90deg, #ffffff66, #0000001a, #ffffff33), #62dd3e;
+      border-radius: 10px;
+      box-shadow: inset 0 0 0 1px #fffd;
+      content: "";
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: -1;
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+    }
+  
+    .buddy-container::after{
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+      border: none;
+      border-radius: 10px;
+      content: "";
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+      width: 100%;
+      z-index: -10;
+    }
+  
+    .buddy-body{
+      background-color: #B0C9CF;
+      border-radius: 3px;
+      height: 100%;
+      width: 100%;
+      border: 1px solid rgba(0, 0, 0, .7);
+    }
+  
+    .buddy-body img{
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .button-container{
+        display: flex;
+        gap: 1em;
+        margin-top: 1em;
+        justify-content: center;
+      }

@@ -9,52 +9,8 @@
       </div>
     </div>
     <div class="window-body has-space">
-      <div class="content-container">
-        <div class="content-card">
-            <h3>Connectez-vous à <br> Windows Live <span>Messenger</span></h3>
-            <div class="login-form-container">
-                <div class="buddy-container glass">
-                    <div class="buddy-body">
-                        <img id="buddy-img" src="../../assets/images/buddy2.png" alt="">
-                    </div>
-                </div>
-                <form>
-                    <div class="field-row">
-                        <input class="text-input" type="email" placeholder="exemple@email.ca" name="email" id="email" required>
-                    </div>
-
-                    <div class="field-row">
-                        <input class="text-input" type="password" placeholder="Entrez votre mot de passe" name="password" id="password" required>
-                    </div>
-
-                    <div class="field-row">
-                        <a href="#"> Mot de passe oublié?</a>
-                    </div>
-                    
-                    <div class="field-row">
-                        <input type="checkbox" id="remember" name="remember">
-                        <label for="remember">
-                            Souvenez-vous de moi
-                        </label>
-                    </div>
-                    <div class="field-row">
-                        <input type="checkbox" id="autoconnect" name="autoconnect" disabled>
-                        <label for="autoconnect">
-                            Se connecter automatiquement
-                        </label>
-                    </div>
-
-                    <div class="button-container">
-                        <button type="submit">Se connecter</button>
-                        <button>Annuler</button>
-                    </div>
-                    
-                    <div style="margin-top: 1em;">
-                        Vous n'avez pas de compte? <a href="">Inscrivez-vous</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-      </div>
+        <!-- <app-login (canBeFullScreenEvent)="onCanBeFullScreen($event)"></app-login> -->
+        <!-- <app-inscription></app-inscription> -->
+        <router-outlet></router-outlet>
     </div>
 </div>

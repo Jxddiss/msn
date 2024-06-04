@@ -9,6 +9,8 @@ import { DesktopComponent } from './desktop/desktop.component';
 import { TaskbarComponent } from './desktop/taskbar/taskbar.component';
 import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
+import { LoginComponent } from './msn-app/login/login.component';
+import { InscriptionComponent } from './msn-app/inscription/inscription.component';
 
 registerLocaleData(localeFr)
 
@@ -17,7 +19,9 @@ registerLocaleData(localeFr)
     AppComponent,
     MsnApp,
     DesktopComponent,
-    TaskbarComponent
+    TaskbarComponent,
+    LoginComponent,
+    InscriptionComponent
   ],
   imports: [
     BrowserModule,

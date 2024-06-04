@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import gsap from 'gsap';
+import { WindowInfoService } from '../service/window-info.service';
 
 @Component({
   selector: 'app-msn-app',
@@ -12,7 +13,10 @@ export class MsnApp implements AfterViewInit, OnDestroy{
   canBeFullScreen = false
   isMinimized = false
 
-  constructor(){
+  constructor(private _windowInfoService : WindowInfoService) {
+    this._windowInfoService.canBeFullScreen$.subscribe(value => {
+      this.canBeFullScreen = value
+    })
   }
 
   ngAfterViewInit(){
@@ -50,20 +54,16 @@ export class MsnApp implements AfterViewInit, OnDestroy{
       height: 0,
       width:0,
       opacity:0,
-    }).to('.content-container',{
-      width: '500px',
-      height: '450px',
-      opacity:1,
-      ease:'back',
-    },0)
+    })
 
     tl.from('.content-card',{
       opacity:0,
     }).to('.content-card',{
       opacity:1,
     })
-
+    tl.to(".content-container", {clearProps:true})
     tl.duration(1)
+    
   }
 
   disparition() : void{
@@ -79,7 +79,9 @@ export class MsnApp implements AfterViewInit, OnDestroy{
     })
 
     tl.to('.window',{display:'none',opacity:0,})
+    tl.to(".content-container", {clearProps:true})
 
     tl.duration(0.2)
   }
+
 }
