@@ -3,9 +3,10 @@
     #draggable="cdkDrag"
     [class.pointer-events-none]="draggable._dragRef.isDragging()">
     </div>
-    <a  class="ie-icon icon-desk" cdkDrag href="https://www.google.ca"
-    #draggable="cdkDrag" target="_blank" data-label="Internet"
-    [class.pointer-events-none]="draggable._dragRef.isDragging()">
+    <a  class="ie-icon icon-desk" cdkDrag 
+    #draggable="cdkDrag" data-label="Internet"
+    [class.pointer-events-none]="draggable._dragRef.isDragging()"
+    onclick="window.open('https://www.google.ca','_unfencedTop ','width=700,height=700,top=500,left=500')">
     </a>
     <ng-template #windowContainer>
         <ng-container></ng-container>
