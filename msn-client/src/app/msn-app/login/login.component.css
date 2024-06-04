@@ -63,7 +63,10 @@
   }
 
   .buddy-container::before{
-    background: linear-gradient(transparent 20%, #ffffffb3 40%, transparent 41%), linear-gradient(90deg, #ffffff66, #0000001a, #ffffff33), #62dd3e;
+    background: 
+      linear-gradient(transparent 20%, #ffffffb3 40%, transparent 41%), 
+      linear-gradient(90deg, #ffffff66, #0000001a, #ffffff33), 
+      #62dd3e;
     border-radius: 10px;
     box-shadow: inset 0 0 0 1px #fffd;
     content: "";

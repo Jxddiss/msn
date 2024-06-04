@@ -29,7 +29,8 @@
                     Vous avez un compte? <a [routerLink]="['/login']">Connectez-vous</a>
                 </div>
 
-                <input type="file" hidden id="avatar" name="avatar" #avatarPicker (change)="onAvatarImgChange($event)">
+                <input type="file" hidden id="avatar" name="avatar" #avatarPicker 
+                accept="image/*" (change)="onAvatarImgChange($event)">
             </form>
         </div>
     </div>
