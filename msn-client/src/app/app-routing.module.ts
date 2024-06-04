@@ -9,7 +9,11 @@ const routes: Routes = [
   {path: 'login',
     children: [
       {path: '', component: LoginComponent, outlet: 'main'},
-      {path: 'inscription', component: InscriptionComponent, outlet: 'main'}
+    ]
+  },
+  {path: 'inscription',
+    children: [
+      {path: '', component: InscriptionComponent, outlet: 'main'},
     ]
   },
 ];
