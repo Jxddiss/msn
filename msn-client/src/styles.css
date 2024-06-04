@@ -80,3 +80,33 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     width: 100%;
     object-fit: cover;
 }
+
+.buddy-inactif::before{
+    background: 
+      linear-gradient(transparent 20%, #ffffffb3 40%, transparent 41%), 
+      linear-gradient(90deg, #ffffff66, #0000001a, #ffffff33), 
+      rgb(221, 205, 62);
+    box-shadow: 
+    inset 0 0 0 1px #fffd,
+    0px 0px 10px 3px rgba(221, 205, 62,0.9);
+}
+
+.buddy-disconnected::before{
+    background: 
+      linear-gradient(transparent 20%, #ffffffb3 40%, transparent 41%), 
+      linear-gradient(90deg, #ffffff66, #0000001a, #ffffff33), 
+      rgb(221, 62, 62);
+    box-shadow: 
+    inset 0 0 0 1px #fffd,
+    0px 0px 10px 3px rgba(221, 62, 62, 0.9);
+}
+
+.buddy-absent::before{
+    background: 
+      linear-gradient(transparent 20%, #ffffffb3 40%, transparent 41%), 
+      linear-gradient(90deg, #ffffff66, #0000001a, #ffffff33), 
+      rgb(155, 154, 154);
+    box-shadow: 
+    inset 0 0 0 1px #fffd,
+    0px 0px 10px 3px rgba(155, 154, 154, 0.9);
+}

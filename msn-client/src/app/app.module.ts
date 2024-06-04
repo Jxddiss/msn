@@ -13,6 +13,8 @@ import { LoginComponent } from './msn-app/login/login.component';
 import { InscriptionComponent } from './msn-app/inscription/inscription.component';
 import { HomeComponent } from './msn-app/home/home.component';
 import { UserCardComponent } from './msn-app/home/user-card/user-card.component';
+import { ActivityHolderComponent } from './msn-app/home/activity-holder/activity-holder.component';
+import { UserListComponent } from './msn-app/home/activity-holder/user-list/user-list.component';
 
 registerLocaleData(localeFr)
 
@@ -25,7 +27,9 @@ registerLocaleData(localeFr)
     LoginComponent,
     InscriptionComponent,
     HomeComponent,
-    UserCardComponent
+    UserCardComponent,
+    ActivityHolderComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,
