@@ -29,27 +29,32 @@ export class InscriptionComponent implements OnInit{
     const target = event.target as HTMLInputElement;
     if (target && target.files && target.files.length > 0) {
       const file = target.files[0];
-      if(this.verifyFile(file)){
+      let result = this.verifyFile(file);
+      if(result === "bon"){
         const reader = new FileReader();
         reader.onload = () => {
           this.avatarImg.nativeElement.src = reader.result as string;
         };
         reader.readAsDataURL(file);
       }else{
-        alert('Le format du fichier n\'est pas supporté');
+        alert(result);
         this.avatarPicker.nativeElement.value = '';
       }
     }
   }
 
-  verifyFile(file: File) : boolean{ 
+  verifyFile(file: File) : string{ 
     if(file.type === 'image/png' 
     || file.type === 'image/jpg' 
     || file.type === 'image/jpeg' 
     || file.type === 'image/gif'){
-      return true
+      if(file.size < 5000000){
+        return "bon"
+      }else{
+        return "Image trop lourde"
+      }
     }
 
-    return false
+    return "Format d'image non supportée"
   }
 }
