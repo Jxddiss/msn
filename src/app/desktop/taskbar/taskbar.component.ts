@@ -1,17 +1,20 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-taskbar',
   templateUrl: './taskbar.component.html',
   styleUrl: './taskbar.component.css'
 })
-export class TaskbarComponent {
+export class TaskbarComponent implements OnDestroy{
   @Input() msnOpened = false
   @Output() msnOpenEvent = new EventEmitter()
   @ViewChild('startMenu') startMenu : ElementRef | undefined
   @ViewChild('startIcon') startIcon : ElementRef | undefined
   startOpened = false
   currentDate = new Date();
+  intervalDate = setInterval(() => {
+    this.currentDate = new Date();
+  }, 1000);
 
 
   onMsnOpen(){
@@ -25,8 +28,13 @@ export class TaskbarComponent {
   }
 
   @HostListener('document:click', ['$event']) onDocumentClick(event: MouseEvent) {
-    if(!this.startMenu?.nativeElement.contains(event.target as Node) && !this.startIcon?.nativeElement.contains(event.target as Node)){
+    if(!this.startMenu?.nativeElement.contains(event.target as Node) 
+      && !this.startIcon?.nativeElement.contains(event.target as Node)){
       if(this.startOpened) this.onOpenStartMenu()
     }
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalDate);
   }
 }

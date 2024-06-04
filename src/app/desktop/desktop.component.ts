@@ -51,7 +51,6 @@ export class DesktopComponent implements OnInit{
 
   onClickWindow(type : string){
     if(this.componentsRefs[type]){
-      console.log(type)
       this.componentsRefs[type]?.instance.minimizeOrResume()
     }else{
       if(type == 'msn') this.openMsn()
