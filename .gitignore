@@ -41,3 +41,4 @@ testem.log
 .DS_Store
 Thumbs.db
 msn-client/.angular/cache
+msn-client/.angular/cache/17.3.8/msn/.tsbuildinfo
