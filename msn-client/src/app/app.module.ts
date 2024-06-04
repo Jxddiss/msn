@@ -11,6 +11,7 @@ import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
 import { LoginComponent } from './msn-app/login/login.component';
 import { InscriptionComponent } from './msn-app/inscription/inscription.component';
+import { HomeComponent } from './msn-app/home/home.component';
 
 registerLocaleData(localeFr)
 
@@ -21,7 +22,8 @@ registerLocaleData(localeFr)
     DesktopComponent,
     TaskbarComponent,
     LoginComponent,
-    InscriptionComponent
+    InscriptionComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

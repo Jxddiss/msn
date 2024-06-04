@@ -12,6 +12,17 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+/*====== General =====*/
+.d-flex{
+    display: flex;
+}
+
+.flex-column{
+    flex-direction: column;
+}
+
+/*===== Buddy(avatar) =====*/
+
 .buddy-container{
     position: relative;
     z-index: 0;
