@@ -10,7 +10,6 @@ export class MsnApp implements OnInit, OnDestroy{
   close = new EventEmitter();
   minimize = new EventEmitter();
   isMinimized = false
-  @HostBinding('style.display') display = 'block'
 
   constructor(){
   }
