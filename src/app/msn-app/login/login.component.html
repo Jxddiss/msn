@@ -19,6 +19,16 @@
                 <div class="field-row">
                     <a href="#"> Mot de passe oublié?</a>
                 </div>
+
+                <div class="field-row">
+                    <label for="statut">Sign in as: </label>
+                    <select name="statut" id="statut" required >
+                        <option value="1" selected>🟩 En ligne</option>
+                        <option value="2">🟥 Hors ligne</option>
+                        <option value="3">🟨 Inactif</option>
+                        <option value="4">⬜ Absent</option>
+                    </select>
+                </div>
                 
                 <div class="field-row">
                     <input type="checkbox" id="remember" name="remember">
@@ -35,7 +45,7 @@
     
                 <div class="button-container">
                     <button type="submit">Se connecter</button>
-                    <button>Annuler</button>
+                    <button type="reset">Annuler</button>
                 </div>
                 
                 <div style="margin-top: 1em;">

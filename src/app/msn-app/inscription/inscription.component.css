@@ -25,6 +25,7 @@
       font-size: 1.7rem;
       font-weight: 300;
       margin-bottom: 1em;
+      text-align: center;
     }
   
     
@@ -89,6 +90,10 @@
       height: 100%;
       width: 100%;
       border: 1px solid rgba(0, 0, 0, .7);
+    }
+
+    .buddy-body:hover{
+      cursor: pointer;
     }
   
     .buddy-body img{

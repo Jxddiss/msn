@@ -4,7 +4,7 @@
         <div class="login-form-container">
             <div class="buddy-container glass">
                 <div class="buddy-body">
-                    <img id="buddy-img" src="../../../assets/images/buddy2.png" alt="">
+                    <img #avatarImg (click)="onChooseAvatar()" id="buddy-img" src="../../../assets/images/buddy2.png" alt="">
                 </div>
             </div>
             <form>
@@ -22,12 +22,14 @@
     
                 <div class="button-container">
                     <button type="submit">S'inscrire</button>
-                    <button>Annuler</button>
+                    <button type="reset">Annuler</button>
                 </div>
                 
                 <div style="margin-top: 1em;">
                     Vous avez un compte? <a [routerLink]="['/login']">Connectez-vous</a>
                 </div>
+
+                <input type="file" hidden id="avatar" name="avatar" #avatarPicker (change)="onAvatarImgChange($event)">
             </form>
         </div>
     </div>
