@@ -40,13 +40,12 @@
   }
 
   #menu-button {
-    position: absolute;
-    top: 3px;
+    position: fixed;
     bottom: 3px;
-    left: 10px;
+    left: 6px;
     display: block;
-    width: 35px;
-    height: 35px;
+    width: 45px;
+    height: 45px;
     z-index: 3;
     background-image: url(../../../assets/images/win7-normal.png);
     background-size: cover;
@@ -102,6 +101,7 @@
     right: 30px;
     z-index: 3;
     text-align: center;
+    color: #f0ecec;
   }
   
   #datetime > span {
@@ -227,7 +227,7 @@
   display: block;
   margin: 5px 0;
   position: relative;
-  color: #fff;
+  color: #f0ecec;
   text-decoration: none;
   min-width: 120px;
 }

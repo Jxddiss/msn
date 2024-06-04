@@ -11,6 +11,7 @@ export class TaskbarComponent {
   @ViewChild('startMenu') startMenu : ElementRef | undefined
   @ViewChild('startIcon') startIcon : ElementRef | undefined
   startOpened = false
+  currentDate = new Date();
 
 
   onMsnOpen(){

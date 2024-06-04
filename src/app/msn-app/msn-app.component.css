@@ -1,5 +1,5 @@
 
-  .violet{
+  .msn-window{
     position: fixed;
     top: 50%;
     left: 50%;
@@ -19,6 +19,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    /* overflow: auto;
+    resize: both; */
   }
 
   .content-card{

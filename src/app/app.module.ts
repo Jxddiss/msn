@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -7,8 +7,10 @@ import {CdkDrag, CdkDragHandle} from '@angular/cdk/drag-drop';
 import { MsnApp } from './msn-app/msn-app.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { TaskbarComponent } from './desktop/taskbar/taskbar.component';
+import localeFr from '@angular/common/locales/fr';
+import { registerLocaleData } from '@angular/common';
 
-
+registerLocaleData(localeFr)
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { TaskbarComponent } from './desktop/taskbar/taskbar.component';
     CdkDragHandle
   ],
   providers: [
+    {provide: LOCALE_ID, useValue:'fr-FR'}
   ],
   bootstrap: [AppComponent]
 })

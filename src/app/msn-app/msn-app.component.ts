@@ -61,7 +61,6 @@ export class MsnApp implements OnInit, OnDestroy{
       opacity:0,
     }).to('.content-card',{
       opacity:1,
-      ease:'power1',
     })
 
     tl.duration(1)
@@ -74,17 +73,13 @@ export class MsnApp implements OnInit, OnDestroy{
       opacity:0,
     },0)
 
-    tl.from('.content-container',{
-      width: '500px',
-      height: '450px',
-    }).to('.content-container',{
-      width: 0,
-      height: 0,
-      ease:'back',
+    tl.to('.content-container',{
+      width: '50px',
+      height: '100px',
     })
 
     tl.to('.window',{display:'none',opacity:0,})
 
-    tl.duration(0.7)
+    tl.duration(0.2)
   }
 }
