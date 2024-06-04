@@ -1,0 +1,16 @@
+<div class="window active msn-window glass first-window" #window cdkDrag>
+    <div class="title-bar" cdkDragHandle>
+        
+      <div class="title-bar-text"><img src="../../assets/images/buddy.png" class="title-icon" alt=""> Windows Live Messenger </div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize" (click)="onMinimize()"></button>
+        <button aria-label="Maximize" [disabled]="!canBeFullScreen"></button>
+        <button aria-label="Close" (click)="onQuitWindow()"></button>
+      </div>
+    </div>
+    <div class="window-body has-space">
+        <!-- <app-login (canBeFullScreenEvent)="onCanBeFullScreen($event)"></app-login> -->
+        <!-- <app-inscription></app-inscription> -->
+        <router-outlet name="main"></router-outlet>
+    </div>
+</div>
