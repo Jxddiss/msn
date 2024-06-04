@@ -1,0 +1,36 @@
+<div class="content-container">
+    <div class="content-card">
+        <h3>Inscrivez-vous à <br> Windows Live <span>Messenger</span></h3>
+        <div class="login-form-container">
+            <div class="buddy-container glass">
+                <div class="buddy-body">
+                    <img #avatarImg (click)="onChooseAvatar()" id="buddy-img" src="../../../assets/images/buddy2.png" alt="">
+                </div>
+            </div>
+            <form>
+                <div class="field-row">
+                    <input class="text-input" type="email" placeholder="exemple@email.ca" name="email" id="email" required>
+                </div>
+    
+                <div class="field-row">
+                    <input class="text-input" type="password" placeholder="Entrez votre mot de passe" name="password" id="password" required>
+                </div>
+    
+                <div class="field-row">
+                    <input class="text-input" type="password" placeholder="Confirmez votre mot de passe" name="confirm" id="confirm" required>
+                </div>
+    
+                <div class="button-container">
+                    <button type="submit">S'inscrire</button>
+                    <button type="reset">Annuler</button>
+                </div>
+                
+                <div style="margin-top: 1em;">
+                    Vous avez un compte? <a [routerLink]="['/login']">Connectez-vous</a>
+                </div>
+
+                <input type="file" hidden id="avatar" name="avatar" #avatarPicker (change)="onAvatarImgChange($event)">
+            </form>
+        </div>
+    </div>
+</div>

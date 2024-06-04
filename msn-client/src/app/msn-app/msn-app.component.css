@@ -1,0 +1,21 @@
+
+  .msn-window{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    z-index: 2;
+  }
+
+  .title-icon{
+    height: 15pt;
+    object-fit: contain;
+    margin-right: 5px;
+  }
+  
+  .window-body{
+    background: rgb(154,220,246);
+    background: linear-gradient(180deg, rgba(154,220,246,1) 0%, rgba(236,247,251,1) 37%, rgba(255,255,255,1) 100%);
+  }
+
+  
