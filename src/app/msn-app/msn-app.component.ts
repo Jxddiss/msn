@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, HostBinding, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import gsap from 'gsap';
 
 @Component({
@@ -6,15 +6,16 @@ import gsap from 'gsap';
   templateUrl: './msn-app.component.html',
   styleUrl: './msn-app.component.css'
 })
-export class MsnApp implements OnInit, OnDestroy{
+export class MsnApp implements AfterViewInit, OnDestroy{
   close = new EventEmitter();
   minimize = new EventEmitter();
+  canBeFullScreen = false
   isMinimized = false
 
   constructor(){
   }
 
-  ngOnInit(){
+  ngAfterViewInit(){
     this.apparition()
   }
   

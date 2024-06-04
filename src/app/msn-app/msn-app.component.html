@@ -4,7 +4,7 @@
       <div class="title-bar-text"><img src="../../assets/images/buddy.png" class="title-icon" alt=""> Windows Live Messenger </div>
       <div class="title-bar-controls">
         <button aria-label="Minimize" (click)="onMinimize()"></button>
-        <button aria-label="Maximize" disabled></button>
+        <button aria-label="Maximize" [disabled]="!canBeFullScreen"></button>
         <button aria-label="Close" (click)="onQuitWindow()"></button>
       </div>
     </div>

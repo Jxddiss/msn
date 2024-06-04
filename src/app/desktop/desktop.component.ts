@@ -1,4 +1,4 @@
-import { Component, ComponentRef, ElementRef, HostListener, OnInit, TemplateRef, ViewChild, ViewContainerRef, signal } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, ElementRef, HostListener, OnInit, TemplateRef, ViewChild, ViewContainerRef, signal } from '@angular/core';
 import { MsnApp } from '../msn-app/msn-app.component';
 import { Subscription } from 'rxjs';
 
@@ -7,18 +7,18 @@ import { Subscription } from 'rxjs';
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.css'
 })
-export class DesktopComponent implements OnInit{
+export class DesktopComponent implements AfterViewInit{
   @ViewChild('windowContainer',{read: ViewContainerRef})
   entry : ViewContainerRef | undefined;
-  msnOpened  = false
+  msnOpened  = signal(false)
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
   private _subcriptions : Subscription[] = []
   
   constructor(){}
 
-  ngOnInit(){
-    setTimeout(()=>this.openMsn(), 500)
+  ngAfterViewInit(){
+    this.openMsn()
   }
 
   openMsn(){
@@ -40,11 +40,11 @@ export class DesktopComponent implements OnInit{
       )
     }
     this.componentsRefs['msn'] = componentRef
-    this.msnOpened = true
+    this.msnOpened.set(true)
   }
 
   onCloseWindow(){
-    this.msnOpened = false
+    this.msnOpened.set(false)
     this.entry?.clear()
     delete this.componentsRefs['msn']
   }
