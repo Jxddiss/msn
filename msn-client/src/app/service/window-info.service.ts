@@ -9,6 +9,8 @@ export class WindowInfoService {
   canBeFullScreen$ = this._canBeFullScreen.asObservable();
   private _chatWindowOpen = new Subject<boolean>();
   chatWindowOpen$ = this._chatWindowOpen.asObservable();
+  private _homeWindowOpen = new Subject<boolean>();
+  homeWindowOpen$ = this._homeWindowOpen.asObservable();
 
   constructor() { }
 
@@ -19,4 +21,9 @@ export class WindowInfoService {
   onChatWindowOpen(value : boolean){
     this._chatWindowOpen.next(value)
   }
+
+  onHomeWindowOpen(value : boolean){
+    this._homeWindowOpen.next(value)
+  }
+
 }

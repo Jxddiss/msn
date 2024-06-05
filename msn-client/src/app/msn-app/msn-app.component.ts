@@ -1,6 +1,8 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import gsap from 'gsap';
 import { WindowInfoService } from '../service/window-info.service';
+import { ChatboxComponent } from './home/chatbox/chatbox.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-msn-app',
@@ -8,15 +10,29 @@ import { WindowInfoService } from '../service/window-info.service';
   styleUrl: './msn-app.component.css'
 })
 export class MsnApp implements AfterViewInit, OnDestroy{
+  @ViewChild('secondWindowContainer', { read: ViewContainerRef }) 
+  secondWindowContainer: ViewContainerRef | undefined;
   close = new EventEmitter();
   minimize = new EventEmitter();
   canBeFullScreen = false
   isMinimized = false
+  private _subscription : Subscription[] = []
 
   constructor(private _windowInfoService : WindowInfoService) {
-    this._windowInfoService.canBeFullScreen$.subscribe(value => {
-      this.canBeFullScreen = value
-    })
+    this._subscription.push(
+      this._windowInfoService.canBeFullScreen$.subscribe(value => {
+        this.canBeFullScreen = value
+      })
+    )
+
+    this._subscription.push(
+      this._windowInfoService.homeWindowOpen$.subscribe(value => {
+        console.log(value)
+        if(value){
+          this.initialiseChatBox()
+        }
+      })
+    )
   }
 
   ngAfterViewInit(){
@@ -43,6 +59,7 @@ export class MsnApp implements AfterViewInit, OnDestroy{
   }
 
   ngOnDestroy(){
+    this._subscription.forEach(sub => sub.unsubscribe())
   }
 
   apparition() : void{
@@ -84,4 +101,11 @@ export class MsnApp implements AfterViewInit, OnDestroy{
     tl.duration(0.2)
   }
 
+  initialiseChatBox() {
+    setTimeout(()=>{
+      this.secondWindowContainer?.clear();
+      const componentRef = this.secondWindowContainer?.createComponent(ChatboxComponent);
+      componentRef?.instance.setTest('test');
+    },0)
+  }
 }
