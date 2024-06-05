@@ -26,6 +26,9 @@
       <div class="pined-icon" (click)="onMsnOpen()" data-window="msn" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
         <img src="../assets/images/buddy.png" alt="">
       </div>
+      <div *ngIf="chatOpened" class="pined-icon" data-window="msn-chat" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
+        <img src="../assets/images/buddy.png" alt="">
+      </div>
       <a class="pined-icon" onclick="window.open('https://www.google.ca','_unfencedTop ','width=700,height=700,top=500,left=500')">
         <img src="https://pngimg.com/d/ie_logo_PNG4.png" alt="">
       </a>

@@ -1,4 +1,6 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { WindowInfoService } from '../../service/window-info.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-taskbar',
@@ -15,7 +17,16 @@ export class TaskbarComponent implements OnDestroy{
   intervalDate = setInterval(() => {
     this.currentDate = new Date();
   }, 1000);
-
+  chatOpened = false
+  private _subcriptions : Subscription[] = []
+  
+  constructor(private _windowInfoService : WindowInfoService){ 
+    this._subcriptions.push(
+      this._windowInfoService.chatWindowOpen$.subscribe(value => {
+        this.chatOpened = value
+      })
+    )
+  }
 
   onMsnOpen(){
     this.msnOpenEvent.emit(null)
