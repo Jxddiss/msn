@@ -1,7 +1,7 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
-/dist
+msn-client/dist/*
 /tmp
 /out-tsc
 /bazel-out
@@ -29,8 +29,8 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
-.sass-cache/
+msn-client/.angular/cache
+msn-client/.sass-cache/
 /connect.lock
 /coverage
 /libpeerconnection.log
@@ -40,3 +40,5 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+msn-client/.angular/cache
+msn-client/.angular/cache/17.3.8/msn/.tsbuildinfo

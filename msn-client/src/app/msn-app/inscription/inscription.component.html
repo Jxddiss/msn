@@ -11,6 +11,14 @@
                 <div class="field-row">
                     <input class="text-input" type="email" placeholder="exemple@email.ca" name="email" id="email" required>
                 </div>
+
+                <div class="field-row">
+                    <input class="text-input" type="text" placeholder="Nom" name="nom" id="nom" required>
+                </div>
+
+                <div class="field-row">
+                    <input class="text-input" type="text" placeholder="Prénom" name="prenom" id="prenom" required>
+                </div>
     
                 <div class="field-row">
                     <input class="text-input" type="password" placeholder="Entrez votre mot de passe" name="password" id="password" required>
@@ -29,7 +37,8 @@
                     Vous avez un compte? <a [routerLink]="['/login']">Connectez-vous</a>
                 </div>
 
-                <input type="file" hidden id="avatar" name="avatar" #avatarPicker (change)="onAvatarImgChange($event)">
+                <input type="file" hidden id="avatar" name="avatar" #avatarPicker 
+                accept="image/*" (change)="onAvatarImgChange($event)">
             </form>
         </div>
     </div>

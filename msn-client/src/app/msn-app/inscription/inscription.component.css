@@ -44,62 +44,9 @@
       width: 100%;
       margin: 0;
     }
-  
-    .buddy-container{
-      position: relative;
-      z-index: 0;
-      padding: 7px;
-      border: 1px solid rgba(0, 0, 0, .7);
-      border-radius: 10px;
-      height: 100px;
-      width: 100px;
-    }
-  
-    .buddy-container::before{
-      background: linear-gradient(transparent 20%, #ffffffb3 40%, transparent 41%), linear-gradient(90deg, #ffffff66, #0000001a, #ffffff33), #62dd3e;
-      border-radius: 10px;
-      box-shadow: inset 0 0 0 1px #fffd;
-      content: "";
-      height: 100%;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
-      z-index: -1;
-      -webkit-backdrop-filter: blur(4px);
-      backdrop-filter: blur(4px);
-    }
-  
-    .buddy-container::after{
-      -webkit-backdrop-filter: blur(4px);
-      backdrop-filter: blur(4px);
-      border: none;
-      border-radius: 10px;
-      content: "";
-      height: 100%;
-      left: 0;
-      position: absolute;
-      top: 0;
-      width: 100%;
-      z-index: -10;
-    }
-  
-    .buddy-body{
-      background-color: #B0C9CF;
-      border-radius: 3px;
-      height: 100%;
-      width: 100%;
-      border: 1px solid rgba(0, 0, 0, .7);
-    }
 
     .buddy-body:hover{
       cursor: pointer;
-    }
-  
-    .buddy-body img{
-      height: 100%;
-      width: 100%;
-      object-fit: cover;
     }
 
     .button-container{

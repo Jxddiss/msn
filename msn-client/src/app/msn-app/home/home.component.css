@@ -1,0 +1,18 @@
+.content-container{
+    width: 430px;
+    height: 750px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* overflow: auto;
+    resize: both; */
+  }
+  
+  .content-card{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 90%;
+    height: 100%;
+    padding-top: 2em;
+  }

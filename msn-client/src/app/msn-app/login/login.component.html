@@ -21,8 +21,8 @@
                 </div>
 
                 <div class="field-row">
-                    <label for="statut">Sign in as: </label>
-                    <select name="statut" id="statut" required >
+                    <label for="statut">Statut: </label>
+                    <select name="statut" id="statut" class="statut" required >
                         <option value="1" selected>🟩 En ligne</option>
                         <option value="2">🟥 Hors ligne</option>
                         <option value="3">🟨 Inactif</option>
@@ -44,7 +44,7 @@
                 </div>
     
                 <div class="button-container">
-                    <button type="submit">Se connecter</button>
+                    <button [routerLink]="['/home']">Se connecter</button>
                     <button type="reset">Annuler</button>
                 </div>
                 

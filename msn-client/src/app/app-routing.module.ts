@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './msn-app/login/login.component';
 import { InscriptionComponent } from './msn-app/inscription/inscription.component';
-import { MsnApp } from './msn-app/msn-app.component';
+import { HomeComponent } from './msn-app/home/home.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,6 +16,12 @@ const routes: Routes = [
       {path: '', component: InscriptionComponent, outlet: 'main'},
     ]
   },
+  { path: 'home', 
+    children: [
+      {path: '', component: HomeComponent, outlet: 'main'},
+    ]
+   },
+  { path: '**', redirectTo: '/login' }
 ];
 
 @NgModule({

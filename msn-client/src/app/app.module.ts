@@ -11,6 +11,11 @@ import localeFr from '@angular/common/locales/fr';
 import { registerLocaleData } from '@angular/common';
 import { LoginComponent } from './msn-app/login/login.component';
 import { InscriptionComponent } from './msn-app/inscription/inscription.component';
+import { HomeComponent } from './msn-app/home/home.component';
+import { UserCardComponent } from './msn-app/home/user-card/user-card.component';
+import { ActivityHolderComponent } from './msn-app/home/activity-holder/activity-holder.component';
+import { UserListComponent } from './msn-app/home/activity-holder/user-list/user-list.component';
+import { ChatboxComponent } from './msn-app/home/chatbox/chatbox.component';
 
 registerLocaleData(localeFr)
 
@@ -21,7 +26,12 @@ registerLocaleData(localeFr)
     DesktopComponent,
     TaskbarComponent,
     LoginComponent,
-    InscriptionComponent
+    InscriptionComponent,
+    HomeComponent,
+    UserCardComponent,
+    ActivityHolderComponent,
+    UserListComponent,
+    ChatboxComponent,
   ],
   imports: [
     BrowserModule,
