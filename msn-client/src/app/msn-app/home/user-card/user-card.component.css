@@ -1,7 +1,11 @@
+.buddy-body{
+  border: 0.5px solid rgba(0, 0, 0, 0.253);
+}
+
 .buddy-container{
-    height: 80px;
-    width: 80px;
-  }
+  height: 80px;
+  width: 80px;
+}
 
 .profil-info{
   display: flex;
