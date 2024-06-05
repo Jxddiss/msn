@@ -50,7 +50,7 @@
 }
 
 .collapse:checked{
-    transform: rotate(180deg);
+    transform: rotate(-90deg);
 }
 
 .user-list{
