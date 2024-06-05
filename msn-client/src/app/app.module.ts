@@ -15,6 +15,7 @@ import { HomeComponent } from './msn-app/home/home.component';
 import { UserCardComponent } from './msn-app/home/user-card/user-card.component';
 import { ActivityHolderComponent } from './msn-app/home/activity-holder/activity-holder.component';
 import { UserListComponent } from './msn-app/home/activity-holder/user-list/user-list.component';
+import { ChatboxComponent } from './msn-app/home/chatbox/chatbox.component';
 
 registerLocaleData(localeFr)
 
@@ -30,6 +31,7 @@ registerLocaleData(localeFr)
     UserCardComponent,
     ActivityHolderComponent,
     UserListComponent,
+    ChatboxComponent,
   ],
   imports: [
     BrowserModule,
