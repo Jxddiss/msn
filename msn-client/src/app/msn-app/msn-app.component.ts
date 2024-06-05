@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, OnDestroy, OnInit, Output, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import gsap from 'gsap';
 import { WindowInfoService } from '../service/window-info.service';
 import { ChatboxComponent } from './home/chatbox/chatbox.component';
