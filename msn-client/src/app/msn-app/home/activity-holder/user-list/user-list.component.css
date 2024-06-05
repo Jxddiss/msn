@@ -1,3 +1,8 @@
+:host{
+    overflow: hidden;
+    height: 100%;
+}
+
 .rechercher{
     width: 100%;
     font-size: 10pt;
@@ -10,12 +15,12 @@
     font-weight: 600;
     font-size: 15pt;
     color: rgb(7, 65, 124);
+    gap: 0.2em;
 }
 
 .title img{
     height: 20pt;
     object-fit: contain;
-    margin-right: 5px;
 }
 
 .count{
@@ -24,17 +29,43 @@
     color: rgba(100, 101, 102, 0.808);
 }
 
+.title:has(:checked) + .user-list{
+    height: 0px;
+    opacity: 0;
+    overflow: hidden;
+}
+
+.collapse{
+    width: 10px;
+    height: 10px;
+    background-image: url(../../../../../assets/images/arrow.svg);
+    background-size: cover;
+    opacity: 1;
+}
+
+.collapse:hover{
+    cursor: pointer;
+}
+
+.collapse:checked{
+    transform: rotate(180deg);
+}
+
 .user-list{
     list-style: none;
     margin-top: 0.5em;
     padding: 4px;
     overflow-y: auto;
-    height: 50%;
+    height: 25%;
+    max-height: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    transition: height 0.3s ease-in-out;
 }
 
 .user-card{
     display: flex;
-    margin-bottom: 1em;
     gap: 0.5em;
     padding: 0.5em;
 }
@@ -65,4 +96,48 @@
     font-size: 12pt;
     font-weight: 600;
     color: rgb(46, 46, 46);
+}
+
+.friend{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    font-size: 10pt;
+    color: rgb(46, 46, 46);
+    padding: 0.4em;
+}
+
+.friend:hover{
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.699);
+}
+
+.friend img{
+    height: 10px;
+    object-fit: contain;
+    margin-right: 5px;
+}
+
+.online-neon{
+    box-shadow: 
+      0px 0px 5px 1px rgba(99,221,62,0.9);
+}
+
+.disconnected-neon{
+    box-shadow: 
+      0px 0px 5px 1px rgba(221,62,62,0.9);
+}
+
+.absent-neon{
+    box-shadow: 
+        0px 0px 5px 1px rgba(155, 154, 154, 0.9);
+}
+
+.inactif-neon{
+    box-shadow: 
+        0px 0px 5px 3px rgba(221, 205, 62,0.9);
+}
+
+.grp-img{
+    height: 20px !important;
 }
