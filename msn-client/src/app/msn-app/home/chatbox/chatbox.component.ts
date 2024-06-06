@@ -90,6 +90,8 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     tl.to('.second-window .content-container',{
       width: '50px',
       height: '100px',
+      minHeight: '0px',
+      minWidth: '0px',
     })
 
     tl.to('.second-window',{display:'none',opacity:0,})
@@ -145,7 +147,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
 
   nudge(){
     const audio = new Audio()
-    audio.src = "../../../assets/sounds/nudge.mp3"
+    audio.src = "./assets/sounds/nudge.mp3"
     audio.load()
     audio.play()
     const tl = gsap.timeline()
