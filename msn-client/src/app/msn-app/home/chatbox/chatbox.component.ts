@@ -103,7 +103,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     if(this._isFullScreen){
       tl.to('.second-window .content-container', {
         height: '600px',
-        width: '750px',
+        width: '800px',
       })
 
       tl.to('.second-window', {
@@ -112,6 +112,9 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
         left: '50%',
       },0)
       tl.set(".second-window", {clearProps:"translate"},0)
+      tl.to('.second-window .content-container', {
+        clearProps:true,
+      })
     }else{
       this.resetDragPosition()
       tl.to('.second-window', {

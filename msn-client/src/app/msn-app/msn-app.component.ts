@@ -31,7 +31,6 @@ export class MsnApp implements AfterViewInit, OnDestroy{
 
     this._subscription.push(
       this._windowInfoService.homeWindowOpen$.subscribe(value => {
-        console.log(value)
         if(value){
           this.initialiseChatBox()
         }

@@ -24,7 +24,7 @@
 
 .content-container{
     height: 600px;
-    width: 750px;
+    width: 800px;
     padding: 15px;
     padding-bottom: 5em;
     resize: both;
@@ -53,16 +53,33 @@
 }
 
 .buddy-container{
-    height: 175px;
-    width: 175px;
+    height: 135px;
+    width: 135px;
     padding: 10px;
 }
 
 ul[role="menubar"]{
-    background: linear-gradient(#c3eeff 20%, #b9e6f8 25%, #c3eeff 43%, #ADE2F7 48%, #7ac6e4);
-    height: 60px;
+    background: linear-gradient(rgba(195, 238, 255, 0.443) 20%, rgba(185, 230, 248, 0.37) 25%, rgba(195, 238, 255, 0.514) 43%, rgba(173, 226, 247, 0.425) 48%, rgba(122, 198, 228, 0.459));
+    height: 45px;
     align-items: center;
     font-size: 12pt;
+}
+
+ul[role="menubar"] li{
+    height: 100%;
+}
+
+ul[role="menubar"] li:hover, ul[role="menubar"] li:focus{
+    background: linear-gradient(rgba(220, 235, 253, 0.5), hsla(214, 94%, 88%, 0.5));
+    cursor: pointer;
+    color: black;
+    outline: 1px solid rgb(185, 230, 248);
+}
+
+ul[role="menubar"] li:active{
+    background: linear-gradient(hsla(214, 94%, 88%, 0.5), rgba(220, 235, 253, 0.5));
+    color: black;
+    outline: 1px solid rgb(185, 230, 248);
 }
 
 .chat-zone{
@@ -120,8 +137,7 @@ ul[role="menubar"]{
 }
 
 .chat-input{
-    height: 150px;
-    padding-bottom: 3em;
+    height: 125px;
 }
 
 .chat-input-options{
@@ -130,9 +146,10 @@ ul[role="menubar"]{
     align-items: center;
     justify-content: start;
     font-size: 20pt;
-    background: rgb(154, 220, 246);
-    background: linear-gradient(180deg, rgba(188, 231, 248, 0.89) 0%, rgba(236, 247, 251, 1) 50%, rgba(255, 255, 255, 1) 100%);
-    border-radius: 10px;
+    background: rgb(238,251,255);
+    background: linear-gradient(180deg, rgba(238,251,255,1) 24%, rgba(216,234,241,1) 69%, rgba(216,234,241,1) 100%);
+    border-radius: 5px;
+    border: 1px solid rgba(125, 162, 206, 0.575);
 }
 
 .opt{
@@ -172,9 +189,18 @@ ul[role="menubar"]{
 }
 
 [role="tooltip"]{
-    height: 80px;
+    height: 60px;
     width: 100%;
     background: transparent;
+    box-shadow: none;
+}
+
+[role="tooltip"]::before{
+    left: -1.45em;
+    bottom: 0;
+    transform: rotate(270deg) !important;
+    background: url(../../../../assets/images/input-point.svg);
+    z-index: 1;
 }
 
 .name-holder{
@@ -209,4 +235,10 @@ hr{
     background: 
         linear-gradient(93deg, rgba(255,255,255,0) 0%, rgba(162,162,162,0.8) 20%, rgba(0, 0, 0, 0.692) 52%, rgba(149,149,149,0.804359243697479) 78%, rgba(255,255,255,0) 100%);
     height: 3px;
+}
+
+.banniere img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
