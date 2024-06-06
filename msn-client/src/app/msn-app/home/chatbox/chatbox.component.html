@@ -1,4 +1,4 @@
-<div class="window active glass second-window " cdkDrag>
+<div class="window active glass second-window" cdkDrag>
     <div class="title-bar" cdkDragHandle>
       <div class="title-bar-text"><img src="../../assets/images/buddy.png" class="title-icon" alt=""> Windows Live Messenger </div>
       <div class="title-bar-controls">
@@ -7,10 +7,103 @@
         <button aria-label="Close"></button>
       </div>
     </div>
-    <div class="window-body has-space">
+    <div class="window-body">
+      <ul role="menubar">
+        <li role="menuitem" tabindex="0">Photos</li>
+        <li role="menuitem" tabindex="0">Vidéo</li>
+        <li role="menuitem" tabindex="0">Appel</li>
+        <li role="menuitem" tabindex="0">Aide</li>
+      </ul>
         <div class="content-container">
           <div class="content-card">
-            <h1 *ngIf="isLoading"> Test is loading </h1>
+            <div class="profiles-pictures-holder">
+              <div class="buddy-container buddy-disconnected glass">
+                  <div class="buddy-body">
+                      <img #avatarImg id="buddy-img" src="https://pbs.twimg.com/media/DwPifW4X4AEVbGY.jpg" alt="">
+                  </div>
+              </div>
+              <div class="buddy-container glass">
+                <div class="buddy-body">
+                    <img #avatarImg id="buddy-img" src="https://i.redd.it/windows-xp-user-icons-part-1-v0-21x236nw74qb1.jpg?width=1117&format=pjpg&auto=webp&s=373255f32cfaeaf801f1e3ae36dc314dd6b1f100" alt="">
+                </div>
+              </div>
+            </div>
+            <div class="chat-zone">
+              <div class="ami-info">
+                <div class="name-holder">
+                  <span class="name">John Doe</span>
+                  <span class="status">(Hors ligne)</span>
+                </div>
+                <div class="desc">
+                  Hello, I am John Doe
+                </div>
+              </div>
+              <hr>
+              <div class="chat-list has-scrollbar">
+                <div class="chat-item">
+                  <div class="sender">John Doe said</div>
+                  <div class="message">
+                    <span class="point"></span>
+                    <div class="message-body">
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Error doloribus temporibus optio necessitatibus eveniet assumenda quam natus nobis, qui repudiandae.
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-item">
+                  <div class="sender">John Doe said</div>
+                  <div class="message">
+                    <span class="point"></span>
+                    <div class="message-body">
+                      Hello, I am John Doe
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-item">
+                  <div class="sender">John Doe said</div>
+                  <div class="message">
+                    <span class="point"></span>
+                    <div class="message-body">
+                      Hello, I am John Doe
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-item">
+                  <div class="sender">John Doe said</div>
+                  <div class="message">
+                    <span class="point"></span>
+                    <div class="message-body">
+                      Hello, I am John Doe
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-item">
+                  <div class="sender">John Doe said</div>
+                  <div class="message">
+                    <span class="point"></span>
+                    <div class="message-body">
+                      Hello, I am John Doe
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-item">
+                  <div class="sender">John Doe said</div>
+                  <div class="message">
+                    <span class="point"></span>
+                    <div class="message-body">
+                      Hello, I am John Doe
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="chat-input">
+                <div class="chat-input-options">
+                  <div class="opt">😲</div>
+                </div>
+                <div role="tooltip" class="is-top is-right">
+                  <textarea placeholder="Écrivez un message" class="text-input"></textarea>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
     </div>
