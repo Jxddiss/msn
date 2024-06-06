@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { WindowInfoService } from '../service/window-info.service';
 import { ChatboxComponent } from './home/chatbox/chatbox.component';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-msn-app',
@@ -16,8 +17,12 @@ export class MsnApp implements AfterViewInit, OnDestroy{
   canBeFullScreen = false
   isMinimized = false
   private _subscription : Subscription[] = []
+  dragPosition = {
+    x: 0,
+    y: 0
+  }
 
-  constructor(private _windowInfoService : WindowInfoService) {
+  constructor(private _windowInfoService : WindowInfoService, private _router : Router) {
     this._subscription.push(
       this._windowInfoService.canBeFullScreen$.subscribe(value => {
         this.canBeFullScreen = value
@@ -30,6 +35,12 @@ export class MsnApp implements AfterViewInit, OnDestroy{
         if(value){
           this.initialiseChatBox()
         }
+      })
+    )
+
+    this._subscription.push(
+      this._router.events.subscribe(() => {
+        this.resetPosition()
       })
     )
   }
@@ -101,5 +112,12 @@ export class MsnApp implements AfterViewInit, OnDestroy{
       const componentRef = this.secondWindowContainer?.createComponent(ChatboxComponent);
       componentRef?.instance.setTest('test');
     },0)
+  }
+
+  resetPosition() {
+    this.dragPosition = {
+      x: 0,
+      y: 0
+    }
   }
 }
