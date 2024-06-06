@@ -39,6 +39,7 @@ export class MsnApp implements AfterViewInit, OnDestroy{
 
     this._subscription.push(
       this._router.events.subscribe(() => {
+        this.secondWindowContainer?.clear();
         this.resetPosition()
       })
     )

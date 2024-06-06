@@ -8,7 +8,7 @@ import { MsnApp } from './msn-app/msn-app.component';
 import { DesktopComponent } from './desktop/desktop.component';
 import { TaskbarComponent } from './desktop/taskbar/taskbar.component';
 import localeFr from '@angular/common/locales/fr';
-import { registerLocaleData } from '@angular/common';
+import { HashLocationStrategy, LocationStrategy, registerLocaleData } from '@angular/common';
 import { LoginComponent } from './msn-app/login/login.component';
 import { InscriptionComponent } from './msn-app/inscription/inscription.component';
 import { HomeComponent } from './msn-app/home/home.component';
@@ -40,7 +40,8 @@ registerLocaleData(localeFr)
     CdkDragHandle
   ],
   providers: [
-    {provide: LOCALE_ID, useValue:'fr-FR'}
+    {provide: LOCALE_ID, useValue:'fr-FR'},
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   bootstrap: [AppComponent]
 })
