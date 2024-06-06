@@ -141,7 +141,6 @@ ul[role="menubar"] li:active{
 }
 
 .chat-input-options{
-    height: 40px;
     display: flex;
     align-items: center;
     justify-content: start;
@@ -156,22 +155,21 @@ ul[role="menubar"] li:active{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 35px;
-    width: 35px;
-    margin-left: 0.5em;
+    height: 45px;
+    width: 65px;
+    min-width: 40px;
     border-radius: 10px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    box-shadow: none;
 }
 
 .opt img{
-    height: 80%;
-    width: 80%;
+    height: 60%;
+    width: 60%;
     object-fit: contain;
-}
-
-.opt:hover{
-    background: linear-gradient(#dcebfd, #c2dcfd);
-    outline: solid 1px #7da2ce;
-    cursor: pointer;
 }
 
 .opt:active{

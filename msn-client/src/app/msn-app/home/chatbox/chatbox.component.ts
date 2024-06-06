@@ -138,4 +138,24 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
       y: 0
     }
   }
+
+  onNudge(){
+    const audio = new Audio()
+    audio.src = "../../../assets/sounds/nudge.mp3"
+    audio.load()
+    audio.play()
+    const tl = gsap.timeline()
+    tl.to('.second-window', {
+      translate: '-55% -50%',
+    })
+    tl.to('.second-window', {
+      translate: '-50% -50%',
+    })
+    tl.to('.second-window', {
+      clearProps: 'translate',
+    })
+    tl.repeat(5)
+    tl.duration(0.2)
+    tl.yoyo(true)
+  }
 }
