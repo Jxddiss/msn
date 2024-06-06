@@ -2,3 +2,37 @@
     overflow: hidden;
     flex-grow: 1;
 }
+
+.rechercher{
+    display: flex;
+    width: 100%;
+    height: 2em;
+    font-size: 10pt;
+    gap: 0.5em;
+}
+
+.rechercher input{
+    flex-grow: 1;
+    color: rgb(100, 101, 102);
+    font-size: 10pt;
+    height: 100%;
+}
+
+.rechercher button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4em;
+    height: 100%;
+    min-width: 2em;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    box-shadow: none;
+}
+
+.rechercher button img{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}

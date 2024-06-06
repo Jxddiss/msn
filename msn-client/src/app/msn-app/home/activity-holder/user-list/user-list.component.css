@@ -3,11 +3,6 @@
     height: 100%;
 }
 
-.rechercher{
-    width: 100%;
-    font-size: 10pt;
-}
-
 .title{
     display: flex;
     align-items: center;
