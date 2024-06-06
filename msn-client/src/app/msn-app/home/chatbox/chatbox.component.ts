@@ -147,7 +147,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
 
   nudge(){
     const audio = new Audio()
-    audio.src = "./assets/sounds/nudge.mp3"
+    audio.src = "assets/sounds/nudge.mp3"
     audio.load()
     audio.play()
     const tl = gsap.timeline()

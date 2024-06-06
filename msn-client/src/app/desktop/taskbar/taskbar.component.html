@@ -5,7 +5,7 @@
     <div id="startmenu" #startMenu>
       <ul id="programs">
           <li (click)="onMsnOpen()">
-            <div class="start-icon"><img src="../../assets/images/buddy.png" alt="">MSN</div>
+            <div class="start-icon"><img src="assets/images/buddy.png" alt="">MSN</div>
           </li>
           <li>
             <a class="start-icon" onclick="window.open('https://www.google.ca','_unfencedTop ','width=700,height=700,top=500,left=500')">
@@ -15,7 +15,7 @@
           </li>
       </ul>
       <ul id="links">
-          <li class="icon"><img src="../../assets/images/folder.png" alt=""></li>
+          <li class="icon"><img src="assets/images/folder.png" alt=""></li>
           <li><div class="start-icon"><span>Documents</span></div></li>
           <li><div class="start-icon"><span>Photos</span></div></li>
           <li><div class="start-icon"><span>Musique</span></div></li>
@@ -24,10 +24,10 @@
     </div>
     <div id="pined-items">
       <div class="pined-icon" (click)="onMsnOpen()" data-window="msn" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
-        <img src="../assets/images/buddy.png" alt="">
+        <img src="assets/images/buddy.png" alt="">
       </div>
       <div *ngIf="chatOpened" (click)="onChatWinowOpen()" class="pined-icon" data-window="msn-chat" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
-        <img src="../assets/images/buddy.png" alt="">
+        <img src="assets/images/buddy.png" alt="">
       </div>
       <a class="pined-icon" onclick="window.open('https://www.google.ca','_unfencedTop ','width=700,height=700,top=500,left=500')">
         <img src="https://pngimg.com/d/ie_logo_PNG4.png" alt="">
