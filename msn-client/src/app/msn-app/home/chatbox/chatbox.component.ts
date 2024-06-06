@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, ViewChild, signal } from '@angular/core';
 import { WindowInfoService } from '../../../service/window-info.service';
 import gsap from 'gsap';
 
@@ -12,6 +12,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
   private _test : string | undefined
   private _isMinimized = false
   private _isFullScreen = false
+  dragPosition = {
+    x: 0,
+    y: 0
+  }
 
   constructor(private _windowInfoService : WindowInfoService) { 
     this._windowInfoService.chatWidowMinimizeOrResume$.subscribe(()=>this.minimizeOrResume())
@@ -101,9 +105,17 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
         height: '600px',
         width: '750px',
       })
-    }else{
+
       tl.to('.second-window', {
-        transform: 'translate(-50%, -50%)',
+        translate: '-50% -50%',
+        top: '50%',
+        left: '50%',
+      },0)
+      tl.set(".second-window", {clearProps:"translate"},0)
+    }else{
+      this.resetDragPosition()
+      tl.to('.second-window', {
+        translate: '-50% -50%',
         top: '48%',
         left: '50%',
       },0)
@@ -113,8 +125,14 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
         height: '85vh',
       })
     }
-
     tl.duration(0.2)
     this._isFullScreen = !this._isFullScreen
+  }
+
+  resetDragPosition() : void{
+    this.dragPosition = {
+      x: 0,
+      y: 0
+    }
   }
 }
