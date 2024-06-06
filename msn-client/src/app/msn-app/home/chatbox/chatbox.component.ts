@@ -103,6 +103,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
       })
     }else{
       tl.to('.second-window', {
+        transform: 'translate(-50%, -50%)',
         top: '48%',
         left: '50%',
       },0)
