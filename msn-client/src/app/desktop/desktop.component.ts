@@ -32,13 +32,6 @@ export class DesktopComponent implements AfterViewInit{
         })
       )
     }
-    if(componentRef?.instance.minimize){
-      this._subcriptions.push(
-        componentRef?.instance.minimize.subscribe(()=>{
-          componentRef.instance.minimizeOrResume()
-        })
-      )
-    }
     this.componentsRefs['msn'] = componentRef
     this.msnOpened.set(true)
   }

@@ -13,7 +13,6 @@ export class MsnApp implements AfterViewInit, OnDestroy{
   @ViewChild('secondWindowContainer', { read: ViewContainerRef }) 
   secondWindowContainer: ViewContainerRef | undefined;
   close = new EventEmitter();
-  minimize = new EventEmitter();
   canBeFullScreen = false
   isMinimized = false
   private _subscription : Subscription[] = []
@@ -41,10 +40,6 @@ export class MsnApp implements AfterViewInit, OnDestroy{
   
   onQuitWindow(){
     this.close.emit(null)
-  }
-
-  onMinimize(){
-    this.minimize.emit(null)
   }
 
   minimizeOrResume(){

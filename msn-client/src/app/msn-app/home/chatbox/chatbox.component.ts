@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, signal } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, signal } from '@angular/core';
 import { WindowInfoService } from '../../../service/window-info.service';
 import gsap from 'gsap';
 
@@ -10,8 +10,11 @@ import gsap from 'gsap';
 export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
   private _isLoading = signal<boolean>(true)
   private _test : string | undefined
+  private _isMinimized = false
 
-  constructor(private _windowInfoService : WindowInfoService) { }
+  constructor(private _windowInfoService : WindowInfoService) { 
+    this._windowInfoService.chatWidowMinimizeOrResume$.subscribe(()=>this.minimizeOrResume())
+  }
 
   ngOnInit(): void {
     this._windowInfoService.onChatWindowOpen(true)
@@ -39,5 +42,54 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
 
   get isLoading(){
     return this._isLoading()
+  }
+
+  minimizeOrResume(){
+    if(this._isMinimized){
+      this._isMinimized = false
+      this.apparition()
+    }else{
+      this.disparition()
+      this._isMinimized = true
+    }
+  }
+
+  apparition() : void{
+    const tl = gsap.timeline()
+
+    gsap.to('.second-window',{display:'block',opacity:1,})
+    
+    tl.from('.second-window .content-container',{
+      height: 0,
+      width:0,
+      opacity:0,
+    })
+
+    tl.from('.second-window .content-card',{
+      opacity:0,
+    }).to('.second-window .content-card',{
+      opacity:1,
+    })
+    tl.to(".second-window .content-container", {clearProps:true})
+    tl.duration(1)
+    
+  }
+
+  disparition() : void{
+    const tl = gsap.timeline()
+
+    tl.to('.second-window .content-card',{
+      opacity:0,
+    },0)
+
+    tl.to('.second-window .content-container',{
+      width: '50px',
+      height: '100px',
+    })
+
+    tl.to('.second-window',{display:'none',opacity:0,})
+    tl.to(".second-window .content-container", {clearProps:true})
+
+    tl.duration(0.2)
   }
 }

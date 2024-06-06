@@ -11,6 +11,8 @@ export class WindowInfoService {
   chatWindowOpen$ = this._chatWindowOpen.asObservable();
   private _homeWindowOpen = new Subject<boolean>();
   homeWindowOpen$ = this._homeWindowOpen.asObservable();
+  private _chatWidowMinimizeOrResume = new Subject();
+  chatWidowMinimizeOrResume$ = this._chatWidowMinimizeOrResume.asObservable();
 
   constructor() { }
 
@@ -24,6 +26,10 @@ export class WindowInfoService {
 
   onHomeWindowOpen(value : boolean){
     this._homeWindowOpen.next(value)
+  }
+
+  onChatWidowMinimizeOrResume(){
+    this._chatWidowMinimizeOrResume.next(null)
   }
 
 }

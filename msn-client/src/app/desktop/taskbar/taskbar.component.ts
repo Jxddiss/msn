@@ -18,6 +18,7 @@ export class TaskbarComponent implements OnDestroy{
     this.currentDate = new Date();
   }, 1000);
   chatOpened = false
+  chatMinimized = false
   private _subcriptions : Subscription[] = []
   
   constructor(private _windowInfoService : WindowInfoService){ 
@@ -30,6 +31,10 @@ export class TaskbarComponent implements OnDestroy{
 
   onMsnOpen(){
     this.msnOpenEvent.emit(null)
+  }
+
+  onChatWinowOpen(){
+    this._windowInfoService.onChatWidowMinimizeOrResume()
   }
 
   onOpenStartMenu(){
