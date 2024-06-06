@@ -36,17 +36,16 @@ export class MsnApp implements AfterViewInit, OnDestroy{
         }
       })
     )
+  }
 
+  ngAfterViewInit(){
+    this.apparition()
     this._subscription.push(
       this._router.events.subscribe(() => {
         this.secondWindowContainer?.clear();
         this.resetPosition()
       })
     )
-  }
-
-  ngAfterViewInit(){
-    this.apparition()
   }
   
   onQuitWindow(){
@@ -119,5 +118,7 @@ export class MsnApp implements AfterViewInit, OnDestroy{
       x: 0,
       y: 0
     }
+
+    gsap.set('.msn-window', {left: '50%',})
   }
 }
