@@ -27,6 +27,11 @@
     width: 750px;
     padding: 15px;
     padding-bottom: 5em;
+    resize: both;
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .content-card{
@@ -34,6 +39,7 @@
     gap: 2em;
     height: 100%;
     width: 100%;
+    max-width: 1200px;
 }
 
 .profiles-pictures-holder{
@@ -76,7 +82,7 @@ ul[role="menubar"]{
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    overflow-y: scroll;
+    overflow-y: auto;
     gap: 1.2em;
     padding: 0.5em;
 }
@@ -115,6 +121,7 @@ ul[role="menubar"]{
 
 .chat-input{
     height: 150px;
+    padding-bottom: 3em;
 }
 
 .chat-input-options{
@@ -165,7 +172,7 @@ ul[role="menubar"]{
 .status{
     font-size: 1.2rem;
     font-weight: 400;
-    color: rgba(24, 23, 23, 0.815);
+    color: rgba(105, 103, 103, 0.6);
 }
 
 .desc{

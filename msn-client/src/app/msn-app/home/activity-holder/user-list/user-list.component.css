@@ -73,7 +73,7 @@
 }
 
 .user-card:hover{
-    border: solid 1px #7da2ce;
+    outline: solid 1px #7da2ce;
     background: linear-gradient(#dcebfd, #c2dcfd);
     border-radius: 3px;
     cursor: pointer;
@@ -109,7 +109,7 @@
 }
 
 .friend:hover{
-    border: solid 1px #7da2ce;
+    outline: solid 1px #7da2ce;
     background: linear-gradient(#dcebfd, #c2dcfd);
     border-radius: 3px;
     cursor: pointer;

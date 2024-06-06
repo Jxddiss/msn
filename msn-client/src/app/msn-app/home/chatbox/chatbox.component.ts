@@ -11,6 +11,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
   private _isLoading = signal<boolean>(true)
   private _test : string | undefined
   private _isMinimized = false
+  private _isFullScreen = false
 
   constructor(private _windowInfoService : WindowInfoService) { 
     this._windowInfoService.chatWidowMinimizeOrResume$.subscribe(()=>this.minimizeOrResume())
@@ -91,5 +92,28 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     tl.to(".second-window .content-container", {clearProps:true})
 
     tl.duration(0.2)
+  }
+
+  onFullScreen() : void{
+    const tl = gsap.timeline()
+    if(this._isFullScreen){
+      tl.to('.second-window .content-container', {
+        height: '600px',
+        width: '750px',
+      })
+    }else{
+      tl.to('.second-window', {
+        top: '48%',
+        left: '50%',
+      },0)
+  
+      tl.to('.second-window .content-container', {
+        width: '99vw',
+        height: '85vh',
+      })
+    }
+
+    tl.duration(0.2)
+    this._isFullScreen = !this._isFullScreen
   }
 }
