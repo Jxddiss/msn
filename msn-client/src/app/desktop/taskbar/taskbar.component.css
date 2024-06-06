@@ -229,6 +229,10 @@
   cursor: pointer;
 }
 
+#programs li:active .start-icon{
+  background: linear-gradient(#c2dcfd, #dcebfd);
+}
+
 #programs, #links {
   float: left;
   display: block;

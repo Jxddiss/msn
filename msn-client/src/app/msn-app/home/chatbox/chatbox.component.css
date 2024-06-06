@@ -135,10 +135,30 @@ ul[role="menubar"]{
     border-radius: 10px;
 }
 
+.opt{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    width: 35px;
+    margin-left: 0.5em;
+    border-radius: 10px;
+}
+
+.opt img{
+    height: 80%;
+    width: 80%;
+    object-fit: contain;
+}
+
 .opt:hover{
     background: linear-gradient(#dcebfd, #c2dcfd);
-    border: solid 1px #7da2ce;
+    outline: solid 1px #7da2ce;
     cursor: pointer;
+}
+
+.opt:active{
+    background: linear-gradient(#c2dcfd, #dcebfd);
 }
 
 .text-input{
