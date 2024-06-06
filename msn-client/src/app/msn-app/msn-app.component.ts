@@ -120,5 +120,9 @@ export class MsnApp implements AfterViewInit, OnDestroy{
     }
 
     gsap.set('.msn-window', {left: '50%',})
+    if(this.isMinimized){
+      this.apparition('.msn-window')
+      this.isMinimized = false
+    }
   }
 }
