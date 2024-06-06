@@ -9,9 +9,6 @@ import { WindowInfoService } from '../../service/window-info.service';
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('secondWindowContainer', { read: ViewContainerRef }) 
-  secondWindowContainer: ViewContainerRef | undefined;
-
   constructor(private _windowInfoService : WindowInfoService){ }
 
   ngOnInit(): void {
