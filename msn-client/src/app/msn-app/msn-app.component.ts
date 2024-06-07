@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrl: './msn-app.component.css'
 })
 export class MsnApp implements AfterViewInit, OnDestroy{
-  @ViewChild('secondWindowContainer', { read: ViewContainerRef }) 
+  @ViewChild('secondWindowContainer', { read: ViewContainerRef })
   secondWindowContainer: ViewContainerRef | undefined;
   close = new EventEmitter();
   canBeFullScreen = false
