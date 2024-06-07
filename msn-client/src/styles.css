@@ -76,7 +76,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.buddy-body img{
+.buddy-body img, .buddy-body video{
     height: 100%;
     width: 100%;
     object-fit: cover;
