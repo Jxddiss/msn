@@ -18,11 +18,11 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
   }
 
   constructor(private _windowInfoService : WindowInfoService) { 
-    this._windowInfoService.chatWidowMinimizeOrResume$.subscribe(()=>this.minimizeOrResume())
   }
 
   ngOnInit(): void {
     this._windowInfoService.onChatWindowOpen(true)
+    this._windowInfoService.chatWidowMinimizeOrResume$.subscribe(()=>this.minimizeOrResume())
   }
 
   ngAfterViewInit(): void {
