@@ -53,6 +53,9 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     if(this._isMinimized){
       this._isMinimized = false
       this.apparition()
+      if(this._isFullScreen){
+        setTimeout(()=>this.makeFullScreen(),800)
+      }
     }else{
       this.disparition()
       this._isMinimized = true
@@ -118,20 +121,26 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
         clearProps:true,
       })
     }else{
-      this.resetDragPosition()
-      tl.to('.second-window', {
-        translate: '-50% -50%',
-        top: '48%',
-        left: '50%',
-      },0)
-  
-      tl.to('.second-window .content-container', {
-        width: '99vw',
-        height: '85vh',
-      })
+      this.makeFullScreen()
     }
     tl.duration(0.2)
     this._isFullScreen = !this._isFullScreen
+  }
+
+  makeFullScreen() : void{
+    this.resetDragPosition()
+    const tl = gsap.timeline()
+    tl.to('.second-window', {
+      translate: '-50% -50%',
+      top: '48%',
+      left: '50%',
+    },0)
+
+    tl.to('.second-window .content-container', {
+      width: '99vw',
+      height: '85vh',
+    })
+    tl.duration(0.2)
   }
 
   resetDragPosition() : void{
@@ -166,6 +175,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     tl.repeat(5)
     tl.duration(0.2)
     tl.yoyo(true)
+  }
+  
+  get isFullScreen(){
+    return this._isFullScreen
   }
 
 }
