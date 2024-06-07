@@ -12,10 +12,23 @@ cdkDragBoundary="#desktop"
     </div>
     <div class="window-body">
         <ul role="menubar">
-          <li role="menuitem" tabindex="0">Photos</li>
-          <li role="menuitem" tabindex="0">Vidéo</li>
-          <li role="menuitem" tabindex="0">Appel</li>
-          <li role="menuitem" tabindex="0">Aide</li>
+          <li role="menuitem" >Aide</li>
+          <li role="menuitem" >
+            <span>Photos</span> 
+            <img src="assets/images/pictures.png" alt="">
+          </li>
+          <li role="menuitem" >
+            <span>Vidéo</span> 
+            <img src="assets/images/webcam.png" alt="">
+          </li>
+          <li role="menuitem" >
+            <span>Audio</span> 
+            <img src="assets/images/phone.png" alt="">
+          </li>
+          <li role="menuitem" >
+            <span>Bloquer</span>
+            <img src="assets/images/block.png" alt="">
+          </li>
         </ul>
         <div class="content-container">
           <div class="content-card" *ngIf="!isLoading">
