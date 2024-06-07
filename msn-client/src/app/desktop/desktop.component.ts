@@ -8,17 +8,21 @@ import { WindowInfoService } from '../service/window-info.service';
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.css'
 })
-export class DesktopComponent implements AfterViewInit, OnDestroy{
+export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   @ViewChild('windowContainer',{read: ViewContainerRef})
   entry : ViewContainerRef | undefined;
+  @ViewChild('desktop') desktop : ElementRef | undefined
   msnOpened  = signal(false)
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
   private _subscriptions : Subscription[] = []
   
   constructor(){ }
+
+  ngOnInit(){}
     
   ngAfterViewInit(){
+    this.onBackgroundChange()
     this.openMsn()
   }
 
@@ -48,6 +52,13 @@ export class DesktopComponent implements AfterViewInit, OnDestroy{
       this.componentsRefs[type]?.instance.minimizeOrResume()
     }else{
       if(type == 'msn') this.openMsn()
+    }
+  }
+
+  onBackgroundChange(){
+    if(localStorage.getItem('background')){
+      if(this.desktop === undefined) return 
+      this.desktop.nativeElement.style.backgroundImage = `url(${localStorage.getItem('background')})`
     }
   }
 
