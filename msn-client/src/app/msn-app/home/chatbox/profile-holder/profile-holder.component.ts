@@ -28,7 +28,6 @@ export class ProfileHolderComponent {
   onStartVideoShare(){
     this._videoShared = !this._videoShared
     this.getStream()
-    this.growVideo()
   }
 
   getStream(){
@@ -41,7 +40,7 @@ export class ProfileHolderComponent {
         .then((stream) => {
               if(this.localVideo === undefined || this.localVideo === null) return
               this._localStream = stream
-              this.localVideo.nativeElement.srcObject = this._localStream
+              this.localVideo.nativeElement.srcObject = this._localStream 
             })
     }
   }
@@ -54,50 +53,47 @@ export class ProfileHolderComponent {
   MakeVideoFullScreen(){
     const tl = gsap.timeline()
     if(!this._isVideoFullScreen){
-      tl.set('.local-holder', {
-        height: 'auto',
-      },0)
-      tl.to('.local-holder', {
-        width: '600px',
-        maxHeight: '350px',
+      tl.to('.chat-zone', {
+        opacity: '0',
       })
       tl.to('.chat-zone', {
         display: 'none',
+      })
+      tl.to('.profiles-pictures-holder', {
+        flexDirection: 'row',
+      })
+      tl.to('.user-pic-holder', {
+        height: '100%',
+        maxHeight: '100%'
+      })
+      tl.to('.content-card', {
+        maxWidth: 'none',
       })
     }else{
       tl.to('.local-holder', {
         clearProps: true,
       })
-
+      tl.to('.chat-zone', {
+        display: 'flex',
+        opacity: '1',
+      })
       tl.to('.chat-zone', {
         clearProps: true,
       })
-      this.growVideo()
+      tl.to('.profiles-pictures-holder', {
+        flexDirection: 'column',
+        ease: 'power1.inOut',
+      })
+      tl.to('.user-pic-holder', {
+        clearProps: true,
+      })
+      tl.to('.content-card', {
+        clearProps: true,
+      })
     }
     tl.duration(0.2)
     this._isVideoFullScreen = !this._isVideoFullScreen
   }
 
-  growVideo(){
-    const tl = gsap.timeline()
-    if(this._videoShared){
-      tl.to('.local-holder', {
-        height: 'auto',
-      },0)
-      tl.to('.local-holder', {
-        width: '350px',
-        maxHeight: '250px',
-      })
-    }else{
-      tl.to('.local-holder', {
-        width: '135px',
-        height: '135px',
-      })
-
-      tl.to('.local-holder', {
-        clearProps: true,
-      })
-    }
-    tl.duration(0.2)
-  }
+  
 }

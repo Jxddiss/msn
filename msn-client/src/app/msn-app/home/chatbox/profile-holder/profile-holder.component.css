@@ -1,16 +1,30 @@
+:host{
+    max-height: 100%;
+    flex-grow: 1;
+}
+
 .profiles-pictures-holder{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     gap: 1em;
-    height: 100%;
     padding-top: 2em;
+    height: 100%;
+    max-height: 100%;
+    transition: all 0.2s ease-in-out;
 }
 
 .user-pic-holder{
     display: flex;
     gap: 0.5em;
+    max-height: 50%;
+    transition: all 0.2s ease-in-out;
+}
+
+.user-pic-holder:has(video){
+    width: 80%;
+    
 }
 
 .user-pic-holder button{
@@ -43,4 +57,21 @@
     height: 135px;
     width: 135px;
     padding: 10px;
+    transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
+}
+
+.buddy-container:has(video){
+    height: 100%;
+    width: 100%;
+    padding: 10px;
+}
+
+.buddy-container video{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+video:hover{
+    cursor: pointer;
 }
