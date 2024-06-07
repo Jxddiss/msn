@@ -52,6 +52,22 @@
     width: 60% !important;
 }
 
+.buddy-body [role="tooltip"]{
+    text-align: center;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    opacity: 0;
+    top: 0;
+    right: 0;
+    translate: 50% -50%;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.buddy-body:hover [role="tooltip"]{
+    opacity: 1;
+}
+
 .buddy-container{
     height: 135px;
     width: 135px;
