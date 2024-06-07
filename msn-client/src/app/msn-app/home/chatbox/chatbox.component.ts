@@ -138,7 +138,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
 
     tl.to('.second-window .content-container', {
       width: '99vw',
-      height: '85vh',
+      height: '87vh',
     })
     tl.duration(0.2)
   }
