@@ -121,7 +121,6 @@ ul[role="menubar"] li:hover, ul[role="menubar"] li:focus{
     background: linear-gradient(rgba(220, 235, 253, 0.5), hsla(214, 94%, 88%, 0.5));
     cursor: pointer;
     color: black;
-    outline: 1px solid rgb(185, 230, 248);
 }
 
 ul[role="menubar"] li:active{
