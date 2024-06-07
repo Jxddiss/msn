@@ -8,16 +8,10 @@ import gsap from 'gsap';
   styleUrl: './chatbox.component.css'
 })
 export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
-  @ViewChild('remoteVideo') remoteVideo : ElementRef | undefined
-  @ViewChild('localVideo') localVideo : ElementRef | undefined
-  private _videoShared = false
-  private _gotRemoteVideo = false
-  private _localStream : MediaStream | undefined
   private _isLoading = signal<boolean>(true)
   private _test : string | undefined
   private _isMinimized = false
   private _isFullScreen = false
-  private _isVideoFullScreen = false
   dragPosition = {
     x: 0,
     y: 0
@@ -183,88 +177,14 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     tl.yoyo(true)
   }
 
-  onStartVideoShare(){
-    this._videoShared = !this._videoShared
-    this.getStream()
-    this.growVideo()
-  }
-
-  getStream(){
-    if(!this._videoShared){
-      this._localStream?.getTracks().forEach(track => track.stop())
-    }else{
-      navigator.mediaDevices
-        .getUserMedia({video:true,audio:true})
-        .then((stream) => {
-              if(this.localVideo === undefined || this.localVideo === null) return
-              this._localStream = stream
-              this.localVideo.nativeElement.srcObject = this._localStream
-            })
-    }
-  }
-
-  onVideoFullScreen(){
+  onVideoFullScreenChange() : void{
     if(!this._isFullScreen){
-      this.onFullScreen()
+      this.makeFullScreen()
+      this._isFullScreen = true
     }
-    const tl = gsap.timeline()
-    if(!this._isVideoFullScreen){
-      tl.set('.local-holder', {
-        height: 'auto',
-      },0)
-      tl.to('.local-holder', {
-        width: '600px',
-        maxHeight: '350px',
-      })
-      tl.to('.chat-zone', {
-        display: 'none',
-      })
-    }else{
-      tl.to('.local-holder', {
-        clearProps: true,
-      })
-
-      tl.to('.chat-zone', {
-        clearProps: true,
-      })
-      this.growVideo()
-    }
-    tl.duration(0.2)
-    this._isVideoFullScreen = !this._isVideoFullScreen
   }
 
-  growVideo(){
-    const tl = gsap.timeline()
-    if(this._videoShared){
-      tl.to('.local-holder', {
-        height: 'auto',
-      },0)
-      tl.to('.local-holder', {
-        width: '350px',
-        maxHeight: '250px',
-      })
-    }else{
-      tl.to('.local-holder', {
-        width: '135px',
-        height: '135px',
-      })
-
-      tl.to('.local-holder', {
-        clearProps: true,
-      })
-    }
-    tl.duration(0.2)
-  }
-  
   get isFullScreen(){
     return this._isFullScreen
-  }
-
-  get videoShared(){
-    return this._videoShared
-  }
-
-  get gotRemoteVideo(){
-    return this._gotRemoteVideo
   }
 }

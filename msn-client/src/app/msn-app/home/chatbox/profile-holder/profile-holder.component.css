@@ -1,0 +1,46 @@
+.profiles-pictures-holder{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    height: 100%;
+    padding-top: 2em;
+}
+
+.user-pic-holder{
+    display: flex;
+    gap: 0.5em;
+}
+
+.user-pic-holder button{
+    margin-top: 10px;
+    height: 25px;
+    width: 25px;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    box-shadow: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.user-pic-holder button img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
+.arrow{
+    height: 60% !important;
+    width: 60% !important;
+}
+
+.buddy-container{
+    height: 135px;
+    width: 135px;
+    padding: 10px;
+}
