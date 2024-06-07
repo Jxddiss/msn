@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import gsap from 'gsap';
 
 @Component({
@@ -6,7 +6,7 @@ import gsap from 'gsap';
   templateUrl: './profile-holder.component.html',
   styleUrl: './profile-holder.component.css'
 })
-export class ProfileHolderComponent {
+export class ProfileHolderComponent implements OnDestroy{
   @ViewChild('remoteVideo') remoteVideo : ElementRef | undefined
   @ViewChild('localVideo') localVideo : ElementRef | undefined
   private _videoShared = false
@@ -96,5 +96,8 @@ export class ProfileHolderComponent {
     this._isVideoFullScreen = !this._isVideoFullScreen
   }
 
+  ngOnDestroy(): void {
+    this._localStream?.getTracks().forEach(track => track.stop())
+  }
   
 }

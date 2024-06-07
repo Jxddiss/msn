@@ -8,7 +8,7 @@ import gsap from 'gsap';
   styleUrl: './chatbox.component.css'
 })
 export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
-  private _isLoading = signal<boolean>(true)
+  private _isLoading = true
   private _test : string | undefined
   private _isMinimized = false
   private _isFullScreen = false
@@ -17,8 +17,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     y: 0
   }
 
-  constructor(private _windowInfoService : WindowInfoService) { 
-  }
+  constructor(private _windowInfoService : WindowInfoService) {}
 
   ngOnInit(): void {
     this._windowInfoService.onChatWindowOpen(true)
@@ -42,11 +41,11 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
 
   setTest(value : string | undefined){
     this._test = value
-    this._isLoading.set(false)
+    this._isLoading = false
   }
 
   get isLoading(){
-    return this._isLoading()
+    return this._isLoading
   }
 
   minimizeOrResume(){

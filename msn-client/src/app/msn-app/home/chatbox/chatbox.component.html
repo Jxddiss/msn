@@ -18,7 +18,7 @@ cdkDragBoundary="#desktop"
           <li role="menuitem" tabindex="0">Aide</li>
         </ul>
         <div class="content-container">
-          <div class="content-card">
+          <div class="content-card" *ngIf="!isLoading">
             <app-profile-holder [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()"></app-profile-holder>
             <div class="chat-zone">
               <div class="ami-info">
