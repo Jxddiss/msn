@@ -34,6 +34,7 @@ export class ProfileHolderComponent {
   getStream(){
     if(!this._videoShared){
       this._localStream?.getTracks().forEach(track => track.stop())
+      if(this._isVideoFullScreen) this.MakeVideoFullScreen()
     }else{
       navigator.mediaDevices
         .getUserMedia({video:true,audio:true})
