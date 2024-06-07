@@ -69,9 +69,11 @@ export class ProfileHolderComponent {
       tl.to('.content-card', {
         maxWidth: 'none',
       })
+      tl.duration(0.2)
     }else{
-      tl.to('.local-holder', {
-        clearProps: true,
+      tl.to('.profiles-pictures-holder', {
+        flexDirection: 'column',
+        ease: 'power1.inOut',
       })
       tl.to('.chat-zone', {
         display: 'flex',
@@ -80,9 +82,8 @@ export class ProfileHolderComponent {
       tl.to('.chat-zone', {
         clearProps: true,
       })
-      tl.to('.profiles-pictures-holder', {
-        flexDirection: 'column',
-        ease: 'power1.inOut',
+      tl.to('.local-holder', {
+        clearProps: true,
       })
       tl.to('.user-pic-holder', {
         clearProps: true,
@@ -90,8 +91,8 @@ export class ProfileHolderComponent {
       tl.to('.content-card', {
         clearProps: true,
       })
+      tl.duration(0)
     }
-    tl.duration(0.2)
     this._isVideoFullScreen = !this._isVideoFullScreen
   }
 

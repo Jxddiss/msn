@@ -1,4 +1,7 @@
-<div class="window active glass second-window window-msn" cdkDrag [cdkDragFreeDragPosition]="dragPosition">
+<div class="window active glass second-window window-msn" cdkDrag 
+[cdkDragFreeDragPosition]="dragPosition" 
+cdkDragBoundary="#desktop"
+[cdkDragDisabled]="isFullScreen">
     <div class="title-bar" cdkDragHandle>
       <div class="title-bar-text"><img src="assets/images/buddy.png" class="title-icon" alt=""> Windows Live Messenger </div>
       <div class="title-bar-controls">
