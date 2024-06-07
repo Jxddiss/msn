@@ -50,6 +50,11 @@ export class TaskbarComponent implements OnDestroy{
     }
   }
 
+  onMsnClose(){
+    console.log('onMsnClose')
+    this._windowInfoService.onMsnCloseEvent()
+  }
+
   ngOnDestroy(): void {
     clearInterval(this.intervalDate);
   }

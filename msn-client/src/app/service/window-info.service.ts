@@ -13,6 +13,8 @@ export class WindowInfoService {
   homeWindowOpen$ = this._homeWindowOpen.asObservable();
   private _chatWidowMinimizeOrResume = new Subject();
   chatWidowMinimizeOrResume$ = this._chatWidowMinimizeOrResume.asObservable();
+  private _msnCloseEvent = new Subject();
+  msnCloseEvent$ = this._msnCloseEvent.asObservable();
 
   constructor() { }
 
@@ -30,6 +32,10 @@ export class WindowInfoService {
 
   onChatWidowMinimizeOrResume(){
     this._chatWidowMinimizeOrResume.next(null)
+  }
+
+  onMsnCloseEvent(){
+    this._msnCloseEvent.next(null)
   }
 
 }

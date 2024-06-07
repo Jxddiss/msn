@@ -23,11 +23,37 @@
       </ul>
     </div>
     <div id="pined-items">
-      <div class="pined-icon" (click)="onMsnOpen()" data-window="msn" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
-        <img src="assets/images/buddy.png" alt="">
+      <div class="taskbar-icon">
+        <div class="pined-icon" (click)="onMsnOpen()" data-window="msn" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
+          <img src="assets/images/buddy.png" alt="">
+        </div>
+        <div *ngIf="msnOpened" class="window-preview window active glass">
+          <div class="preview-header title-bar">
+            <span>MSN</span> 
+            <div class="title-bar-controls">
+              <button aria-label="Close" (click)="onMsnClose()"></button>
+            </div>
+          </div>
+          <div class="preview-body window-body has-space">
+            <img src="assets/images/buddy.png" alt="">
+          </div>
+        </div>
       </div>
-      <div *ngIf="chatOpened" (click)="onChatWinowOpen()" class="pined-icon" data-window="msn-chat" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
-        <img src="assets/images/buddy.png" alt="">
+      <div *ngIf="chatOpened" class="taskbar-icon">
+        <div (click)="onChatWinowOpen()" class="pined-icon" data-window="msn-chat" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
+          <img src="assets/images/buddy.png" alt="">
+        </div>
+        <div class="window-preview window active glass">
+          <div class="preview-header title-bar">
+            <span>MSN</span> 
+            <div class="title-bar-controls">
+              <button aria-label="Close" (click)="onChatWinowOpen()"></button>
+            </div>
+          </div>
+          <div class="preview-body window-body has-space">
+            <img src="assets/images/buddy.png" alt="">
+          </div>
+        </div>
       </div>
       <a class="pined-icon" onclick="window.open('https://www.google.ca','_unfencedTop ','width=700,height=700,top=500,left=500')">
         <img src="https://pngimg.com/d/ie_logo_PNG4.png" alt="">

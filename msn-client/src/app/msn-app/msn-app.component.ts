@@ -16,31 +16,38 @@ export class MsnApp implements AfterViewInit, OnDestroy{
   close = new EventEmitter();
   canBeFullScreen = false
   isMinimized = false
-  private _subscription : Subscription[] = []
+  private _subscriptions : Subscription[] = []
   dragPosition = {
     x: 0,
     y: 0
   }
 
   constructor(private _windowInfoService : WindowInfoService, private _router : Router) {
-    this._subscription.push(
+    this._subscriptions.push(
       this._windowInfoService.canBeFullScreen$.subscribe(value => {
         this.canBeFullScreen = value
       })
     )
 
-    this._subscription.push(
+    this._subscriptions.push(
       this._windowInfoService.homeWindowOpen$.subscribe(value => {
         if(value){
           this.initialiseChatBox()
         }
       })
     )
+
+    this._subscriptions.push(
+      this._windowInfoService.msnCloseEvent$.subscribe(value => {
+        console.log('onCloseWindow')
+        this.onQuitWindow()
+      })
+    )
   }
 
   ngAfterViewInit(){
     this.apparition()
-    this._subscription.push(
+    this._subscriptions.push(
       this._router.events.subscribe(() => {
         this.secondWindowContainer?.clear();
         this.resetPosition()
@@ -63,10 +70,10 @@ export class MsnApp implements AfterViewInit, OnDestroy{
   }
 
   ngOnDestroy(){
-    this._subscription.forEach(sub => sub.unsubscribe())
+    this._subscriptions.forEach(sub => sub.unsubscribe())
   }
 
-  apparition(sel : string = '.window') : void{
+  apparition(sel : string = '.window-msn') : void{
     const tl = gsap.timeline()
 
     gsap.to(sel,{display:'block',opacity:1,})
@@ -87,7 +94,7 @@ export class MsnApp implements AfterViewInit, OnDestroy{
     
   }
 
-  disparition(sel : string = '.window') : void{
+  disparition(sel : string = '.window-msn') : void{
     const tl = gsap.timeline()
 
     tl.to(sel+' .content-card',{

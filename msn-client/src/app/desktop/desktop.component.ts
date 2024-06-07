@@ -1,22 +1,23 @@
-import { AfterViewInit, Component, ComponentRef, ElementRef, HostListener, OnInit, TemplateRef, ViewChild, ViewContainerRef, signal } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, ElementRef, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, signal } from '@angular/core';
 import { MsnApp } from '../msn-app/msn-app.component';
 import { Subscription } from 'rxjs';
+import { WindowInfoService } from '../service/window-info.service';
 
 @Component({
   selector: 'app-desktop',
   templateUrl: './desktop.component.html',
   styleUrl: './desktop.component.css'
 })
-export class DesktopComponent implements AfterViewInit{
+export class DesktopComponent implements AfterViewInit, OnDestroy{
   @ViewChild('windowContainer',{read: ViewContainerRef})
   entry : ViewContainerRef | undefined;
   msnOpened  = signal(false)
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
-  private _subcriptions : Subscription[] = []
+  private _subscriptions : Subscription[] = []
   
-  constructor(){}
-
+  constructor(){ }
+    
   ngAfterViewInit(){
     this.openMsn()
   }
@@ -25,7 +26,7 @@ export class DesktopComponent implements AfterViewInit{
     this.entry?.clear()
     const componentRef = this.entry?.createComponent(MsnApp);
     if(componentRef?.instance.close){
-      this._subcriptions.push(
+      this._subscriptions.push(
           componentRef?.instance.close.subscribe(()=>{
           componentRef.instance.disparition()
           setTimeout(()=>this.onCloseWindow(), 500)
@@ -50,5 +51,7 @@ export class DesktopComponent implements AfterViewInit{
     }
   }
 
-
+  ngOnDestroy(): void {
+    this._subscriptions.forEach(sub => sub.unsubscribe())
+  }
 }
