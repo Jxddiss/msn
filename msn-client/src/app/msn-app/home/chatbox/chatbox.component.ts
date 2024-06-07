@@ -161,18 +161,18 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     audio.play()
     const tl = gsap.timeline()
     tl.to('.second-window', {
-      translate: '-53% -50%',
+      translate: '-51% -51%',
     })
     tl.to('.second-window', {
       translate: '-50% -50%',
     })
     tl.to('.second-window', {
-      translate: '-47% -50%',
+      translate: '-49% -49%',
     })
     tl.to('.second-window', {
       clearProps: 'translate',
     })
-    tl.repeat(5)
+    tl.repeat(7)
     tl.duration(0.2)
     tl.yoyo(true)
   }
