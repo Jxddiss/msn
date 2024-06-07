@@ -214,7 +214,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
       },0)
       tl.to('.local-holder', {
         width: '600px',
-        maxHeight: '400px',
+        maxHeight: '350px',
       })
       tl.to('.chat-zone', {
         display: 'none',
@@ -238,7 +238,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     if(this._videoShared){
       tl.to('.local-holder', {
         height: 'auto',
-      })
+      },0)
       tl.to('.local-holder', {
         width: '350px',
         maxHeight: '250px',
