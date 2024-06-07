@@ -17,7 +17,7 @@
       <div class="buddy-container glass local-holder">
         <div class="buddy-body">
             <img *ngIf="!videoShared" #localAvatarImg  src="https://i.redd.it/windows-xp-user-icons-part-1-v0-21x236nw74qb1.jpg?width=1117&format=pjpg&auto=webp&s=373255f32cfaeaf801f1e3ae36dc314dd6b1f100" alt="">
-            <video *ngIf="videoShared" src="" #localVideo autoplay (click)="onVideoFullScreen()"></video>
+            <video *ngIf="videoShared" src="" #localVideo autoplay (click)="onVideoFullScreen()" [muted]="true"></video>
         </div>
       </div>
     </div>
