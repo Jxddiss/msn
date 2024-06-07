@@ -196,7 +196,7 @@ ul[role="menubar"] li:active{
     justify-content: start;
     font-size: 20pt;
     background: rgb(238,251,255);
-    background: linear-gradient(180deg, rgba(238,251,255,1) 24%, rgba(216,234,241,1) 69%, rgba(216,234,241,1) 100%);
+    background: linear-gradient(180deg, #f7fdff, #d6e3ea 50%, #eef9fa);
     border-radius: 5px;
     border: 1px solid rgba(125, 162, 206, 0.575);
 }

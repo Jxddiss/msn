@@ -111,3 +111,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     inset 0 0 0 1px #fffd,
     0px 0px 10px 3px rgba(155, 154, 154, 0.9);
 }
+
+.cdk-drag-dragging {
+    z-index: 9000 !important;
+}
