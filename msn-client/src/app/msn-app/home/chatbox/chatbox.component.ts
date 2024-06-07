@@ -53,7 +53,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
       this._isMinimized = false
       this.apparition()
       if(this._isFullScreen){
-        setTimeout(()=>this.makeFullScreen(),800)
+        setTimeout(()=>this.makeFullScreen(),850)
       }
     }else{
       this.disparition()
