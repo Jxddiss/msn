@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { WindowInfoService } from '../../../../service/window-info.service';
 
 @Component({

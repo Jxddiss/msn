@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, ViewChild, signal } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { WindowInfoService } from '../../../service/window-info.service';
 import gsap from 'gsap';
 import { Subscription } from 'rxjs';
