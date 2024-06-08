@@ -1,7 +1,14 @@
 <div class="rechercher">
     <input type="search" placeholder="Rechercher" name="email" id="email" required>
-    <button type="button">
-        <img src="assets/images/add.png" alt="">
-    </button>
+    <div class="button">
+        <label role="button" type="button" for="add">
+            <img src="assets/images/add.png" alt="">
+        </label>
+        <input type="checkbox" name="add" id="add">
+        <ul role="menu" >
+            <li role="menuitem" tabindex="0"><a>Ajouter un ami</a></li>
+            <li role="menuitem" tabindex="0"><a>Inviter un ami</a></li>
+        </ul>
+    </div>
 </div>
 <app-user-list></app-user-list>
