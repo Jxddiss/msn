@@ -126,7 +126,6 @@ ul[role="menubar"] li:hover, ul[role="menubar"] li:focus{
 ul[role="menubar"] li:active{
     background: linear-gradient(hsla(214, 94%, 88%, 0.5), rgba(220, 235, 253, 0.5));
     color: black;
-    outline: 1px solid rgb(185, 230, 248);
 }
 
 .chat-zone{
