@@ -240,7 +240,11 @@ ul[role="menubar"] li:active{
 }
 
 .opt:last-of-type{
+    background-color: #f3fcff;
+    border-left: 1px solid rgba(125, 162, 206, 0.575);
+    border-right: 1px solid rgba(125, 162, 206, 0.575);
     margin-left: auto;
+    border-radius: 0;
 }
 
 .text-input{
