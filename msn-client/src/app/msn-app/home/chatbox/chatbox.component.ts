@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, OnInit, ViewChild, signal } from '@angular/core';
 import { WindowInfoService } from '../../../service/window-info.service';
 import gsap from 'gsap';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chatbox',
@@ -12,6 +13,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
   private _test : string | undefined
   private _isMinimized = false
   private _isFullScreen = false
+  private _subscriptions : Subscription[] = []
   dragPosition = {
     x: 0,
     y: 0
@@ -21,7 +23,9 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
 
   ngOnInit(): void {
     this._windowInfoService.onChatWindowOpen(true)
-    this._windowInfoService.chatWidowMinimizeOrResume$.subscribe(()=>this.minimizeOrResume())
+    this._subscriptions.push(
+      this._windowInfoService.chatWidowMinimizeOrResume$.subscribe(()=>this.minimizeOrResume())
+    )
   }
 
   ngAfterViewInit(): void {
@@ -30,6 +34,9 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
 
   ngOnDestroy(): void {
     this._windowInfoService.onChatWindowOpen(false)
+    this._isMinimized = false
+    this._isFullScreen = false
+    this._subscriptions.forEach(sub => sub.unsubscribe())
   }
 
   positionAnimation() {
@@ -50,36 +57,33 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
 
   minimizeOrResume(){
     if(this._isMinimized){
-      this._isMinimized = false
       this.apparition()
       if(this._isFullScreen){
         setTimeout(()=>this.makeFullScreen(),850)
       }
     }else{
       this.disparition()
-      this._isMinimized = true
     }
+    this._isMinimized = !this._isMinimized
   }
 
-  apparition() : void{
+  apparition(){
     const tl = gsap.timeline()
 
-    gsap.to('.second-window',{display:'block',opacity:1,})
+    tl.to('.second-window',{display:'block',opacity:1,},0)
     
     tl.from('.second-window .content-container',{
       height: 0,
       width:0,
       opacity:0,
     })
-
     tl.from('.second-window .content-card',{
       opacity:0,
     }).to('.second-window .content-card',{
       opacity:1,
     })
     tl.to(".second-window .content-container", {clearProps:true})
-    tl.duration(1)
-    
+    tl.duration(0.5)
   }
 
   disparition() : void{
@@ -90,10 +94,13 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     },0)
 
     tl.to('.second-window .content-container',{
-      width: '50px',
-      height: '100px',
       minHeight: '0px',
       minWidth: '0px',
+    })
+
+    tl.to('.second-window .content-container',{
+      width: '50px',
+      height: '100px',
     })
 
     tl.to('.second-window',{display:'none',opacity:0,})
