@@ -303,3 +303,14 @@ hr{
     height: 100%;
     object-fit: cover;
 }
+
+.loading{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    font-size: 2rem;
+    font-weight: 400;
+    color: rgba(24, 23, 23, 0.815);
+}

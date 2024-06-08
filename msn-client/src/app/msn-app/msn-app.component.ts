@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, EventEmitter, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import gsap from 'gsap';
 import { WindowInfoService } from '../service/window-info.service';
 import { ChatboxComponent } from './home/chatbox/chatbox.component';
@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 export class MsnApp implements AfterViewInit, OnDestroy{
   @ViewChild('secondWindowContainer', { read: ViewContainerRef })
   secondWindowContainer: ViewContainerRef | undefined;
+  componentRef : ComponentRef<ChatboxComponent> | undefined
   close = new EventEmitter();
   canBeFullScreen = false
   isMinimized = false
@@ -39,8 +40,13 @@ export class MsnApp implements AfterViewInit, OnDestroy{
 
     this._subscriptions.push(
       this._windowInfoService.msnCloseEvent$.subscribe(value => {
-        console.log('onCloseWindow')
         this.onQuitWindow()
+      })
+    )
+
+    this._subscriptions.push(
+      this._windowInfoService.initaliseChatBox$.subscribe(value => {
+        this.initialiseChatBox()
       })
     )
   }
@@ -113,11 +119,16 @@ export class MsnApp implements AfterViewInit, OnDestroy{
   }
 
   initialiseChatBox() {
+    let delay = 0
+    if(this.componentRef){
+      this.componentRef.instance.disparition()
+      delay = 500
+    }
     setTimeout(()=>{
       this.secondWindowContainer?.clear();
-      const componentRef = this.secondWindowContainer?.createComponent(ChatboxComponent);
-      componentRef?.instance.setTest('test');
-    },0)
+      this.componentRef = this.secondWindowContainer?.createComponent(ChatboxComponent);
+      this.componentRef?.instance.setTest('test');
+    },delay)
   }
 
   resetPosition() {

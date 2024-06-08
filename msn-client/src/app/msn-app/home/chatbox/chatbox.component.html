@@ -10,7 +10,7 @@ cdkDragBoundary="#desktop"
         <button aria-label="Close" (click)="minimizeOrResume()"></button>
       </div>
     </div>
-    <div class="window-body">
+    <div class="window-body" *ngIf="!isLoading">
         <ul role="menubar">
           <li role="menuitem" >
             <img src="assets/images/help.png" alt="">
@@ -34,7 +34,7 @@ cdkDragBoundary="#desktop"
           </li>
         </ul>
         <div class="content-container">
-          <div class="content-card" *ngIf="!isLoading">
+          <div class="content-card">
             <app-profile-holder [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()"></app-profile-holder>
             <div class="chat-zone">
               <div class="ami-info">
@@ -101,5 +101,12 @@ cdkDragBoundary="#desktop"
             </div>
           </div>
         </div>
+    </div>
+    <div class="window-body loading" *ngIf="isLoading">
+      <img src="assets/images/buddy.png" alt="">
+      <div>
+        <span>Chargement </span>
+        <span class="loader animate" aria-label="Processing your request"></span>
+      </div>
     </div>
 </div>

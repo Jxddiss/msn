@@ -41,7 +41,11 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
 
   positionAnimation() {
     const tl = gsap.timeline();
-    tl.to('.second-window', {
+    tl.fromTo('.second-window', {
+      left: '20%',
+      opacity: 0,
+    },{
+      opacity: 1,
       left: '70%',
     })
   }
