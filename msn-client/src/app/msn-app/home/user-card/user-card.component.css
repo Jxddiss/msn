@@ -48,6 +48,7 @@ hr{
   display: flex;
   justify-content: flex-end;
   margin-top: 1em;
+  gap: 0.5em;
 }
 
 .btn{
@@ -55,8 +56,8 @@ hr{
   background: transparent;
   cursor: pointer;
   box-shadow: none;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   min-width: 10px;
   min-height: 30px;
   padding: 0.1em;
