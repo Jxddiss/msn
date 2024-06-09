@@ -21,7 +21,7 @@
                 <button type="button" class="btn">
                     <img src="assets/images/account_settings.png" alt="" class="edit-icon">
                 </button>
-                <button type="button" class="btn">
+                <button type="button" class="btn" (click)="onChooseBanner()">
                     <img src="assets/images/pictures.png" alt="" class="edit-icon">
                 </button>
                 <button type="button" class="btn">
@@ -33,5 +33,5 @@
     <input type="file" hidden id="avatar" name="avatar" #avatarPicker 
                 accept="image/*" (change)="onAvatarImgChange($event)">
     <input type="file" hidden id="banner" name="banner" #bannerPicker 
-        accept="image/*" >
+        (change)="onBannerImgChange($event)" accept="image/*" >
 </div>

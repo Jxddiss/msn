@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-user-card',
@@ -9,9 +9,17 @@ export class UserCardComponent {
 
   @ViewChild('avatarPicker') avatarPicker !: ElementRef
   @ViewChild('avatarImg') avatarImg !: ElementRef
+  @ViewChild('bannerPicker') bannerPicker !: ElementRef
+  @Output() bannerChangeEvent = new EventEmitter<File>();
+
+  constructor() { }
 
   onChooseAvatar(){
     this.avatarPicker.nativeElement.click()
+  }
+
+  onChooseBanner(){
+    this.bannerPicker.nativeElement.click()
   }
 
   onAvatarImgChange(event : Event){
@@ -28,6 +36,20 @@ export class UserCardComponent {
       }else{
         alert(result);
         this.avatarPicker.nativeElement.value = '';
+      }
+    }
+  }
+
+  onBannerImgChange(event : Event){
+    const target = event.target as HTMLInputElement;
+    if (target && target.files && target.files.length > 0) {
+      const file = target.files[0];
+      let result = this.verifyFile(file);
+      if(result === "bon"){
+        this.bannerChangeEvent.emit(file);
+      }else{
+        alert(result);
+        this.bannerPicker.nativeElement.value = '';
       }
     }
   }

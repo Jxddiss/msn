@@ -1,9 +1,9 @@
 <div class="content-container">
     <div class="banner-holder">
-        <img src="assets/images/default.jpg" alt="">
+        <img src="assets/images/default.jpg" alt="" #bannerImg>
     </div>
     <div class="content-card">
-        <app-user-card></app-user-card>
+        <app-user-card (bannerChangeEvent)="onBannerChangeEvent($event)"></app-user-card>
         <hr/>
         <app-activity-holder></app-activity-holder>
     </div>
