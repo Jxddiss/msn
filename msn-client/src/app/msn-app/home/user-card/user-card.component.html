@@ -3,10 +3,11 @@
         <div class="buddy-body" (click)="onChooseAvatar()">
             <img #avatarImg id="buddy-img" src="https://i.redd.it/windows-xp-user-icons-part-1-v0-21x236nw74qb1.jpg?width=1117&format=pjpg&auto=webp&s=373255f32cfaeaf801f1e3ae36dc314dd6b1f100" alt="">
         </div>
+        <div role="tooltip">Changez votre photo de profil</div>
     </div>
     <div class="user-info">
         <span class="username-holder">
-                <input  type="text" placeholder="Username" name="username" id="username" value="John Doe" class="username">
+                <input  type="text" placeholder="Nom" name="nom" id="nom" value="John Doe" class="nom">
                 <label for="statut">( Statut: </label>
                 <select name="statut" id="statut" class="statut" required >
                     <option value="1" selected>🟩 En ligne</option>
@@ -18,14 +19,13 @@
         <div class="description">
             <input type="text" placeholder="Description" name="description" id="description" value="Hello, I am John Doe">
             <div class="option-holder">
-                <button type="button" class="btn">
-                    <img src="assets/images/account_settings.png" alt="" class="edit-icon">
-                </button>
                 <button type="button" class="btn" (click)="onChooseBanner()">
                     <img src="assets/images/pictures.png" alt="" class="edit-icon">
+                    <div role="tooltip">Changez votre bannière</div>
                 </button>
                 <button type="button" class="btn">
                     <img src="assets/images/diskette.png" alt="" class="edit-icon">
+                    <div role="tooltip">Enregistrez vos modifications.</div>
                 </button>
             </div>
         </div>
