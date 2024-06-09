@@ -1,6 +1,9 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, HostBinding, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, EventEmitter, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
 import gsap from 'gsap';
 import { WindowInfoService } from '../service/window-info.service';
+import { ChatboxComponent } from './home/chatbox/chatbox.component';
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-msn-app',
@@ -8,80 +11,136 @@ import { WindowInfoService } from '../service/window-info.service';
   styleUrl: './msn-app.component.css'
 })
 export class MsnApp implements AfterViewInit, OnDestroy{
+  @ViewChild('secondWindowContainer', { read: ViewContainerRef })
+  secondWindowContainer: ViewContainerRef | undefined;
+  componentRef : ComponentRef<ChatboxComponent> | undefined
   close = new EventEmitter();
-  minimize = new EventEmitter();
   canBeFullScreen = false
   isMinimized = false
+  private _subscriptions : Subscription[] = []
+  dragPosition = {
+    x: 0,
+    y: 0
+  }
 
-  constructor(private _windowInfoService : WindowInfoService) {
-    this._windowInfoService.canBeFullScreen$.subscribe(value => {
-      this.canBeFullScreen = value
-    })
+  constructor(private _windowInfoService : WindowInfoService, private _router : Router) {
+    this._subscriptions.push(
+      this._windowInfoService.canBeFullScreen$.subscribe(value => {
+        this.canBeFullScreen = value
+      })
+    )
+
+    this._subscriptions.push(
+      this._windowInfoService.homeWindowOpen$.subscribe(value => {
+        if(value){
+          this.initialiseChatBox()
+        }
+      })
+    )
+
+    this._subscriptions.push(
+      this._windowInfoService.msnCloseEvent$.subscribe(value => {
+        this.onQuitWindow()
+      })
+    )
+
+    this._subscriptions.push(
+      this._windowInfoService.initaliseChatBox$.subscribe(value => {
+        this.initialiseChatBox()
+      })
+    )
   }
 
   ngAfterViewInit(){
     this.apparition()
+    this._subscriptions.push(
+      this._router.events.subscribe(() => {
+        this.secondWindowContainer?.clear();
+        this.resetPosition()
+      })
+    )
   }
   
   onQuitWindow(){
     this.close.emit(null)
   }
 
-  onMinimize(){
-    this.minimize.emit(null)
-  }
-
   minimizeOrResume(){
     if(this.isMinimized){
       this.isMinimized = false
-      this.apparition()
+      this.apparition('.msn-window')
     }else{
-      this.disparition()
+      this.disparition('.msn-window')
       this.isMinimized = true
     }
-    
   }
 
   ngOnDestroy(){
+    this._subscriptions.forEach(sub => sub.unsubscribe())
   }
 
-  apparition() : void{
+  apparition(sel : string = '.window-msn') : void{
     const tl = gsap.timeline()
 
-    gsap.to('.window',{display:'block',opacity:1,})
+    gsap.to(sel,{display:'block',opacity:1,})
     
-    tl.from('.content-container',{
+    tl.from(sel+' .content-container',{
       height: 0,
       width:0,
       opacity:0,
     })
 
-    tl.from('.content-card',{
+    tl.from(sel+' .content-card',{
       opacity:0,
-    }).to('.content-card',{
+    }).to(sel+' .content-card',{
       opacity:1,
     })
-    tl.to(".content-container", {clearProps:true})
+    tl.to(sel+" .content-container", {clearProps:true})
     tl.duration(1)
     
   }
 
-  disparition() : void{
+  disparition(sel : string = '.window-msn') : void{
     const tl = gsap.timeline()
 
-    tl.to('.content-card',{
+    tl.to(sel+' .content-card',{
       opacity:0,
     },0)
 
-    tl.to('.content-container',{
+    tl.to(sel+' .content-container',{
       width: '50px',
       height: '100px',
     })
 
-    tl.to('.window',{display:'none',opacity:0,})
-    tl.to(".content-container", {clearProps:true})
+    tl.to(sel,{display:'none',opacity:0,})
+    tl.to(sel+" .content-container", {clearProps:true})
 
     tl.duration(0.2)
   }
 
+  initialiseChatBox() {
+    let delay = 0
+    if(this.componentRef){
+      this.componentRef.instance.disparition()
+      delay = 500
+    }
+    setTimeout(()=>{
+      this.secondWindowContainer?.clear();
+      this.componentRef = this.secondWindowContainer?.createComponent(ChatboxComponent);
+      this.componentRef?.instance.setTest('test');
+    },delay)
+  }
+
+  resetPosition() {
+    this.dragPosition = {
+      x: 0,
+      y: 0
+    }
+
+    gsap.set('.msn-window', {left: '50%',})
+    if(this.isMinimized){
+      this.apparition('.msn-window')
+      this.isMinimized = false
+    }
+  }
 }

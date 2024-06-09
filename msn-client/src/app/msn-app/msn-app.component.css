@@ -7,6 +7,11 @@
     z-index: 2;
   }
 
+  .window::before{
+    content: "";
+    background-color: #8FD1EC;
+  }
+
   .title-icon{
     height: 11pt;
     object-fit: contain;

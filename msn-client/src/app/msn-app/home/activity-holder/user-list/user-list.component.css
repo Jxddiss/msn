@@ -3,11 +3,6 @@
     height: 100%;
 }
 
-.rechercher{
-    width: 100%;
-    font-size: 10pt;
-}
-
 .title{
     display: flex;
     align-items: center;
@@ -50,7 +45,7 @@
 }
 
 .collapse:checked{
-    transform: rotate(180deg);
+    transform: rotate(-90deg);
 }
 
 .user-list{
@@ -63,7 +58,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.5em;
-    transition: height 0.3s ease-in-out;
+    transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
 .user-card{
@@ -73,8 +68,14 @@
 }
 
 .user-card:hover{
+    outline: solid 1px #7da2ce;
+    background: linear-gradient(#dcebfd, #c2dcfd);
+    border-radius: 3px;
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.267);
+}
+
+.user-card:active{
+    background: linear-gradient(#c2dcfd, #dcebfd);
 }
 
 .user-list-avatar{
@@ -83,10 +84,7 @@
     margin-right: 0.5em;
     border-radius: 50%;
     padding: 5px;
-}
-
-.user-list-avatar .buddy-body{
-    border: 0.5px solid rgba(0, 0, 0, 0.2);
+    border: none;
 }
 
 .username-holder{
@@ -110,8 +108,14 @@
 }
 
 .friend:hover{
+    outline: solid 1px #7da2ce;
+    background: linear-gradient(#dcebfd, #c2dcfd);
+    border-radius: 3px;
     cursor: pointer;
-    background-color: rgba(255, 255, 255, 0.699);
+}
+
+.friend:active{
+    background: linear-gradient(#c2dcfd, #dcebfd);
 }
 
 .friend img{

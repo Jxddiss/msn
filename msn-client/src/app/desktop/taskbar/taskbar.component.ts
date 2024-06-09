@@ -1,4 +1,6 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { WindowInfoService } from '../../service/window-info.service';
+import { Subscription, reduce } from 'rxjs';
 
 @Component({
   selector: 'app-taskbar',
@@ -10,15 +12,31 @@ export class TaskbarComponent implements OnDestroy{
   @Output() msnOpenEvent = new EventEmitter()
   @ViewChild('startMenu') startMenu : ElementRef | undefined
   @ViewChild('startIcon') startIcon : ElementRef | undefined
+  @ViewChild('backgroundFile') backgroundFile : ElementRef | undefined
   startOpened = false
   currentDate = new Date();
   intervalDate = setInterval(() => {
     this.currentDate = new Date();
   }, 1000);
-
+  chatOpened = false
+  chatMinimized = false
+  private _subcriptions : Subscription[] = []
+  @Output() backgroundChangeEvent = new EventEmitter()
+  
+  constructor(private _windowInfoService : WindowInfoService){ 
+    this._subcriptions.push(
+      this._windowInfoService.chatWindowOpen$.subscribe(value => {
+        this.chatOpened = value
+      })
+    )
+  }
 
   onMsnOpen(){
     this.msnOpenEvent.emit(null)
+  }
+
+  onChatWinowOpen(){
+    this._windowInfoService.onChatWidowMinimizeOrResume()
   }
 
   onOpenStartMenu(){
@@ -32,6 +50,46 @@ export class TaskbarComponent implements OnDestroy{
       && !this.startIcon?.nativeElement.contains(event.target as Node)){
       if(this.startOpened) this.onOpenStartMenu()
     }
+  }
+
+  onMsnClose(){
+    this._windowInfoService.onMsnCloseEvent()
+  }
+
+  onOpenBackgroundSelector(){
+    this.backgroundFile?.nativeElement.click()
+  }
+
+  onSetBackground(){
+    const file = this.backgroundFile?.nativeElement.files[0]
+    if(file){
+      const result = this.verifyFile(file)
+      if(result === "bon"){
+        const reader = new FileReader();
+        reader.onload = () => {
+          localStorage.setItem('background', reader.result as string)
+          this.backgroundChangeEvent.emit(null)
+        };
+        reader.readAsDataURL(file);
+      }else{
+        alert(result)
+      }
+    }
+  }
+
+  verifyFile(file: File) : string{ 
+    if(file.type === 'image/png' 
+    || file.type === 'image/jpg' 
+    || file.type === 'image/jpeg' 
+    || file.type === 'image/gif'){
+      if(file.size < 5000000){
+        return "bon"
+      }else{
+        return "Image trop lourde"
+      }
+    }
+
+    return "Format d'image non supportée"
   }
 
   ngOnDestroy(): void {

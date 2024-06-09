@@ -1,17 +1,118 @@
-<div class="window active glass second-window " cdkDrag>
+<div class="window active glass second-window window-msn" cdkDrag 
+[cdkDragFreeDragPosition]="dragPosition" 
+cdkDragBoundary="#desktop"
+[cdkDragDisabled]="isFullScreen">
     <div class="title-bar" cdkDragHandle>
-      <div class="title-bar-text"><img src="../../assets/images/buddy.png" class="title-icon" alt=""> Windows Live Messenger </div>
+      <div class="title-bar-text"><img src="assets/images/buddy.png" class="title-icon" alt=""> Windows Live Messenger </div>
       <div class="title-bar-controls">
-        <button aria-label="Minimize"></button>
-        <button aria-label="Maximize"></button>
-        <button aria-label="Close"></button>
+        <button aria-label="Minimize" (click)="minimizeOrResume()"></button>
+        <button [ariaLabel]="!isFullScreen ? 'Maximize' : 'Restore'" (click)="onFullScreen()"></button>
+        <button aria-label="Close" (click)="minimizeOrResume()"></button>
       </div>
     </div>
-    <div class="window-body has-space">
+    <div class="window-body" *ngIf="!isLoading">
+        <ul role="menubar">
+          <li tabindex="0" role="menuitem" >
+            <img src="assets/images/help.png" alt="">
+            <span>Aide</span> 
+          </li>
+          <li tabindex="0" role="menuitem" > 
+            <img src="assets/images/pictures.png" alt="">
+            <span>Photos</span>
+          </li>
+          <li tabindex="0" role="menuitem" >
+            <img src="assets/images/webcam.png" alt="">
+            <span>Vidéo</span> 
+          </li>
+          <li tabindex="0" role="menuitem" >
+            <img src="assets/images/phone.png" alt="">
+            <span>Audio</span> 
+          </li>
+          <li tabindex="0" role="menuitem" >
+            <img src="assets/images/block.png" alt="">
+            <span>Bloquer</span>
+          </li>
+        </ul>
         <div class="content-container">
           <div class="content-card">
-            
+            <app-profile-holder [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()"></app-profile-holder>
+            <div class="chat-zone">
+              <div class="ami-info">
+                <div class="name-holder">
+                  <span class="name">John Doe</span>
+                  <span class="status">(Hors ligne)</span>
+                </div>
+                <div class="desc">
+                  Hello, I am John Doe
+                </div>
+              </div>
+              <hr>
+              <div class="chat-list has-scrollbar">
+                
+                <div class="chat-item">
+                  <div class="sender">John Doe said</div>
+                  <div class="message">
+                    <span class="point"></span>
+                    <div class="message-body">
+                      Hello, I am John Doe
+                    </div>
+                  </div>
+                </div>
+                <div class="chat-item">
+                  <div class="sender">John Doe said</div>
+                  <div class="message">
+                    <span class="point"></span>
+                    <div class="message-body">
+                      Hello, I am John Doe
+                    </div>
+                  </div>
+                </div>
+                <div class="interaction">
+                  <hr>
+                  <div class="sender">John Doe à envoyé un Wizz</div>
+                  <hr>
+                </div>
+                <div class="chat-item">
+                  <div class="sender">John Doe said</div>
+                  <div class="message">
+                    <span class="point"></span>
+                    <div class="message-body">
+                      Hello, I am John Doe
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="chat-input">
+                <div role="tooltip" class="is-top is-right">
+                  <textarea placeholder="Écrivez un message" class="text-input"></textarea>
+                </div>
+                <div class="chat-input-options">
+                  <button type="button" class="opt">
+                    <img src="assets/images/emojis/teeth_smile.png" alt="">
+                  </button>
+                  <button type="button" class="opt">
+                    <img src="assets/images/emojis/wink_smile.gif" alt="">
+                  </button>
+                  <button type="button" class="opt" (click)="onNudge()">
+                    <img src="assets/images/emojis/wizz-msn.png" alt="">
+                  </button>
+                  <button type="button" class="opt">
+                    <img src="assets/images/pictures.png" alt="">
+                  </button>
+                  <button type="button" class="opt" >
+                    <img src="assets/images/text.png" alt="">
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+    </div>
+    <div class="window-body loading" *ngIf="isLoading">
+      <img src="assets/images/buddy.png" alt="">
+      <div>
+        <span>Chargement </span>
+        <span class="loader animate" aria-label="Processing your request"></span>
+      </div>
     </div>
 </div>

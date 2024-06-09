@@ -5,7 +5,7 @@
     <div id="startmenu" #startMenu>
       <ul id="programs">
           <li (click)="onMsnOpen()">
-            <div class="start-icon"><img src="../../assets/images/buddy.png" alt="">MSN</div>
+            <div class="start-icon"><img src="assets/images/buddy.png" alt="">MSN</div>
           </li>
           <li>
             <a class="start-icon" onclick="window.open('https://www.google.ca','_unfencedTop ','width=700,height=700,top=500,left=500')">
@@ -15,23 +15,55 @@
           </li>
       </ul>
       <ul id="links">
-          <li class="icon"><img src="../../assets/images/folder.png" alt=""></li>
+          <li class="icon"><img src="assets/images/folder.png" alt=""></li>
           <li><div class="start-icon"><span>Documents</span></div></li>
           <li><div class="start-icon"><span>Photos</span></div></li>
           <li><div class="start-icon"><span>Musique</span></div></li>
-          <li><div class="start-icon"><span>Computer</span></div></li>
+          <li><div class="start-icon"><span>Ordinateur</span></div></li>
+          <hr>
+          <li><div class="start-icon" (click)="onOpenBackgroundSelector()"><span>Changer de fond d'écran</span></div></li>
+          <input type="file" name="background"  id="" #backgroundFile [hidden]="true" (change)="onSetBackground()" accepts='images/*'>
       </ul>
     </div>
     <div id="pined-items">
-      <div class="pined-icon" (click)="onMsnOpen()" data-window="msn" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
-        <img src="../assets/images/buddy.png" alt="">
+      <div class="taskbar-icon">
+        <div class="pined-icon" (click)="onMsnOpen()" data-window="msn" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
+          <img src="assets/images/buddy.png" alt="">
+        </div>
+        <div *ngIf="msnOpened" class="window-preview window active glass">
+          <div class="preview-header title-bar">
+            <span class="title-bar-text">MSN</span> 
+            <div class="title-bar-controls">
+              <button aria-label="Close" (click)="onMsnClose()"></button>
+            </div>
+          </div>
+          <div class="preview-body window-body has-space">
+            <img src="assets/images/buddy.png" alt="">
+          </div>
+        </div>
+      </div>
+      <div *ngIf="chatOpened" class="taskbar-icon">
+        <div (click)="onChatWinowOpen()" class="pined-icon" data-window="msn-chat" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
+          <img src="assets/images/buddy.png" alt="">
+        </div>
+        <div class="window-preview window active glass">
+          <div class="preview-header title-bar">
+            <span class="title-bar-text">MSN</span> 
+            <div class="title-bar-controls">
+              <button aria-label="Close" (click)="onChatWinowOpen()"></button>
+            </div>
+          </div>
+          <div class="preview-body window-body has-space">
+            <img src="assets/images/buddy.png" alt="">
+          </div>
+        </div>
       </div>
       <a class="pined-icon" onclick="window.open('https://www.google.ca','_unfencedTop ','width=700,height=700,top=500,left=500')">
         <img src="https://pngimg.com/d/ie_logo_PNG4.png" alt="">
       </a>
     </div>
     <div id="datetime">
-      <span class="time">{{currentDate | date : 'mediumTime'}}</span>
+      <span class="time">{{currentDate | date : 'HH:mm:ss a'}}</span>
       <span class="date">{{currentDate | date}}</span>
     </div>
     <div id="show-desktop"></div>

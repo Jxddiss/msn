@@ -26,11 +26,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .buddy-container{
     position: relative;
     z-index: 0;
-    padding: 7px;
-    border: 1px solid rgba(0, 0, 0, .7);
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, .3);
     border-radius: 10px;
     height: 100px;
     width: 100px;
+    
 }
 
 .buddy-container::before{
@@ -38,10 +39,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
       linear-gradient(transparent 20%, #ffffffb3 40%, transparent 41%), 
       linear-gradient(90deg, #ffffff66, #0000001a, #ffffff33), 
       #62dd3e;
-    border-radius: 10px;
     box-shadow: 
       inset 0 0 0 1px #fffd,
       0px 0px 10px 3px rgba(99,221,62,0.9);
+    border-radius: 10px;
     content: "";
     height: 100%;
     left: 0;
@@ -72,10 +73,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-radius: 3px;
     height: 100%;
     width: 100%;
-    border: 1px solid rgba(0, 0, 0, .7);
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.buddy-body img{
+.buddy-body img, .buddy-body video{
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -110,3 +111,15 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     inset 0 0 0 1px #fffd,
     0px 0px 10px 3px rgba(155, 154, 154, 0.9);
 }
+
+.cdk-drag-dragging{
+    z-index: 3 !important;
+}
+
+::-moz-selection { /* Code for Firefox */
+    background: rgba(0, 0, 0, 0.16);
+  }
+  
+  ::selection {
+    background: rgba(0, 0, 0, 0.16);
+  }

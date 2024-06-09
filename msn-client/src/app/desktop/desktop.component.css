@@ -1,9 +1,17 @@
 #desktop{
-    background: url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/f8cbba04-d884-4dc3-b9ef-9979145c22d1/d68d6tc-70c2835d-c837-4d81-ab0f-5d185d6d592a.jpg');
-    height: 100vh;
-    width: 100vw;
-    display: block;
-    background-position: center;
+  background: 
+    url('https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/i/f8cbba04-d884-4dc3-b9ef-9979145c22d1/d68d6tc-70c2835d-c837-4d81-ab0f-5d185d6d592a.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  background-position: center;
 }
 
 /* Source pour la barre de tâche, les icones : https://codepen.io/legarth/pen/jrKLqd*/
@@ -13,22 +21,22 @@
     cursor: pointer;
   }
 
-  .icon-desk {
-    position: absolute;
-    display: block;
-    width: 70px;
-    height: 70px;
-    background-size: 48px;
-    background-repeat: no-repeat;
-    background-position: top center;
-    border: solid 1px transparent;
-    border-radius: 2px;
-    z-index: 2;
-    margin: 1em;
+.icon-desk {
+  position: absolute;
+  display: block;
+  width: 70px;
+  height: 70px;
+  background-size: 48px;
+  background-repeat: no-repeat;
+  background-position: top center;
+  border: solid 1px transparent;
+  border-radius: 2px;
+  z-index: 2;
+  margin: 1em;
 }
 
 .msn-icon{
-    background-image: url(../../assets/images/buddy.png);
+  background-image: url(../../assets/images/buddy.png);
 }
 
 .ie-icon{
@@ -37,18 +45,18 @@
 }
 
 .icon-desk:after {
-    display: block;
-    position: absolute;
-    top: 50px;
-    width: 100%;
-    text-align: center;
-    content: attr(data-label);
-    text-shadow: 0 2px 2px #000;
-    color: azure;
+  display: block;
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  text-align: center;
+  content: attr(data-label);
+  text-shadow: 0 2px 2px #000;
+  color: azure;
 }
 
 .pointer-events-none {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 

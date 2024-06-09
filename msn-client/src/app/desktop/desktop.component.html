@@ -1,4 +1,4 @@
-<div id="desktop">
+<div id="desktop" #desktop>
     <div  class="msn-icon icon-desk" data-label="MSN" cdkDrag (click)="onClickWindow('msn')"
     #draggable="cdkDrag"
     [class.pointer-events-none]="draggable._dragRef.isDragging()">
@@ -11,5 +11,11 @@
     <ng-template #windowContainer>
         <ng-container></ng-container>
     </ng-template>
-    <app-taskbar (msnOpenEvent)="onClickWindow('msn')" [msnOpened]="msnOpened()"></app-taskbar>
+    <app-taskbar (msnOpenEvent)="onClickWindow('msn')" [msnOpened]="msnOpened()" (backgroundChangeEvent)="onBackgroundChange()"></app-taskbar>
+    <svg width="0" height="0">
+        <clipPath id="svgClip" clipPathUnits="objectBoundingBox">
+            <path d="M.067.067C.1676 0 .8379 0 .9385.067C1.0055.1676 1.0055.8379.9385.9385C.8379 1.0055.1676 1.0055.067.9385C0 .8379 0 .1676.067.067"></path>
+        </clipPath>
+    </svg>
   </div> 
+  

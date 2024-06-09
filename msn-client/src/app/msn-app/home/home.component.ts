@@ -1,6 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import gsap from 'gsap';
-import { ChatboxComponent } from './chatbox/chatbox.component';
+import { WindowInfoService } from '../../service/window-info.service';
 
 @Component({
   selector: 'app-home',
@@ -9,17 +9,13 @@ import { ChatboxComponent } from './chatbox/chatbox.component';
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
-  @ViewChild('secondWindowContainer', { read: ViewContainerRef }) 
-  secondWindowContainer: ViewContainerRef | undefined;
+  constructor(private _windowInfoService : WindowInfoService){ }
 
-  constructor(private cdRef : ChangeDetectorRef){ }
-
-  ngOnInit(): void {  
-    
+  ngOnInit(): void {
+    this._windowInfoService.onHomeWindowOpen(true)
   }
 
   ngAfterViewInit(): void {
-    this.initialiseChatBox()
     this.positionAnimation()
   }
 
@@ -29,18 +25,10 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     tl.to('.msn-window', {
       left: '20%',
     })
-
-    tl.to('.second-window', {
-      left: '50vw',
-    })
   }
 
   ngOnDestroy(): void {
+    this._windowInfoService.onHomeWindowOpen(false)
   }
 
-  initialiseChatBox() {
-    const componentRef = this.secondWindowContainer?.createComponent(ChatboxComponent);
-
-    this.cdRef.detectChanges();
-  }
 }
