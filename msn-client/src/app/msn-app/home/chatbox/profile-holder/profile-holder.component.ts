@@ -1,12 +1,13 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import gsap from 'gsap';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-profile-holder',
   templateUrl: './profile-holder.component.html',
   styleUrl: './profile-holder.component.css'
 })
-export class ProfileHolderComponent implements OnDestroy{
+export class ProfileHolderComponent implements OnInit,OnDestroy{
   @ViewChild('remoteVideo') remoteVideo : ElementRef | undefined
   @ViewChild('localVideo') localVideo : ElementRef | undefined
   private _videoShared = false
@@ -15,7 +16,16 @@ export class ProfileHolderComponent implements OnDestroy{
   private _localStream : MediaStream | undefined
   @Output() videoFullScreen = new EventEmitter()
   @Input() fullScreen = false
+  @Input() appelStarted !: Observable<any>
+  private _subscriptions : Subscription[] = []
 
+  constructor() {}
+
+  ngOnInit(): void {
+    this._subscriptions.push(
+      this.appelStarted.subscribe(()=>this.onStartVideoShare())
+    )
+  }
 
   get videoShared(){
     return this._videoShared
@@ -98,6 +108,7 @@ export class ProfileHolderComponent implements OnDestroy{
 
   ngOnDestroy(): void {
     this._localStream?.getTracks().forEach(track => track.stop())
+    this._subscriptions.forEach(sub => sub.unsubscribe())
   }
   
 }

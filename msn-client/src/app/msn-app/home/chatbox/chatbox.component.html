@@ -16,11 +16,11 @@ cdkDragBoundary="#desktop"
             <img src="assets/images/pictures.png" alt="">
             <span>Photos</span>
           </li>
-          <li tabindex="0" role="menuitem" >
+          <li tabindex="0" role="menuitem" (click)="onAppelStarted()" title="Commencer un appel video">
             <img src="assets/images/webcam.png" alt="">
             <span>Vidéo</span> 
           </li>
-          <li tabindex="0" role="menuitem" >
+          <li tabindex="0" role="menuitem" title="Commencer un appel audio">
             <img src="assets/images/phone.png" alt="">
             <span>Audio</span> 
           </li>
@@ -35,7 +35,7 @@ cdkDragBoundary="#desktop"
         </div>
         <div class="content-container">
           <div class="content-card">
-            <app-profile-holder [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()"></app-profile-holder>
+            <app-profile-holder [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()" [appelStarted]="appelStarted"></app-profile-holder>
             <div class="chat-zone">
               <div class="ami-info">
                 <div class="name-holder">

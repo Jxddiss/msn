@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { WindowInfoService } from '../../../service/window-info.service';
 import gsap from 'gsap';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chatbox',
@@ -14,6 +14,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
   private _isMinimized = false
   private _isFullScreen = false
   private _subscriptions : Subscription[] = []
+  private _appelEnCours = false
+  private _appelStarted = new Subject()
+  appelStarted$ = this._appelStarted.asObservable()
+
   dragPosition = {
     x: 0,
     y: 0
@@ -194,7 +198,16 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     }
   }
 
+  onAppelStarted() : void{
+    this._appelEnCours = !this._appelEnCours
+    this._appelStarted.next(null)
+  }
+
   get isFullScreen(){
     return this._isFullScreen
+  }
+
+  get appelStarted(){
+    return this.appelStarted$
   }
 }

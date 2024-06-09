@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="user-pic-holder">
-      <button type="button" (click)="onStartVideoShare()">
+      <button type="button" (click)="onStartVideoShare()" [title]="!videoShared ? 'Commencer un appel video' : 'Arrêter l\'appel video'">
         <img src="assets/images/webcam.png" alt="">
       </button>
       <div class="buddy-container glass local-holder">
