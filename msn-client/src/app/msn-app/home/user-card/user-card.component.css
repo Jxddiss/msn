@@ -6,6 +6,7 @@
 .buddy-container{
   height: 80px;
   width: 80px;
+  min-width: 80px;
 }
 
 .profil-info{
@@ -44,8 +45,15 @@ hr{
 }
 
 .username{
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   font-weight: 500;
+  display: block;
+  width: 40%;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
 }
 
 .option-holder{
@@ -87,6 +95,6 @@ hr{
   margin: 0;
 }
 
-#description:focus, #description:focus-visible, #description:hover{
-  border-bottom: 2px solid rgba(24, 23, 23, 0.4);
+#description:focus, #description:focus-visible, #description:hover, .username:focus, .username:focus-visible, .username:hover{
+  border-bottom: 1px solid rgba(24, 23, 23, 0.4);
 }
