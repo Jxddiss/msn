@@ -34,6 +34,23 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+.banner-holder{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.banner-holder img{
+    width: 100%;
+    height: 20%;
+    object-fit: cover;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 50%, rgba(0,0,0,0) 100%);
 }
 
 .content-card{
@@ -43,6 +60,7 @@
     width: 100%;
     max-width: 1200px;
     justify-content: center;
+    z-index: 1;
 }
 
 .profiles-pictures-holder{
@@ -139,6 +157,7 @@ ul[role="menubar"] li:active{
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+    text-shadow: 0 0 10px #fff, 0 0 10px #fff;
 }
 
 .chat-list{
