@@ -31,7 +31,7 @@ hr{
   background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik0xMSA2SDR2MWgxdjFoMXYxaDF2MWgxVjloMVY4aDFWN2gxVjZaIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+);
   background-position: 100%;
   background-repeat: no-repeat;
-  background-color: rgba(228, 224, 220, 0.29);
+  background-color: rgba(228, 224, 220, 0.14);
   text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff;
   border: none;
   box-shadow: none;
@@ -75,19 +75,6 @@ hr{
   min-width: 10px;
   min-height: 30px;
   padding: 0.1em;
-}
-
-[role="tooltip"]{
-  position: absolute;
-  opacity: 0;
-  transition: all 0.3s ease;
-  pointer-events: none;
-  text-align: initial;
-  width: max-content;
-}
-
-.btn:hover [role="tooltip"], .btn:focus [role="tooltip"], .buddy-container:hover [role="tooltip"]{
-  opacity: 1;
 }
 
 .edit-icon{

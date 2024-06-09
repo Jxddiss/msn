@@ -1,15 +1,14 @@
 <form class="profil-info">
-    <div class="buddy-container glass" [ngClass]="'buddy-'+statut">
+    <div class="buddy-container glass" [ngClass]="'buddy-'+statut" title="Changez votre photo de profil">
         <div class="buddy-body" (click)="onChooseAvatar()">
             <img #avatarImg id="buddy-img" src="https://i.redd.it/windows-xp-user-icons-part-1-v0-21x236nw74qb1.jpg?width=1117&format=pjpg&auto=webp&s=373255f32cfaeaf801f1e3ae36dc314dd6b1f100" alt="">
         </div>
-        <div role="tooltip">Changez votre photo de profil</div>
     </div>
     <div class="user-info">
         <span class="username-holder">
-                <input  type="text" placeholder="Nom" name="nom" id="nom" value="John Doe" class="nom">
+                <input  type="text" placeholder="Nom" name="nom" id="nom" value="John Doe" class="nom" title="Changez votre nom" [required]="true">
                 <label for="statut">( Statut: </label>
-                <select name="statut" id="statut" class="statut" required (change)="onStatutChange($event)">
+                <select name="statut" id="statut" class="statut" required (change)="onStatutChange($event)" title="Changez votre statut" [required]="true">
                     <option value="online" selected>🟩 En ligne</option>
                     <option value="disconnected">🟥 Hors ligne</option>
                     <option value="inactif">🟨 Inactif</option>
@@ -17,15 +16,13 @@
                 </select>)
         </span>
         <div class="description">
-            <input type="text" placeholder="Description" name="description" id="description" value="Hello, I am John Doe">
+            <input type="text" placeholder="Description" name="description" id="description" value="Hello, I am John Doe" title="Changez votre description">
             <div class="option-holder">
-                <button type="button" class="btn" (click)="onChooseBanner()">
+                <button type="button" class="btn" (click)="onChooseBanner()" title="Changez votre bannière">
                     <img src="assets/images/pictures.png" alt="" class="edit-icon">
-                    <div role="tooltip">Changez votre bannière</div>
                 </button>
-                <button type="button" class="btn">
+                <button type="button" class="btn" title="Enregistrez vos modifications.">
                     <img src="assets/images/diskette.png" alt="" class="edit-icon">
-                    <div role="tooltip">Enregistrez vos modifications.</div>
                 </button>
             </div>
         </div>
