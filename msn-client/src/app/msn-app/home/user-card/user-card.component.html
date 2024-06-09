@@ -1,6 +1,6 @@
 <div class="profil-info">
     <div class="buddy-container glass">
-        <div class="buddy-body">
+        <div class="buddy-body" (click)="onChooseAvatar()">
             <img #avatarImg id="buddy-img" src="https://i.redd.it/windows-xp-user-icons-part-1-v0-21x236nw74qb1.jpg?width=1117&format=pjpg&auto=webp&s=373255f32cfaeaf801f1e3ae36dc314dd6b1f100" alt="">
         </div>
     </div>
@@ -21,6 +21,8 @@
                 <button type="button" class="btn">
                     <img src="assets/images/account_settings.png" alt="" class="edit-icon">
                 </button>
+                <input type="file" hidden id="avatar" name="avatar" #avatarPicker 
+                accept="image/*" (change)="onAvatarImgChange($event)">
             </div>
         </div>
     </div>
