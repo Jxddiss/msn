@@ -1,5 +1,5 @@
 <div class="profil-info">
-    <div class="buddy-container glass">
+    <div class="buddy-container glass" [ngClass]="'buddy-'+statut">
         <div class="buddy-body" (click)="onChooseAvatar()">
             <img #avatarImg id="buddy-img" src="https://i.redd.it/windows-xp-user-icons-part-1-v0-21x236nw74qb1.jpg?width=1117&format=pjpg&auto=webp&s=373255f32cfaeaf801f1e3ae36dc314dd6b1f100" alt="">
         </div>
@@ -9,11 +9,11 @@
         <span class="username-holder">
                 <input  type="text" placeholder="Nom" name="nom" id="nom" value="John Doe" class="nom">
                 <label for="statut">( Statut: </label>
-                <select name="statut" id="statut" class="statut" required >
-                    <option value="1" selected>🟩 En ligne</option>
-                    <option value="2">🟥 Hors ligne</option>
-                    <option value="3">🟨 Inactif</option>
-                    <option value="4">⬜ Absent</option>
+                <select name="statut" id="statut" class="statut" required (change)="onStatutChange($event)">
+                    <option value="online" selected>🟩 En ligne</option>
+                    <option value="disconnected">🟥 Hors ligne</option>
+                    <option value="inactif">🟨 Inactif</option>
+                    <option value="absent">⬜ Absent</option>
                 </select>)
         </span>
         <div class="description">

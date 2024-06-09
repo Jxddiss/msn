@@ -11,6 +11,7 @@ export class UserCardComponent {
   @ViewChild('avatarImg') avatarImg !: ElementRef
   @ViewChild('bannerPicker') bannerPicker !: ElementRef
   @Output() bannerChangeEvent = new EventEmitter<File>();
+  statut = 'online';
 
   constructor() { }
 
@@ -67,5 +68,10 @@ export class UserCardComponent {
     }
 
     return "Format d'image non supportée"
+  }
+
+  onStatutChange(event : Event){
+    const target = event.target as HTMLInputElement;
+    this.statut = target.value;
   }
 }
