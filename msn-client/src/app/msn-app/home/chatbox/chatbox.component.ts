@@ -21,6 +21,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   @ViewChild('imgDialog') imgDialog !: ElementRef
   @ViewChild('photoInput') photoInput !: ElementRef
   @ViewChild('chatList') chatList : ElementRef | undefined
+  private _scrolledChatList = false
 
   dragPosition = {
     x: 0,
@@ -42,7 +43,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
 
   ngAfterContentChecked(): void {
     if(this.chatList){
-      this.chatList.nativeElement.scrollTop = this.chatList.nativeElement.scrollHeight
+      if(!this._scrolledChatList){
+        this.chatList.nativeElement.scrollTop = this.chatList.nativeElement.scrollHeight
+        this._scrolledChatList = true
+      }
     }
   }
 

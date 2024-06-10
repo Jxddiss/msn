@@ -2,6 +2,10 @@
     max-height: 100%;
 }
 
+:host:has(video){
+    min-width: 45%;
+}
+
 .profiles-pictures-holder{
     display: flex;
     flex-direction: column;
@@ -11,7 +15,6 @@
     padding-top: 2em;
     height: 100%;
     max-height: 100%;
-    
 }
 
 .user-pic-holder{
@@ -26,7 +29,7 @@
     
 }
 
-.user-pic-holder button{
+.user-pic-holder button, .user-pic-holder [role="button"]{
     margin-top: 10px;
     height: 25px;
     width: 25px;
@@ -41,7 +44,7 @@
     justify-content: center;
 }
 
-.user-pic-holder button img{
+.user-pic-holder button img, .user-pic-holder [role="button"] img{
     height: 100%;
     width: 100%;
     object-fit: contain;
@@ -89,4 +92,20 @@
 
 video:hover{
     cursor: pointer;
+}
+
+[role="menu"]{
+    position: absolute;
+    z-index: 1;
+    translate: -5% 40%;
+    display: none;
+}
+
+input:checked + [role="menu"]{
+    display: block;
+}
+
+[role="menuitem"] > img{
+    height: 80%;
+    object-fit: contain;
 }
