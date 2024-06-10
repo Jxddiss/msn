@@ -12,7 +12,8 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    background: linear-gradient(to bottom, #cccccc, #d3d3d3 50%, #f9fcfd);
+    background: linear-gradient(to bottom, rgba(204, 204, 204, 0.7), rgba(211, 211, 211, 0.6) 50%, rgba(249, 252, 253, 0.8));
+    backdrop-filter: blur(5px);
     border-radius: 10px;
     box-shadow: 
     1px 1px 5px #000,
@@ -22,7 +23,7 @@
 }
 
 .msn-notif{
-    background: linear-gradient(to bottom, #93d3f3, #79a3b8 50%, #c0eaff);
+    background: linear-gradient(to bottom, rgba(147, 211, 243, 0.9), rgba(121, 163, 184, 0.9) 50%, rgba(192, 234, 255, 1));
 }
 
 .notification-title-bar{
