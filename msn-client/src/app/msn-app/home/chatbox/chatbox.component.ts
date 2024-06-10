@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { WindowInfoService } from '../../../service/window-info.service';
 import gsap from 'gsap';
 import { Subject, Subscription } from 'rxjs';
@@ -17,6 +17,8 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
   private _appelEnCours = false
   private _appelStarted = new Subject()
   appelStarted$ = this._appelStarted.asObservable()
+  @ViewChild('dialogImg') dialogImg !: ElementRef
+  @ViewChild('imgDialog') imgDialog !: ElementRef
 
   dragPosition = {
     x: 0,
@@ -204,6 +206,17 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
   onAppelStarted() : void{
     this._appelEnCours = !this._appelEnCours
     this._appelStarted.next(null)
+  }
+
+  onShowDialogImg(event : any) : void{
+    this.imgDialog.nativeElement.src = event.target.src
+    this.dialogImg.nativeElement.style.opacity = '1'
+    this.dialogImg.nativeElement.style.visibility = 'visible'
+  }
+
+  onHideDialogImg() : void{
+    this.dialogImg.nativeElement.style.opacity = '0'
+    this.dialogImg.nativeElement.style.visibility = 'hidden'
   }
 
   get isFullScreen(){
