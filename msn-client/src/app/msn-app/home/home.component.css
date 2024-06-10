@@ -1,6 +1,8 @@
 .content-container{
     width: 430px;
+    max-width: 30vw;
     height: 750px;
+    max-height: 80vh;
     display: flex;
     align-items: center;
     justify-content: center;

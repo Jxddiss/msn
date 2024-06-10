@@ -124,7 +124,6 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
         height: '600px',
         width: '800px',
       })
-
       tl.to('.second-window', {
         translate: '-50% -50%',
         top: '50%',
@@ -144,6 +143,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
   makeFullScreen() : void{
     this.resetDragPosition()
     const tl = gsap.timeline()
+    tl.set('.second-window .content-container', {
+      maxHeight: 'unset',
+      maxWidth: 'unset',
+    })
     tl.to('.second-window', {
       translate: '-50% -50%',
       top: '48%',
@@ -151,8 +154,8 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     },0)
 
     tl.to('.second-window .content-container', {
-      width: '99vw',
-      height: '87vh',
+      width: '99dvw',
+      height: '87dvh',
     })
     tl.duration(0.2)
   }
