@@ -215,6 +215,12 @@ ul[role="menubar"] li:active{
     margin-top: 0.5em;
 }
 
+.message-body img:hover{
+    cursor: zoom-in;
+    scale: 1.05;
+    box-shadow: 10px 10px 5px #888;
+}
+
 .interaction{
     display: flex;
     flex-direction: column;

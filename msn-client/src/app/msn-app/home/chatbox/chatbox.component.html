@@ -47,7 +47,7 @@ cdkDragBoundary="#desktop"
                 </div>
               </div>
               <hr>
-              <div class="chat-list has-scrollbar">
+              <div class="chat-list has-scrollbar" #chatList>
                 
                 <div class="chat-item">
                   <div class="sender">John Doe said</div>
@@ -104,12 +104,13 @@ cdkDragBoundary="#desktop"
                   <button type="button" class="opt" (click)="onNudge()">
                     <img src="assets/images/emojis/wizz-msn.png" alt="">
                   </button>
-                  <button type="button" class="opt">
+                  <button type="button" class="opt" (click)="onPhotoSelection()">
                     <img src="assets/images/pictures.png" alt="">
                   </button>
                   <button type="button" class="opt" >
                     <img src="assets/images/text.png" alt="">
                   </button>
+                  <input type="file" hidden #photoInput accept="image/*">
                 </div>
               </div>
             </div>

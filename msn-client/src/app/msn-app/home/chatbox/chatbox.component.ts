@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { WindowInfoService } from '../../../service/window-info.service';
 import gsap from 'gsap';
 import { Subject, Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subject, Subscription } from 'rxjs';
   templateUrl: './chatbox.component.html',
   styleUrl: './chatbox.component.css'
 })
-export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
+export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterContentChecked{
   private _isLoading = true
   private _test : string | undefined
   private _isMinimized = false
@@ -19,6 +19,8 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
   appelStarted$ = this._appelStarted.asObservable()
   @ViewChild('dialogImg') dialogImg !: ElementRef
   @ViewChild('imgDialog') imgDialog !: ElementRef
+  @ViewChild('photoInput') photoInput !: ElementRef
+  @ViewChild('chatList') chatList : ElementRef | undefined
 
   dragPosition = {
     x: 0,
@@ -36,6 +38,12 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
 
   ngAfterViewInit(): void {
     this.positionAnimation()
+  }
+
+  ngAfterContentChecked(): void {
+    if(this.chatList){
+      this.chatList.nativeElement.scrollTop = this.chatList.nativeElement.scrollHeight
+    }
   }
 
   ngOnDestroy(): void {
@@ -194,6 +202,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     tl.repeat(7)
     tl.duration(0.2)
     tl.yoyo(true)
+  }
+
+  onPhotoSelection(){
+    this.photoInput.nativeElement.click()
   }
 
   onVideoFullScreenChange() : void{
