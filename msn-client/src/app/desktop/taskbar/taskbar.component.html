@@ -22,7 +22,7 @@
           <li><div class="start-icon"><span>Ordinateur</span></div></li>
           <hr>
           <li><div class="start-icon" (click)="onOpenBackgroundSelector()"><span>Changer de fond d'écran</span></div></li>
-          <input type="file" name="background"  id="" #backgroundFile [hidden]="true" (change)="onSetBackground()" accepts='images/*'>
+          <input type="file" name="background" #backgroundFile [hidden]="true"  accept='image/*' (change)="onSetBackground()">
       </ul>
     </div>
     <div id="pined-items">
