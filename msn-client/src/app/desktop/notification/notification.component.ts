@@ -14,9 +14,9 @@ export class NotificationComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.apparition()
-    // this.destroyTimeout = setTimeout(()=>{
-    //   this.onClose()
-    // },5000)
+    this.destroyTimeout = setTimeout(()=>{
+      this.onClose()
+    },7000)
   }
 
   onClose(){
