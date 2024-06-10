@@ -12,13 +12,17 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-    background: linear-gradient(to bottom, #93d3f3, #79a3b8 50%, #c0eaff);
+    background: linear-gradient(to bottom, #cccccc, #d3d3d3 50%, #f9fcfd);
     border-radius: 10px;
     box-shadow: 
     1px 1px 5px #000,
     inset 0 0 5px #fff,
     inset 0 0 10px #a4e5ff,
     inset -2px -2px 0px 0px rgb(255, 255, 255);
+}
+
+.msn-notif{
+    background: linear-gradient(to bottom, #93d3f3, #79a3b8 50%, #c0eaff);
 }
 
 .notification-title-bar{
@@ -66,7 +70,7 @@
     height: 100%;
 }
 
-.buddy-container{
+.buddy-container, .notification-image > img{
     width: 100%;
     height: 100%;
     padding: 6px;
