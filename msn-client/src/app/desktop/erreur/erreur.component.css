@@ -28,13 +28,23 @@
     object-fit: contain;
 }
 
+.erreur-texte{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    flex: 1;
+}
+
 .erreur-title{
     font-size: 14pt;
     color: #1349C3;
-    margin-bottom: 0.5em;
 }
 
 .erreur-message{
     font-size: 10pt;
     color: #162227;
+}
+
+button{
+    align-self: flex-end;
 }
