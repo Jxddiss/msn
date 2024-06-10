@@ -1,7 +1,8 @@
-import { AfterViewInit, Component, ComponentRef, ElementRef, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, signal } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, ElementRef, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, ViewRef, signal } from '@angular/core';
 import { MsnApp } from '../msn-app/msn-app.component';
 import { Subscription } from 'rxjs';
 import { WindowInfoService } from '../service/window-info.service';
+import { NotificationComponent } from './notification/notification.component';
 
 @Component({
   selector: 'app-desktop',
@@ -12,6 +13,8 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   @ViewChild('windowContainer',{read: ViewContainerRef})
   entry : ViewContainerRef | undefined;
   @ViewChild('desktop') desktop : ElementRef | undefined
+  @ViewChild('notificationContainer',{read: ViewContainerRef}) 
+  notificationContainer : ViewContainerRef | undefined
   msnOpened  = signal(false)
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
@@ -19,11 +22,18 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   
   constructor(){ }
 
-  ngOnInit(){}
+  ngOnInit(){
+    
+  }
     
   ngAfterViewInit(){
     this.onBackgroundChange()
     this.openMsn()
+    for (let index = 0; index < 3; index++) {
+      setTimeout(() => {
+        this.onNotificationReceived(index)
+      }, index*1000);
+    }
   }
 
   openMsn(){
@@ -60,6 +70,25 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
       if(this.desktop === undefined) return 
       this.desktop.nativeElement.style.backgroundImage = `url(${localStorage.getItem('background')})`
     }
+  }
+
+  onNotificationReceived(index : number){
+    if(this.notificationContainer === undefined) return
+    const componentRef = this.notificationContainer?.createComponent(NotificationComponent)
+    this.componentsRefs['notification-'+index] = componentRef
+    if(componentRef) componentRef?.instance.close.subscribe(()=>this.onCloseNotification(index))
+  }
+
+  onCloseNotification(index : number){
+    const componentRef = this.componentsRefs['notification-'+index]
+    if(!componentRef) return
+    const instance = componentRef.instance
+    const indexNot = this.notificationContainer?.indexOf(componentRef.hostView)
+    instance.disparition()
+    setTimeout(()=>{
+      this.notificationContainer?.remove(indexNot)
+    }, 500)
+    delete this.componentsRefs['notification-'+index]
   }
 
   ngOnDestroy(): void {

@@ -17,6 +17,7 @@ import { ActivityHolderComponent } from './msn-app/home/activity-holder/activity
 import { UserListComponent } from './msn-app/home/activity-holder/user-list/user-list.component';
 import { ChatboxComponent } from './msn-app/home/chatbox/chatbox.component';
 import { ProfileHolderComponent } from './msn-app/home/chatbox/profile-holder/profile-holder.component';
+import { NotificationComponent } from './desktop/notification/notification.component';
 
 registerLocaleData(localeFr)
 
@@ -34,6 +35,7 @@ registerLocaleData(localeFr)
     UserListComponent,
     ChatboxComponent,
     ProfileHolderComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,
