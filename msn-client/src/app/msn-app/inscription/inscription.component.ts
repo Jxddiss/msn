@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { WindowInfoService } from '../../service/window-info.service';
+import { Erreur } from '../../model/erreur.model';
+import { ErreurService } from '../../service/erreur.service';
 
 @Component({
   selector: 'app-inscription',
@@ -11,7 +13,10 @@ export class InscriptionComponent implements OnInit{
   @ViewChild('avatarImg') avatarImg !: ElementRef
   canBeFullScreen = false
 
-  constructor(private _windowInfoService : WindowInfoService) { }
+  constructor(
+    private _windowInfoService : WindowInfoService,
+    private _erreurService : ErreurService
+  ) { }
 
   ngOnInit(): void {
     this.onFullScreen()
@@ -37,7 +42,8 @@ export class InscriptionComponent implements OnInit{
         };
         reader.readAsDataURL(file);
       }else{
-        alert(result);
+        const erreur = new Erreur("Upload d'image", result);
+        this._erreurService.onErreursEvent(erreur);
         this.avatarPicker.nativeElement.value = '';
       }
     }

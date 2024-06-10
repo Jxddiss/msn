@@ -1,4 +1,6 @@
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { ErreurService } from '../../../service/erreur.service';
+import { Erreur } from '../../../model/erreur.model';
 
 @Component({
   selector: 'app-user-card',
@@ -13,7 +15,7 @@ export class UserCardComponent {
   @Output() bannerChangeEvent = new EventEmitter<File>();
   statut = 'online';
 
-  constructor() { }
+  constructor(private _erreurService : ErreurService) { }
 
   onChooseAvatar(){
     this.avatarPicker.nativeElement.click()
@@ -35,7 +37,8 @@ export class UserCardComponent {
         };
         reader.readAsDataURL(file);
       }else{
-        alert(result);
+        const erreur = new Erreur("avatar", result);
+        this._erreurService.onErreursEvent(erreur);
         this.avatarPicker.nativeElement.value = '';
       }
     }
@@ -49,7 +52,8 @@ export class UserCardComponent {
       if(result === "bon"){
         this.bannerChangeEvent.emit(file);
       }else{
-        alert(result);
+        const erreur = new Erreur("Upload d'image", result);
+        this._erreurService.onErreursEvent(erreur);
         this.bannerPicker.nativeElement.value = '';
       }
     }

@@ -3,6 +3,9 @@ import { MsnApp } from '../msn-app/msn-app.component';
 import { Subscription } from 'rxjs';
 import { WindowInfoService } from '../service/window-info.service';
 import { NotificationComponent } from './notification/notification.component';
+import { ErreurService } from '../service/erreur.service';
+import { ErreurComponent } from './erreur/erreur.component';
+import { Erreur } from '../model/erreur.model';
 
 @Component({
   selector: 'app-desktop',
@@ -15,12 +18,18 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   @ViewChild('desktop') desktop : ElementRef | undefined
   @ViewChild('notificationContainer',{read: ViewContainerRef}) 
   notificationContainer : ViewContainerRef | undefined
+  @ViewChild('erreurContainer',{read: ViewContainerRef})
+  erreurContainer : ViewContainerRef | undefined
   msnOpened  = signal(false)
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
   private _subscriptions : Subscription[] = []
   
-  constructor(){ }
+  constructor(private _erreurService : ErreurService){ 
+    this._subscriptions.push(
+      this._erreurService.erreursEvent$.subscribe((erreur)=>this.onErreurReceived(erreur))
+    )
+  }
 
   ngOnInit(){
     
@@ -93,6 +102,16 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
       this.notificationContainer?.remove(indexNot)
     }, 500)
     delete this.componentsRefs['notification-'+index]
+  }
+
+  onErreurReceived(erreur : Erreur){
+    if(this.erreurContainer === undefined) return
+    this.erreurContainer.clear()
+    const componentRef = this.erreurContainer?.createComponent(ErreurComponent)
+    componentRef.instance.erreur = erreur
+    this._subscriptions.push(
+      componentRef?.instance.close.subscribe(()=>this.erreurContainer?.clear())
+    )
   }
 
   ngOnDestroy(): void {
