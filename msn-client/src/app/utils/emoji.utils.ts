@@ -1,20 +1,18 @@
 import { Emoji } from "../model/emoji.model";
 
 export function parseEmoji(message : string) : string{
-    const regex = /\:[a-zA-Z0-9_\-\+\=]+\:/g;
+    const regex = /\:[a-zA-Z0-9_\-\+\=\(\)]+\:/g;
     const matches = message.match(regex)
     if(!matches) return message
-    let emojiToParse = message
     for(let i = 0; i < matches.length; i++){
-        const match = matches[i]
-        const emoji = match
-        const emojiName = match.slice(1, -1)
-        const emojiImage = getEmojiImg(match)
+        const emoji = matches[i]
+        const emojiName = emoji.slice(1, -1)
+        const emojiImage = getEmojiImg(emoji)
         if(emojiImage !== ""){
-            emojiToParse = emojiToParse.replace(emoji, `<img class="message-emoji" src="assets/images/emojis/${emojiImage}" alt="" title="${emojiName}">`)
+            message = message.replace(emoji, `<img class="message-emoji" src="assets/images/emojis/${emojiImage}" alt="" title="${emojiName}">`)
         }
     }
-    return emojiToParse
+    return message
 }
 
 function getEmojiImg(emojiCode : string) : string{

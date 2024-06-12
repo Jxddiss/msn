@@ -51,8 +51,8 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     if(componentRef?.instance.close){
       this._subscriptions.push(
           componentRef?.instance.close.subscribe(()=>{
-          componentRef.instance.disparition()
-          setTimeout(()=>this.onCloseWindow(), 500)
+            componentRef.instance.disparition()
+            setTimeout(()=>this.onCloseWindow(), 500)
         })
       )
     }
