@@ -99,8 +99,8 @@ cdkDragBoundary="#desktop"
                   <textarea placeholder="Écrivez un message" class="text-input"></textarea>
                 </div>
                 <div class="chat-input-options">
-                  <button type="button" class="opt">
-                    <img src="assets/images/emojis/teeth_smile.png" alt="">
+                  <button type="button" class="opt" (click)="onEmojiPickerOpen()">
+                    <img class="emoji" src="assets/images/emojis/teeth_smile.png" alt="">
                   </button>
                   <button type="button" class="opt">
                     <img src="assets/images/emojis/wink_smile.gif" alt="">
@@ -117,6 +117,7 @@ cdkDragBoundary="#desktop"
                   <input type="file" hidden #photoInput accept="image/*">
                 </div>
               </div>
+              <app-emoji-picker [open$]="emojiPickerOpen$"></app-emoji-picker>
             </div>
           </div>
         </div>

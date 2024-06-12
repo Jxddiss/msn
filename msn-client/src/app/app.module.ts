@@ -19,6 +19,7 @@ import { ChatboxComponent } from './msn-app/home/chatbox/chatbox.component';
 import { ProfileHolderComponent } from './msn-app/home/chatbox/profile-holder/profile-holder.component';
 import { NotificationComponent } from './desktop/notification/notification.component';
 import { ErreurComponent } from './desktop/erreur/erreur.component';
+import { EmojiPickerComponent } from './msn-app/home/chatbox/emoji-picker/emoji-picker.component';
 
 registerLocaleData(localeFr)
 
@@ -38,6 +39,7 @@ registerLocaleData(localeFr)
     ProfileHolderComponent,
     NotificationComponent,
     ErreurComponent,
+    EmojiPickerComponent,
   ],
   imports: [
     BrowserModule,
