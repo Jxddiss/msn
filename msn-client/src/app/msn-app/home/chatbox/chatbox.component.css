@@ -205,8 +205,6 @@ ul[role="menubar"] li:active{
 }
 
 .message-body{
-    display: flex;
-    align-items: center;
     max-width: 90%;
 }
 
