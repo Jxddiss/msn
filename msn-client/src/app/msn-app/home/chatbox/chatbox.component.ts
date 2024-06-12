@@ -1,19 +1,28 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterContentChecked, AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { WindowInfoService } from '../../../service/window-info.service';
 import gsap from 'gsap';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-chatbox',
   templateUrl: './chatbox.component.html',
   styleUrl: './chatbox.component.css'
 })
-export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
+export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterContentChecked{
   private _isLoading = true
   private _test : string | undefined
   private _isMinimized = false
   private _isFullScreen = false
   private _subscriptions : Subscription[] = []
+  private _appelEnCours = false
+  private _appelStarted = new Subject()
+  appelStarted$ = this._appelStarted.asObservable()
+  @ViewChild('dialogImg') dialogImg !: ElementRef
+  @ViewChild('imgDialog') imgDialog !: ElementRef
+  @ViewChild('photoInput') photoInput !: ElementRef
+  @ViewChild('chatList') chatList : ElementRef | undefined
+  private _scrolledChatList = false
+
   dragPosition = {
     x: 0,
     y: 0
@@ -30,6 +39,15 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
 
   ngAfterViewInit(): void {
     this.positionAnimation()
+  }
+
+  ngAfterContentChecked(): void {
+    if(this.chatList){
+      if(!this._scrolledChatList){
+        this.chatList.nativeElement.scrollTop = this.chatList.nativeElement.scrollHeight
+        this._scrolledChatList = true
+      }
+    }
   }
 
   ngOnDestroy(): void {
@@ -120,7 +138,6 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
         height: '600px',
         width: '800px',
       })
-
       tl.to('.second-window', {
         translate: '-50% -50%',
         top: '50%',
@@ -140,6 +157,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
   makeFullScreen() : void{
     this.resetDragPosition()
     const tl = gsap.timeline()
+    tl.set('.second-window .content-container', {
+      maxHeight: 'unset',
+      maxWidth: 'unset',
+    })
     tl.to('.second-window', {
       translate: '-50% -50%',
       top: '48%',
@@ -147,8 +168,8 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     },0)
 
     tl.to('.second-window .content-container', {
-      width: '99vw',
-      height: '87vh',
+      width: '99dvw',
+      height: '87dvh',
     })
     tl.duration(0.2)
   }
@@ -187,6 +208,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     tl.yoyo(true)
   }
 
+  onPhotoSelection(){
+    this.photoInput.nativeElement.click()
+  }
+
   onVideoFullScreenChange() : void{
     if(!this._isFullScreen){
       this.makeFullScreen()
@@ -194,7 +219,27 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy{
     }
   }
 
+  onAppelStarted() : void{
+    this._appelEnCours = !this._appelEnCours
+    this._appelStarted.next(null)
+  }
+
+  onShowDialogImg(event : any) : void{
+    this.imgDialog.nativeElement.src = event.target.src
+    this.dialogImg.nativeElement.style.opacity = '1'
+    this.dialogImg.nativeElement.style.visibility = 'visible'
+  }
+
+  onHideDialogImg() : void{
+    this.dialogImg.nativeElement.style.opacity = '0'
+    this.dialogImg.nativeElement.style.visibility = 'hidden'
+  }
+
   get isFullScreen(){
     return this._isFullScreen
+  }
+
+  get appelStarted(){
+    return this.appelStarted$
   }
 }

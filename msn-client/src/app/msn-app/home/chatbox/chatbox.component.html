@@ -12,19 +12,15 @@ cdkDragBoundary="#desktop"
     </div>
     <div class="window-body" *ngIf="!isLoading">
         <ul role="menubar">
-          <li tabindex="0" role="menuitem" >
-            <img src="assets/images/help.png" alt="">
-            <span>Aide</span> 
-          </li>
           <li tabindex="0" role="menuitem" > 
             <img src="assets/images/pictures.png" alt="">
             <span>Photos</span>
           </li>
-          <li tabindex="0" role="menuitem" >
+          <li tabindex="0" role="menuitem" (click)="onAppelStarted()" title="Commencer un appel video">
             <img src="assets/images/webcam.png" alt="">
             <span>Vidéo</span> 
           </li>
-          <li tabindex="0" role="menuitem" >
+          <li tabindex="0" role="menuitem" title="Commencer un appel audio">
             <img src="assets/images/phone.png" alt="">
             <span>Audio</span> 
           </li>
@@ -33,9 +29,13 @@ cdkDragBoundary="#desktop"
             <span>Bloquer</span>
           </li>
         </ul>
+        <div class="banner-holder">
+          <img src="assets/images/default.png" alt="">
+          <!-- <img src="https://images.unsplash.com/photo-1481988535861-271139e06469?q=80&w=2090&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt=""> -->
+        </div>
         <div class="content-container">
           <div class="content-card">
-            <app-profile-holder [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()"></app-profile-holder>
+            <app-profile-holder [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()" [appelStarted]="appelStarted"></app-profile-holder>
             <div class="chat-zone">
               <div class="ami-info">
                 <div class="name-holder">
@@ -47,7 +47,7 @@ cdkDragBoundary="#desktop"
                 </div>
               </div>
               <hr>
-              <div class="chat-list has-scrollbar">
+              <div class="chat-list has-scrollbar" #chatList>
                 
                 <div class="chat-item">
                   <div class="sender">John Doe said</div>
@@ -81,6 +81,18 @@ cdkDragBoundary="#desktop"
                     </div>
                   </div>
                 </div>
+                <div class="chat-item">
+                  <div class="sender">John Doe à envoyée une image</div>
+                  <hr>
+                  <div class="message">
+                    <div class="message-body">
+                      <img (click)="onShowDialogImg($event)" 
+                      src="https://images.unsplash.com/photo-1481988535861-271139e06469?q=80&w=2090&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                      alt="" title="Cliquez pour agrandir">
+                    </div>
+                  </div>
+                  <hr>
+                </div>
               </div>
               <div class="chat-input">
                 <div role="tooltip" class="is-top is-right">
@@ -96,12 +108,13 @@ cdkDragBoundary="#desktop"
                   <button type="button" class="opt" (click)="onNudge()">
                     <img src="assets/images/emojis/wizz-msn.png" alt="">
                   </button>
-                  <button type="button" class="opt">
+                  <button type="button" class="opt" (click)="onPhotoSelection()">
                     <img src="assets/images/pictures.png" alt="">
                   </button>
                   <button type="button" class="opt" >
                     <img src="assets/images/text.png" alt="">
                   </button>
+                  <input type="file" hidden #photoInput accept="image/*">
                 </div>
               </div>
             </div>
@@ -115,4 +128,18 @@ cdkDragBoundary="#desktop"
         <span class="loader animate" aria-label="Processing your request"></span>
       </div>
     </div>
+</div>
+
+<div class="window active is-bright glass" 
+  role="dialog" aria-labelledby="dialog-title" 
+  aria-modal="true" cdkDrag #dialogImg cdkDragBoundary="#desktop">
+  <div class="title-bar" cdkDragHandle>
+    <div class="title-bar-text" id="dialog-title">Photo</div>
+    <div class="title-bar-controls">
+      <button aria-label="Close" (click)="onHideDialogImg()"></button>
+    </div>
+  </div>
+  <div class="window-body">
+    <img #imgDialog src="" alt="">
+  </div>
 </div>

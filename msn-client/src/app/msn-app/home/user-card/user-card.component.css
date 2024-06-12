@@ -6,6 +6,8 @@
 .buddy-container{
   height: 80px;
   width: 80px;
+  min-width: 80px;
+  padding: 7px;
 }
 
 .profil-info{
@@ -17,6 +19,8 @@
   flex-direction: column;
   margin-left: 1em;
   flex-grow: 1;
+  z-index: 1;
+  text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff;
 }
 
 hr{
@@ -27,6 +31,8 @@ hr{
   background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTciIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJhIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3R5bGU9InN0b3AtY29sb3I6IzMzMztzdG9wLW9wYWNpdHk6MSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3R5bGU9InN0b3AtY29sb3I6I2FhYTtzdG9wLW9wYWNpdHk6MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxwYXRoIGQ9Ik0xMSA2SDR2MWgxdjFoMXYxaDF2MWgxVjloMVY4aDFWN2gxVjZaIiBmaWxsPSJ1cmwoI2EpIi8+PC9zdmc+);
   background-position: 100%;
   background-repeat: no-repeat;
+  background-color: rgba(228, 224, 220, 0.14);
+  text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff;
   border: none;
   box-shadow: none;
 }
@@ -35,17 +41,28 @@ hr{
   display: flex;
   gap: 0.5em;
   align-items: center;
+  text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff;
+  font-size: 0.8rem;
 }
 
-.username{
+.nom{
   font-size: 1.2rem;
   font-weight: 500;
+  display: block;
+  width: 35%;
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff;
 }
 
 .option-holder{
   display: flex;
   justify-content: flex-end;
   margin-top: 1em;
+  gap: 0.5em;
 }
 
 .btn{
@@ -53,8 +70,8 @@ hr{
   background: transparent;
   cursor: pointer;
   box-shadow: none;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   min-width: 10px;
   min-height: 30px;
   padding: 0.1em;
@@ -78,8 +95,9 @@ hr{
   box-shadow: none;
   padding: 0;
   margin: 0;
+  text-shadow: 0 0 10px #fff, 0 0 10px #fff, 0 0 10px #fff;
 }
 
-#description:focus, #description:focus-visible, #description:hover{
-  border-bottom: 2px solid rgba(24, 23, 23, 0.4);
+#description:focus, #description:focus-visible, #description:hover, .nom:focus, .nom:focus-visible, .nom:hover{
+  border-bottom: 1px solid rgba(24, 23, 23, 0.4);
 }

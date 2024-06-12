@@ -20,6 +20,7 @@
 .window-body{
     background: rgb(154,220,246);
     background: linear-gradient(180deg, rgba(154,220,246,1) 0%, rgba(236,247,251,1) 37%, rgba(255,255,255,1) 100%);
+    position: relative;
 }
 
 .content-container{
@@ -34,6 +35,30 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+@media (-webkit-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {
+    .content-container{
+        max-height: 80vh;
+        max-width: 50vw;
+    }
+}
+
+.banner-holder{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.banner-holder img{
+    width: 100%;
+    height: 25%;
+    object-fit: cover;
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 25%, rgba(0,0,0,0) 100%);
 }
 
 .content-card{
@@ -43,6 +68,7 @@
     width: 100%;
     max-width: 1200px;
     justify-content: center;
+    z-index: 1;
 }
 
 .profiles-pictures-holder{
@@ -93,10 +119,17 @@
 }
 
 ul[role="menubar"]{
-    background: linear-gradient(rgba(195, 238, 255, 0.443) 20%, rgba(185, 230, 248, 0.37) 25%, rgba(195, 238, 255, 0.514) 43%, rgba(173, 226, 247, 0.425) 48%, rgba(122, 198, 228, 0.459));
+    background: linear-gradient(to top, rgba(133, 137, 139, 0.418) 30%, rgba(129, 129, 129, 0.2) 100%);
+    box-shadow: 
+        inset 0 2px 15px rgba(255, 255, 255, 0.5),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px) brightness(1.2);
+    -webkit-backdrop-filter: blur(10px) brightness(1.2);
     height: 45px;
     align-items: center;
     font-size: 12pt;
+    z-index: 1;
+    position: relative;
 }
 
 [role="menuitem"]{
@@ -139,6 +172,9 @@ ul[role="menubar"] li:active{
     display: flex;
     flex-direction: column;
     gap: 0.5em;
+    text-shadow: 0 0 10px #fff, 0 0 10px #fff;
+    padding-left: 2em;
+    padding-top: 0.5em;
 }
 
 .chat-list{
@@ -170,6 +206,19 @@ ul[role="menubar"] li:active{
 
 .message-body{
     max-width: 90%;
+}
+
+.message-body img{
+    width: 45%;
+    height: 45%;
+    object-fit: cover;
+    margin-top: 0.5em;
+}
+
+.message-body img:hover{
+    cursor: zoom-in;
+    scale: 1.05;
+    box-shadow: 10px 10px 5px #888;
 }
 
 .interaction{
@@ -287,7 +336,7 @@ ul[role="menubar"] li:active{
 .status{
     font-size: 1.2rem;
     font-weight: 400;
-    color: rgba(105, 103, 103, 0.6);
+    color: rgba(48, 46, 46, 0.712);
 }
 
 .desc{
@@ -321,4 +370,20 @@ hr{
     font-size: 2rem;
     font-weight: 400;
     color: rgba(24, 23, 23, 0.815);
+}
+
+[role='dialog']{
+    transform: none;
+}
+
+[role='dialog'] .window-body{
+    background-color: black;
+    height: 700px;
+    width: 1000px;
+}
+
+[role='dialog'] img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }

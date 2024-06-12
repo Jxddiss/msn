@@ -1,6 +1,8 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { WindowInfoService } from '../../service/window-info.service';
 import { Subscription, reduce } from 'rxjs';
+import { Erreur } from '../../model/erreur.model';
+import { ErreurService } from '../../service/erreur.service';
 
 @Component({
   selector: 'app-taskbar',
@@ -23,7 +25,9 @@ export class TaskbarComponent implements OnDestroy{
   private _subcriptions : Subscription[] = []
   @Output() backgroundChangeEvent = new EventEmitter()
   
-  constructor(private _windowInfoService : WindowInfoService){ 
+  constructor(
+    private _windowInfoService : WindowInfoService,
+    private _erreurService : ErreurService){ 
     this._subcriptions.push(
       this._windowInfoService.chatWindowOpen$.subscribe(value => {
         this.chatOpened = value
@@ -72,7 +76,8 @@ export class TaskbarComponent implements OnDestroy{
         };
         reader.readAsDataURL(file);
       }else{
-        alert(result)
+        const erreur = new Erreur("Upload d'image", result);
+        this._erreurService.onErreursEvent(erreur);
       }
     }
   }

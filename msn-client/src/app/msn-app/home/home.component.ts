@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import gsap from 'gsap';
 import { WindowInfoService } from '../../service/window-info.service';
 
@@ -8,6 +8,8 @@ import { WindowInfoService } from '../../service/window-info.service';
   styleUrl: './home.component.css'
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
+
+  @ViewChild('bannerImg') bannerImg !: ElementRef
 
   constructor(private _windowInfoService : WindowInfoService){ }
 
@@ -25,6 +27,14 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
     tl.to('.msn-window', {
       left: '20%',
     })
+  }
+
+  onBannerChangeEvent(file: File){
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.bannerImg.nativeElement.src = reader.result as string;
+    };
+    reader.readAsDataURL(file);
   }
 
   ngOnDestroy(): void {
