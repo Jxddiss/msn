@@ -10,7 +10,9 @@ export function parseEmoji(message : string) : string{
         const emoji = match
         const emojiName = match.slice(1, -1)
         const emojiImage = getEmojiImg(match)
-        emojiToParse = emojiToParse.replace(emoji, `<img class="message-emoji" src="assets/images/emojis/${emojiImage}" alt="" title="${emojiName}">`)
+        if(emojiImage !== ""){
+            emojiToParse = emojiToParse.replace(emoji, `<img class="message-emoji" src="assets/images/emojis/${emojiImage}" alt="" title="${emojiName}">`)
+        }
     }
     return emojiToParse
 }

@@ -53,8 +53,8 @@ cdkDragBoundary="#desktop"
                   <div class="sender">John Doe said</div>
                   <div class="message">
                     <span class="point"></span>
-                    <div class="message-body">
-                      Hello, I am John Doe
+                    <div class="message-body"
+                    [innerHTML]="parseEmoji('Hello , I am John Doe :cry_smile:')">
                     </div>
                   </div>
                 </div>
@@ -76,8 +76,8 @@ cdkDragBoundary="#desktop"
                   <div class="sender">John Doe said</div>
                   <div class="message">
                     <span class="point"></span>
-                    <div class="message-body">
-                      Hello, I am John Doe
+                    <div class="message-body"
+                    [innerHTML]="parseEmoji('Hello , I am John Doe :blaze:')">
                     </div>
                   </div>
                 </div>
