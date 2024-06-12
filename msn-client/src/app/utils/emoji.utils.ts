@@ -1,7 +1,7 @@
 import { Emoji } from "../model/emoji.model";
 
 export function parseEmoji(message : string) : string{
-    const regex = /\:[a-z0-9_\-\+]+\:/g;
+    const regex = /\:[a-zA-Z0-9_\-\+\=]+\:/g;
     const matches = message.match(regex)
     if(!matches) return message
     let emojiToParse = message
