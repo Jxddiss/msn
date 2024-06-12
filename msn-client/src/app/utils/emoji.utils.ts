@@ -26,6 +26,18 @@ function getEmojiImg(emojiCode : string) : string{
     return ""
 }
 
+export function saveRecentEmoji(emoji : Emoji) : void{
+    if(!localStorage.getItem("recentEmojis")){
+        localStorage.setItem("recentEmojis", JSON.stringify([emoji]))
+    }else{
+        const emojis : Emoji[] = JSON.parse(localStorage.getItem("recentEmojis")!)
+        if(!emojis.some(e => e.code === emoji.code)){
+            emojis.push(emoji)
+            localStorage.setItem("recentEmojis", JSON.stringify(emojis))
+        }
+    }
+}
+
 export const EMOJIS : Emoji[] = [
   new Emoji(":angel_smile:", "angel_smile.png"),
   new Emoji(":regular_smile:", "regular_smile.png"),
