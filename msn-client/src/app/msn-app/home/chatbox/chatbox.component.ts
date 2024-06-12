@@ -2,6 +2,7 @@ import { AfterContentChecked, AfterViewInit, Component, ElementRef, OnDestroy, O
 import { WindowInfoService } from '../../../service/window-info.service';
 import gsap from 'gsap';
 import { Subject, Subscription } from 'rxjs';
+import {parseEmoji} from '../../../utils/emoji.utils'
 
 @Component({
   selector: 'app-chatbox',
@@ -24,7 +25,6 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   @ViewChild('photoInput') photoInput !: ElementRef
   @ViewChild('chatList') chatList : ElementRef | undefined
   private _scrolledChatList = false
-
   dragPosition = {
     x: 0,
     y: 0
@@ -241,6 +241,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     this._emojiPickerOpen.next(null)
   }
 
+  parseEmoji(emoji : string) : string{
+    return parseEmoji(emoji)
+  }
+
   get isFullScreen(){
     return this._isFullScreen
   }
@@ -248,4 +252,5 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   get appelStarted(){
     return this.appelStarted$
   }
+  
 }

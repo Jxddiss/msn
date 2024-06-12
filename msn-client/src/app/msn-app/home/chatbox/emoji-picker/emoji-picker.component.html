@@ -3,21 +3,9 @@
         <img src="assets/images/emojis/teeth_smile.png" alt="">
         <span>Émoticones</span>
     </div>
-    <div class="emoji-list emoji">
-        <button type="button" class="emoji-item emoji">
-            <img src="assets/images/emojis/teeth_smile.png" alt="" class="emoji">
-        </button>
-        <button type="button" class="emoji-item emoji">
-            <img src="assets/images/emojis/teeth_smile.png" alt="" class="emoji">
-        </button>
-        <button type="button" class="emoji-item emoji">
-            <img src="assets/images/emojis/teeth_smile.png" alt="" class="emoji">
-        </button>
-        <button type="button" class="emoji-item emoji">
-            <img src="assets/images/emojis/teeth_smile.png" alt="" class="emoji">
-        </button>
-        <button type="button" class="emoji-item emoji">
-            <img src="assets/images/emojis/teeth_smile.png" alt="" class="emoji">
+    <div class="emoji-list emoji has-scrollbar">
+        <button type="button" class="emoji-item emoji" *ngFor="let emoji of emojis">
+            <img src="assets/images/emojis/{{emoji.img}}" alt="" class="emoji">
         </button>
     </div>
 </div>

@@ -205,6 +205,8 @@ ul[role="menubar"] li:active{
 }
 
 .message-body{
+    display: flex;
+    align-items: center;
     max-width: 90%;
 }
 
@@ -244,7 +246,7 @@ ul[role="menubar"] li:active{
     height: 5px;
     border-radius: 50%;
     background-color: rgba(29, 29, 29, 0.664);
-    align-self: flex-start;
+    align-self: center;
     margin-top: 0.5em;
 }
 

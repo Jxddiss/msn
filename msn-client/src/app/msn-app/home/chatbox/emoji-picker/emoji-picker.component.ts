@@ -1,6 +1,7 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import gsap from 'gsap';
 import { Observable, Subscription } from 'rxjs';
+import { EMOJIS } from '../../../../utils/emoji.utils';
 
 @Component({
   selector: 'app-emoji-picker',
@@ -44,5 +45,9 @@ export class EmojiPickerComponent implements OnInit {
           this.onOpen()
       }
     }
+  }
+
+  get emojis() {
+    return EMOJIS
   }
 }

@@ -5,7 +5,7 @@
     display: none;
     flex-direction: column;
     height: 250px;
-    width: 250px;
+    width: 275px;
     background: rgb(254,255,250);
     background: linear-gradient(180deg, rgba(254,255,250,1) 24%, rgba(255,251,243,1) 69%, rgba(255,254,250,1) 100%);
     border-radius: 5px;
@@ -38,6 +38,8 @@ img{
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
     gap: 0.5em;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .emoji-item{
@@ -47,4 +49,6 @@ img{
     border: none;
     cursor: pointer;
     box-shadow: none;
+    height: 30px;
+    width: 30px;
 }
