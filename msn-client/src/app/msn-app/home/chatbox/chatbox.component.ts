@@ -24,6 +24,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   @ViewChild('imgDialog') imgDialog !: ElementRef
   @ViewChild('photoInput') photoInput !: ElementRef
   @ViewChild('chatList') chatList : ElementRef | undefined
+  @ViewChild('messageInput') messageInput !: ElementRef
   private _scrolledChatList = false
   dragPosition = {
     x: 0,
@@ -243,6 +244,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
 
   parseEmoji(emoji : string) : string{
     return parseEmoji(emoji)
+  }
+
+  onEmojiPicked(emojiCode : string) : void{
+    this.messageInput.nativeElement.value = this.messageInput.nativeElement.value + emojiCode
   }
 
   get isFullScreen(){

@@ -4,8 +4,8 @@
         <span>Émoticones</span>
     </div>
     <div class="emoji-list emoji has-scrollbar">
-        <button type="button" class="emoji-item emoji" *ngFor="let emoji of emojis">
-            <img src="assets/images/emojis/{{emoji.img}}" alt="" class="emoji">
+        <button type="button" class="emoji-item" *ngFor="let emoji of emojis" (click)="onEmojiClick(emoji)">
+            <img src="assets/images/emojis/{{emoji.img}}" alt="">
         </button>
     </div>
 </div>

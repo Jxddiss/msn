@@ -77,7 +77,7 @@ cdkDragBoundary="#desktop"
                   <div class="message">
                     <span class="point"></span>
                     <div class="message-body"
-                    [innerHTML]="parseEmoji('Hello , I am John Doe :blaze:')">
+                    [innerHTML]="parseEmoji('Hello , I am John Doe :kiss::wink_smile:')">
                     </div>
                   </div>
                 </div>
@@ -96,7 +96,7 @@ cdkDragBoundary="#desktop"
               </div>
               <div class="chat-input">
                 <div role="tooltip" class="is-top is-right">
-                  <textarea placeholder="Écrivez un message" class="text-input"></textarea>
+                  <textarea placeholder="Écrivez un message" class="text-input" #messageInput></textarea>
                 </div>
                 <div class="chat-input-options">
                   <button type="button" class="opt" (click)="onEmojiPickerOpen()">
@@ -117,7 +117,7 @@ cdkDragBoundary="#desktop"
                   <input type="file" hidden #photoInput accept="image/*">
                 </div>
               </div>
-              <app-emoji-picker [open$]="emojiPickerOpen$"></app-emoji-picker>
+              <app-emoji-picker [open$]="emojiPickerOpen$" (emojiSelected)="onEmojiPicked($event)"></app-emoji-picker>
             </div>
           </div>
         </div>
