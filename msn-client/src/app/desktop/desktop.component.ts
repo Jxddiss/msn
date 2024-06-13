@@ -129,9 +129,11 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     audio.load()
     audio.play()
     tl.to('.wink-player', {
+      display: 'block',
       opacity: 1,
     })
     tl.to('.wink-player', {
+      display: 'none',
       opacity: 0,
       delay: wink.duration
     })
