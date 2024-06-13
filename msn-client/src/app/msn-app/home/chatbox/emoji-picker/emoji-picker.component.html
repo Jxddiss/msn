@@ -1,8 +1,4 @@
 <div class="emoji-container emoji">
-    <div class="emoji-header emoji">
-        <img src="assets/images/emojis/teeth_smile.png" alt="">
-        <span>Émoticones</span>
-    </div>
     <div class="emoji-list emoji has-scrollbar">
         <button type="button" class="emoji-item" *ngFor="let emoji of emojis" (click)="onEmojiClick(emoji)">
             <img src="assets/images/emojis/{{emoji.img}}" alt="">
