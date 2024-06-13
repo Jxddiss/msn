@@ -1,0 +1,43 @@
+
+.winks-container{
+    position: fixed;
+    display: none;
+    flex-direction: column;
+    height: 250px;
+    width: 275px;
+    background: rgb(254,255,250);
+    background: linear-gradient(180deg, rgba(254,255,250,1) 24%, rgba(255,251,243,1) 69%, rgba(255,254,250,1) 100%);
+    border-radius: 5px;
+    border: 1px solid rgba(61, 61, 61, 0.3);
+    box-shadow: 1px 1px 1px rgba(61, 61, 61, 0.3);
+    translate: 20% -120%;
+    padding: 1em;
+    gap: 0.5em;
+    opacity: 0;
+}
+
+img{
+    width: 45px;
+    height: 45px;
+    object-fit: contain;
+}
+
+.winks-list{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 0.5em;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.wink-item{
+    min-width: min-content;
+    background: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    box-shadow: none;
+    height: 50px;
+    width: 50px;
+}

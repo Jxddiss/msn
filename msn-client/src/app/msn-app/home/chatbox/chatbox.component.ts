@@ -20,6 +20,8 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   appelStarted$ = this._appelStarted.asObservable()
   private _emojiPickerOpen = new Subject()
   emojiPickerOpen$ = this._emojiPickerOpen.asObservable()
+  private _winksPickerOpen = new Subject()
+  winksPickerOpen$ = this._winksPickerOpen.asObservable()
   @ViewChild('dialogImg') dialogImg !: ElementRef
   @ViewChild('imgDialog') imgDialog !: ElementRef
   @ViewChild('photoInput') photoInput !: ElementRef
@@ -248,6 +250,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
 
   onEmojiPicked(emojiCode : string) : void{
     this.messageInput.nativeElement.value += emojiCode
+  }
+
+  onWinkPickerOpen() : void{
+    this._winksPickerOpen.next(null)
   }
 
   get isFullScreen(){

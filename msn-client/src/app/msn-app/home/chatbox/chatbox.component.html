@@ -102,8 +102,8 @@ cdkDragBoundary="#desktop"
                   <button type="button" class="opt" (click)="onEmojiPickerOpen()">
                     <img class="emoji" src="assets/images/emojis/teeth_smile.png" alt="">
                   </button>
-                  <button type="button" class="opt">
-                    <img src="assets/images/emojis/wink_smile.gif" alt="">
+                  <button type="button" class="opt" (click)="onWinkPickerOpen()">
+                    <img src="assets/images/emojis/wink_smile.gif" alt="" class="wink">
                   </button>
                   <button type="button" class="opt" (click)="onNudge()">
                     <img src="assets/images/emojis/wizz-msn.png" alt="">
@@ -118,6 +118,7 @@ cdkDragBoundary="#desktop"
                 </div>
               </div>
               <app-emoji-picker [open$]="emojiPickerOpen$" (emojiSelected)="onEmojiPicked($event)"></app-emoji-picker>
+              <app-winks-picker [open$]="winksPickerOpen$"></app-winks-picker>
             </div>
           </div>
         </div>
