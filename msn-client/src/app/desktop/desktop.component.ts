@@ -137,6 +137,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
       opacity: 0,
       delay: wink.duration
     })
+    setTimeout(()=>this.winkImg.nativeElement.src = '', wink.duration*1500)
   }
 
   ngOnDestroy(): void {
