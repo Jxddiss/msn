@@ -24,6 +24,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   @ViewChild('erreurContainer',{read: ViewContainerRef})
   erreurContainer : ViewContainerRef | undefined
   @ViewChild('winkImg') winkImg !: ElementRef 
+  private _winkIsPlaying = false
   msnOpened  = signal(false)
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
@@ -123,6 +124,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   }
 
   onPlayWink(wink : Wink){
+    if(this._winkIsPlaying) return
     this.winkImg.nativeElement.src = wink.gif
     const tl = gsap.timeline()
     const audio = new Audio(wink.sound)
@@ -137,7 +139,10 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
       opacity: 0,
       delay: wink.duration
     })
-    setTimeout(()=>this.winkImg.nativeElement.src = '', wink.duration*1500)
+    setTimeout(()=>{
+      this.winkImg.nativeElement.src = ''
+      this._winkIsPlaying = false
+    }, wink.duration*1000 + 800)
   }
 
   ngOnDestroy(): void {
