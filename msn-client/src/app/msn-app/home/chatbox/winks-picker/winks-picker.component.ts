@@ -42,8 +42,7 @@ export class WinksPickerComponent implements OnInit {
   clickout(event: Event) {
     if(this._open){
       const target = event.target as HTMLElement
-      if(!target.classList.contains('wink')
-        && !target.classList.contains('opt')){
+      if(!target.classList.contains('wink')){
           this.onOpen()
       }
     }

@@ -17,8 +17,8 @@
 }
 
 img{
-    width: 45px;
-    height: 45px;
+    width: 50px;
+    height: 50px;
     object-fit: contain;
 }
 
@@ -38,6 +38,12 @@ img{
     border: none;
     cursor: pointer;
     box-shadow: none;
-    height: 50px;
-    width: 50px;
+    height: 70px;
+    width: 70px;
+    border-radius: 20px;
+}
+
+.wink-item::after,
+.wink-item::before{
+    border-radius: 20px;
 }

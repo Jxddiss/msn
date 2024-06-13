@@ -41,6 +41,12 @@ img{
     box-shadow: none;
     height: 30px;
     width: 30px;
+    border-radius: 20px;
+}
+
+.emoji-item::after,
+.emoji-item::before{
+    border-radius: 20px;
 }
 
 .recent-emoji-list{
