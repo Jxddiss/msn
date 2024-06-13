@@ -4,7 +4,7 @@
     position: fixed;
     display: none;
     flex-direction: column;
-    height: 275px;
+    height: 250px;
     width: 275px;
     background: rgb(254,255,250);
     background: linear-gradient(180deg, rgba(254,255,250,1) 24%, rgba(255,251,243,1) 69%, rgba(255,254,250,1) 100%);
@@ -47,5 +47,5 @@ img{
     display: flex;
     overflow: hidden;
     flex-grow: 1;
-    height: 30%;
+    height: 20%;
 }
