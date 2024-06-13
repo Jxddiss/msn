@@ -55,8 +55,7 @@ img{
 
 .recent-emoji-list{
     display: flex;
-    overflow-x: auto;
-    overflow-y: hidden;
+    overflow: hidden;
     flex-grow: 1;
-    height: 50%;
+    height: 30%;
 }

@@ -30,6 +30,9 @@ export function saveRecentEmoji(emoji : Emoji) : void{
     }else{
         const emojis : Emoji[] = JSON.parse(localStorage.getItem("recentEmojis")!)
         if(!emojis.some(e => e.code === emoji.code)){
+            if(emojis.length >= 5){
+                emojis.shift()
+            }
             emojis.push(emoji)
             localStorage.setItem("recentEmojis", JSON.stringify(emojis))
         }
