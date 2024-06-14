@@ -5,6 +5,6 @@ export class Message {
         public date: Date,
         public pseudoSender: string,
         public type: string,
-        public winkName: string
+        public winkName?: string | null
     ){}
 }
