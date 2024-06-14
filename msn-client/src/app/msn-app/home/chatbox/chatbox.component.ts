@@ -22,6 +22,8 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   emojiPickerOpen$ = this._emojiPickerOpen.asObservable()
   private _winksPickerOpen = new Subject()
   winksPickerOpen$ = this._winksPickerOpen.asObservable()
+  private _textEditOpen = new Subject()
+  textEditOpen$ = this._textEditOpen.asObservable()
   @ViewChild('dialogImg') dialogImg !: ElementRef
   @ViewChild('imgDialog') imgDialog !: ElementRef
   @ViewChild('photoInput') photoInput !: ElementRef
@@ -31,6 +33,13 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   dragPosition = {
     x: 0,
     y: 0
+  }
+  style = {
+    color: '',
+    fontSize: '1rem',
+    fontWeight: '',
+    fontFamily: '',
+    textShadow: 'none'
   }
 
   constructor(private _windowInfoService : WindowInfoService) {}
@@ -255,6 +264,14 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
 
   onWinkPickerOpen() : void{
     this._winksPickerOpen.next(null)
+  }
+
+  onTextEditOpen() : void{
+    this._textEditOpen.next(null)
+  }
+
+  onTextEdited(textStyle : any) : void{
+    this.style = textStyle
   }
 
   get isFullScreen(){

@@ -21,6 +21,7 @@ import { NotificationComponent } from './desktop/notification/notification.compo
 import { ErreurComponent } from './desktop/erreur/erreur.component';
 import { EmojiPickerComponent } from './msn-app/home/chatbox/emoji-picker/emoji-picker.component';
 import { WinksPickerComponent } from './msn-app/home/chatbox/winks-picker/winks-picker.component';
+import { TextEditComponent } from './msn-app/home/chatbox/text-edit/text-edit.component';
 
 registerLocaleData(localeFr)
 
@@ -42,6 +43,7 @@ registerLocaleData(localeFr)
     ErreurComponent,
     EmojiPickerComponent,
     WinksPickerComponent,
+    TextEditComponent,
   ],
   imports: [
     BrowserModule,

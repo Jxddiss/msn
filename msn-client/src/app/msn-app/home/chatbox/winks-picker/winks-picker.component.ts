@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import gsap from 'gsap';
 import { WinksService } from '../../../../service/winks.service';
@@ -10,7 +10,7 @@ import { WINKS } from '../../../../utils/wink.utils';
   templateUrl: './winks-picker.component.html',
   styleUrl: './winks-picker.component.css'
 })
-export class WinksPickerComponent implements OnInit {
+export class WinksPickerComponent implements OnInit, OnDestroy {
   @Input() open$ !: Observable<any>
   private _subscriptions : Subscription[] = []
   private _open = false
@@ -54,5 +54,9 @@ export class WinksPickerComponent implements OnInit {
 
   get winks(): Wink[] {
     return WINKS
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.forEach(sub => sub.unsubscribe())
   }
 }

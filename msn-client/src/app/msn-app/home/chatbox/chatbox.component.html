@@ -96,7 +96,7 @@ cdkDragBoundary="#desktop"
               </div>
               <div class="chat-input">
                 <div role="tooltip" class="is-top is-right">
-                  <textarea placeholder="Écrivez un message" class="text-input" #messageInput></textarea>
+                  <textarea [ngStyle]="style" placeholder="Écrivez un message" class="text-input" #messageInput></textarea>
                 </div>
                 <div class="chat-input-options">
                   <button type="button" class="opt emoji" 
@@ -115,15 +115,16 @@ cdkDragBoundary="#desktop"
                   (click)="onPhotoSelection()" title="Envoyer une image">
                     <img src="assets/images/pictures.png" alt="">
                   </button>
-                  <button type="button" class="opt" 
-                  title="Modifier le texte">
-                    <img src="assets/images/text.png" alt="">
+                  <button type="button" class="opt text-edit" 
+                  title="Modifier le texte" (click)="onTextEditOpen()">
+                    <img src="assets/images/text.png" alt="" class="text-edit">
                   </button>
                   <input type="file" hidden #photoInput accept="image/*">
                 </div>
               </div>
               <app-emoji-picker [open$]="emojiPickerOpen$" (emojiSelected)="onEmojiPicked($event)"></app-emoji-picker>
               <app-winks-picker [open$]="winksPickerOpen$"></app-winks-picker>
+              <app-text-edit [open$]="textEditOpen$" (textEditedEvent)="onTextEdited($event)"></app-text-edit>
             </div>
           </div>
         </div>

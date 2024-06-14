@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import gsap from 'gsap';
 import { Observable, Subscription } from 'rxjs';
 import { EMOJIS, saveRecentEmoji } from '../../../../utils/emoji.utils';
@@ -9,7 +9,7 @@ import { Emoji } from '../../../../model/emoji.model';
   templateUrl: './emoji-picker.component.html',
   styleUrl: './emoji-picker.component.css'
 })
-export class EmojiPickerComponent implements OnInit {
+export class EmojiPickerComponent implements OnInit, OnDestroy {
   @Input() open$ !: Observable<any>
   private _subscriptions : Subscription[] = []
   private _open = false
@@ -67,5 +67,9 @@ export class EmojiPickerComponent implements OnInit {
 
   get recentEmojis() {
     return this._recentEmojis
+  }
+
+  ngOnDestroy(): void {
+    this._subscriptions.forEach(sub => sub.unsubscribe())
   }
 }
