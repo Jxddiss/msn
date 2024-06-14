@@ -12,4 +12,7 @@ export const WINKS : Wink[] = [
     new Wink("Boy peeking","assets/images/winks/sideway_man.gif", "assets/images/winks/sideway_man.png", "assets/sounds/sideway_man.mp3",6),
     new Wink("Dancing pig","assets/images/winks/dancing_pig.gif", "assets/images/winks/dancing_pig.png", "assets/sounds/dancing_pig.mp3",9),
 ]
-        
+
+export function getWink(nomWink : string) : Wink | null{
+  return WINKS.find(wink => wink.nom === nomWink) ?? null
+}
