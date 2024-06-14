@@ -27,7 +27,7 @@ hr{
     position: relative;
     display: flex;
     flex-direction: column;
-    gap: 0.5em;
+    gap: 1em;
     align-items: center;
     width: 50%;
     overflow-y: auto;

@@ -3,6 +3,8 @@ import { WindowInfoService } from '../../../service/window-info.service';
 import gsap from 'gsap';
 import { Subject, Subscription } from 'rxjs';
 import {parseEmoji} from '../../../utils/emoji.utils'
+import { WinksService } from '../../../service/winks.service';
+import { getWink } from '../../../utils/wink.utils';
 
 @Component({
   selector: 'app-chatbox',
@@ -42,7 +44,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     textShadow: 'none'
   }
 
-  constructor(private _windowInfoService : WindowInfoService) {}
+  constructor(private _windowInfoService : WindowInfoService, private _winksService : WinksService) {}
 
   ngOnInit(): void {
     this._windowInfoService.onChatWindowOpen(true)
@@ -272,6 +274,14 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
 
   onTextEdited(textStyle : any) : void{
     this.style = textStyle
+  }
+
+  onPlayWink($event : Event) : void{
+    const elem = $event.target as HTMLElement
+    const wink = getWink(elem.getAttribute("winkName") ?? '')
+    if(wink){
+      this._winksService.onWinksToPlay(wink)
+    }
   }
 
   get isFullScreen(){

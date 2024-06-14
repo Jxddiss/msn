@@ -1,5 +1,14 @@
-<div class="edit-container text-edit has-scrollbar">
-    <div class="inputs text-edit">
+<div class="edit-container text-edit">
+    <div class="inputs text-edit has-scrollbar">
+        <div class="input-container text-edit">
+            <label for="font-family" class="text-edit">Police </label>
+            <hr>
+            <ul class="text-edit font-selector" #fontSelector>
+                <span class="text-edit police-previous pol-btn" (click)="onScrollFont(0)"><</span>
+                <li class="text-edit" *ngFor="let font of fonts" [ngStyle]="{fontFamily: font}">{{font}}</li>
+                <span class="text-edit police-next pol-btn" (click)="onScrollFont(1)">></span>
+            </ul>
+        </div>
         <div class="input-container text-edit">
             <label for="color" class="text-edit">Couleur du texte </label>
             <hr>
@@ -28,15 +37,6 @@
                 (change)="onTextShadowChange($event)">
                 <label for="text-shadow" class="text-edit">Ajouter une ombre </label>
             </div>
-        </div>
-        <div class="input-container text-edit">
-            <label for="font-family" class="text-edit">Police </label>
-            <hr>
-            <ul class="text-edit font-selector" #fontSelector>
-                <span class="text-edit police-previous pol-btn" (click)="onScrollFont(0)"><</span>
-                <li class="text-edit" *ngFor="let font of fonts" [ngStyle]="{fontFamily: font}">{{font}}</li>
-                <span class="text-edit police-next pol-btn" (click)="onScrollFont(1)">></span>
-            </ul>
         </div>
     </div>
     <div class="preview text-edit">
