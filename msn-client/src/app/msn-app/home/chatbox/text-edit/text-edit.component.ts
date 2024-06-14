@@ -12,16 +12,17 @@ export class TextEditComponent implements OnInit, OnDestroy {
   @ViewChild('fontSelector') fontSelector !: ElementRef
   private _subscriptions : Subscription[] = []
   private _open = false
-  currentFontIndex = 0
-  fonts : string[] = [
-    'Arial', 'Times New Roman', 
-    'Segoe UI', 'Roboto', 'Helvetica Neue', 
+  private _currentFontIndex = 0
+  private _fonts : string[] = [
+    'Segoe UI','Arial', 'Times New Roman', 
+    'Roboto', 'Helvetica Neue', 
     'brush script mt', 'Verdana', 'sans-serif',
     'Courier New', 'Monospace',
     'Georgia', 'Impact', 'Palatino',
     'comic sans ms', 'papyrus',
   ]
-  textShadow = '1px 1px 1px black'
+  private _fontDebounce : NodeJS.Timeout | undefined
+  private _textShadow = '1px 1px 1px black'
   style = {
     color: '',
     fontSize: '1rem',
@@ -76,11 +77,15 @@ export class TextEditComponent implements OnInit, OnDestroy {
     if(!input.checked){
       this.style.textShadow = 'none'
     }else{
-      this.style.textShadow = this.textShadow
+      this.style.textShadow = this._textShadow
     }
   }
 
   onScrollFont(direction: number) {
+    if(this._fontDebounce) return
+    this._fontDebounce = setTimeout(() => {
+      this._fontDebounce = undefined
+    }, 500)
     const fontSelector = this.fontSelector.nativeElement
     if(direction > 0){
       fontSelector.scrollBy({
@@ -88,16 +93,16 @@ export class TextEditComponent implements OnInit, OnDestroy {
         left: fontSelector.clientWidth,
         behavior: 'smooth'
       })
-      if(this.currentFontIndex < this.fonts.length - 1) this.currentFontIndex++
+      if(this._currentFontIndex < this._fonts.length - 1) this._currentFontIndex++
     }else{
       fontSelector.scrollBy({
         top: 0,
         left: -fontSelector.clientWidth,
         behavior: 'smooth'
       })
-      if(this.currentFontIndex > 0) this.currentFontIndex--
+      if(this._currentFontIndex > 0) this._currentFontIndex--
     }
-    this.style.fontFamily = this.fonts[this.currentFontIndex]
+    this.style.fontFamily = this._fonts[this._currentFontIndex]
   }
 
   onSave() {
@@ -114,9 +119,25 @@ export class TextEditComponent implements OnInit, OnDestroy {
     }
   }
 
+  resetStyle(): void {
+    this.style = {
+      color: '',
+      fontSize: '1rem',
+      fontWeight: '',
+      fontFamily: '',
+      textShadow: 'none'
+    }
+    this._currentFontIndex = 0
+    this.textEditedEvent.emit(this.style)
+  }
+
+  get fonts() : string[] {
+    return this._fonts
+  }
+
   ngOnDestroy(): void {
     this._subscriptions.forEach(sub => sub.unsubscribe())
     this._open = false
-    this.currentFontIndex = 0
+    this._currentFontIndex = 0
   }
 }

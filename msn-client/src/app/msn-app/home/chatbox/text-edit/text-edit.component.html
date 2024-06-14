@@ -1,4 +1,4 @@
-<div class="edit-container text-edit">
+<form class="edit-container text-edit">
     <div class="inputs text-edit has-scrollbar">
         <div class="input-container text-edit">
             <div class="input-title text-edit">Police </div>
@@ -44,5 +44,6 @@
         <hr>
         <span class="preview-text" [ngStyle]="style">texte</span>
     </div>
+    <button type="reset" class="reset-btn text-edit" (click)="resetStyle()">Reset</button>
     <button type="button" class="save-btn" (click)="onSave()">Enregistrer</button>
-</div>
+</form>
