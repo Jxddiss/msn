@@ -40,6 +40,7 @@ export class TextEditComponent implements OnInit, OnDestroy {
     this._subscriptions.push(
       this.open$.subscribe(()=>this.onOpen())
     )
+    this.textEditedEvent.emit(this.style)
   }
 
   onOpen() {
@@ -103,10 +104,6 @@ export class TextEditComponent implements OnInit, OnDestroy {
       if(this._currentFontIndex > 0) this._currentFontIndex--
     }
     this.style.fontFamily = this._fonts[this._currentFontIndex]
-  }
-
-  onSave() {
-    this.textEditedEvent.emit(this.style)
   }
 
   @HostListener('document:click', ['$event'])

@@ -101,14 +101,8 @@ hr{
     right: 10px;
 }
 
-.save-btn{
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-}
-
 .reset-btn{
     position: absolute;
-    bottom: 40px;
+    bottom: 10px;
     right: 10px;
 }
