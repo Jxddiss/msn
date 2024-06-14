@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { ErreurService } from '../../../service/erreur.service';
 import { Erreur } from '../../../model/erreur.model';
+import { verifyFile } from '../../../utils/input-verification.utils';
 
 @Component({
   selector: 'app-user-card',
@@ -29,7 +30,7 @@ export class UserCardComponent {
     const target = event.target as HTMLInputElement;
     if (target && target.files && target.files.length > 0) {
       const file = target.files[0];
-      let result = this.verifyFile(file);
+      let result = verifyFile(file);
       if(result === "bon"){
         const reader = new FileReader();
         reader.onload = () => {
@@ -48,7 +49,7 @@ export class UserCardComponent {
     const target = event.target as HTMLInputElement;
     if (target && target.files && target.files.length > 0) {
       const file = target.files[0];
-      let result = this.verifyFile(file);
+      let result = verifyFile(file);
       if(result === "bon"){
         this.bannerChangeEvent.emit(file);
       }else{
@@ -57,21 +58,6 @@ export class UserCardComponent {
         this.bannerPicker.nativeElement.value = '';
       }
     }
-  }
-
-  verifyFile(file: File) : string{ 
-    if(file.type === 'image/png' 
-    || file.type === 'image/jpg' 
-    || file.type === 'image/jpeg' 
-    || file.type === 'image/gif'){
-      if(file.size < 5000000){
-        return "bon"
-      }else{
-        return "Image trop lourde"
-      }
-    }
-
-    return "Format d'image non supportée"
   }
 
   onStatutChange(event : Event){

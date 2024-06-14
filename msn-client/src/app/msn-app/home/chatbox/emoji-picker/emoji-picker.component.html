@@ -1,0 +1,15 @@
+<div class="emoji-container emoji">
+    <div class="emoji-list emoji has-scrollbar">
+        <button type="button" class="emoji-item" *ngFor="let emoji of emojis" 
+        (click)="onEmojiClick(emoji)" title="{{emoji.code}}">
+            <img src="assets/images/emojis/{{emoji.img}}" alt="">
+        </button>
+    </div>
+    <hr *ngIf="recentEmojis.length > 0">
+    <div class="recent-emoji-list emoji has-scrollbar" *ngIf="recentEmojis.length > 0">
+        <button type="button" class="emoji-item" *ngFor="let emoji of recentEmojis" 
+        (click)="onEmojiClick(emoji)" title="{{emoji.code}}">
+            <img src="assets/images/emojis/{{emoji.img}}" alt="">
+        </button>
+    </div>
+</div>

@@ -3,6 +3,7 @@ import { WindowInfoService } from '../../service/window-info.service';
 import { Subscription, reduce } from 'rxjs';
 import { Erreur } from '../../model/erreur.model';
 import { ErreurService } from '../../service/erreur.service';
+import { verifyFile } from '../../utils/input-verification.utils';
 
 @Component({
   selector: 'app-taskbar',
@@ -67,7 +68,7 @@ export class TaskbarComponent implements OnDestroy{
   onSetBackground(){
     const file = this.backgroundFile?.nativeElement.files[0]
     if(file){
-      const result = this.verifyFile(file)
+      const result = verifyFile(file)
       if(result === "bon"){
         const reader = new FileReader();
         reader.onload = () => {
@@ -80,21 +81,6 @@ export class TaskbarComponent implements OnDestroy{
         this._erreurService.onErreursEvent(erreur);
       }
     }
-  }
-
-  verifyFile(file: File) : string{ 
-    if(file.type === 'image/png' 
-    || file.type === 'image/jpg' 
-    || file.type === 'image/jpeg' 
-    || file.type === 'image/gif'){
-      if(file.size < 5000000){
-        return "bon"
-      }else{
-        return "Image trop lourde"
-      }
-    }
-
-    return "Format d'image non supportée"
   }
 
   ngOnDestroy(): void {

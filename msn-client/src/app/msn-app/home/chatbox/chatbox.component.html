@@ -53,8 +53,8 @@ cdkDragBoundary="#desktop"
                   <div class="sender">John Doe said</div>
                   <div class="message">
                     <span class="point"></span>
-                    <div class="message-body">
-                      Hello, I am John Doe
+                    <div class="message-body"
+                    [innerHTML]="parseEmoji('Hello , I am John Doe :cry_smile:')">
                     </div>
                   </div>
                 </div>
@@ -62,8 +62,8 @@ cdkDragBoundary="#desktop"
                   <div class="sender">John Doe said</div>
                   <div class="message">
                     <span class="point"></span>
-                    <div class="message-body">
-                      Hello, I am John Doe
+                    <div class="message-body" 
+                    [innerHTML]="parseEmoji('Hello :birthday:, I am John Doe :angel_smile:')">
                     </div>
                   </div>
                 </div>
@@ -76,8 +76,8 @@ cdkDragBoundary="#desktop"
                   <div class="sender">John Doe said</div>
                   <div class="message">
                     <span class="point"></span>
-                    <div class="message-body">
-                      Hello, I am John Doe
+                    <div class="message-body"
+                    [innerHTML]="parseEmoji(':birthday: SAlljipjoirg rettr retrtert:shades_smile::kiss::blaze::devil_smile:terertre etrert ertret:bruh::\(O_O\)::=P:')">
                     </div>
                   </div>
                 </div>
@@ -93,30 +93,51 @@ cdkDragBoundary="#desktop"
                   </div>
                   <hr>
                 </div>
+                <div class="chat-item">
+                  <div class="sender">John Doe à envoyée un clin d'oeil</div>
+                  <hr>
+                  <div class="message">
+                    <div class="message-body">
+                      <img 
+                      src="assets/images/winks/kiss.png" 
+                      alt="" title="Cliquez pour jouer le clin d'oeil" 
+                      winkName="Kiss" (click)="onPlayWink($event)">
+                    </div>
+                  </div>
+                  <hr>
+                </div>
               </div>
               <div class="chat-input">
                 <div role="tooltip" class="is-top is-right">
-                  <textarea placeholder="Écrivez un message" class="text-input"></textarea>
+                  <textarea [ngStyle]="style" placeholder="Écrivez un message" class="text-input" #messageInput></textarea>
                 </div>
                 <div class="chat-input-options">
-                  <button type="button" class="opt">
-                    <img src="assets/images/emojis/teeth_smile.png" alt="">
+                  <button type="button" class="opt emoji" 
+                  (click)="onEmojiPickerOpen()" title="Envoyer un émoticone">
+                    <img class="emoji" src="assets/images/emojis/teeth_smile.png" alt="">
                   </button>
-                  <button type="button" class="opt">
-                    <img src="assets/images/emojis/wink_smile.gif" alt="">
+                  <button type="button" class="opt wink" 
+                  (click)="onWinkPickerOpen()" title="Envoyer un clin d'oeil">
+                    <img src="assets/images/emojis/wink_smile.gif" alt="" class="wink">
                   </button>
-                  <button type="button" class="opt" (click)="onNudge()">
+                  <button type="button" class="opt" 
+                  (click)="onNudge()" title="Envoyer un nudge">
                     <img src="assets/images/emojis/wizz-msn.png" alt="">
                   </button>
-                  <button type="button" class="opt" (click)="onPhotoSelection()">
+                  <button type="button" class="opt" 
+                  (click)="onPhotoSelection()" title="Envoyer une image">
                     <img src="assets/images/pictures.png" alt="">
                   </button>
-                  <button type="button" class="opt" >
-                    <img src="assets/images/text.png" alt="">
+                  <button type="button" class="opt text-edit" 
+                  title="Modifier le texte" (click)="onTextEditOpen()">
+                    <img src="assets/images/text.png" alt="" class="text-edit">
                   </button>
                   <input type="file" hidden #photoInput accept="image/*">
                 </div>
               </div>
+              <app-emoji-picker [open$]="emojiPickerOpen$" (emojiSelected)="onEmojiPicked($event)"></app-emoji-picker>
+              <app-winks-picker [open$]="winksPickerOpen$"></app-winks-picker>
+              <app-text-edit [open$]="textEditOpen$" (textEditedEvent)="onTextEdited($event)"></app-text-edit>
             </div>
           </div>
         </div>

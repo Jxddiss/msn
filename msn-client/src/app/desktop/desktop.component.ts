@@ -6,6 +6,9 @@ import { NotificationComponent } from './notification/notification.component';
 import { ErreurService } from '../service/erreur.service';
 import { ErreurComponent } from './erreur/erreur.component';
 import { Erreur } from '../model/erreur.model';
+import { Wink } from '../model/wink.model';
+import gsap from 'gsap';
+import { WinksService } from '../service/winks.service';
 
 @Component({
   selector: 'app-desktop',
@@ -20,14 +23,20 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   notificationContainer : ViewContainerRef | undefined
   @ViewChild('erreurContainer',{read: ViewContainerRef})
   erreurContainer : ViewContainerRef | undefined
+  @ViewChild('winkImg') winkImg !: ElementRef 
+  private _winkIsPlaying = false
   msnOpened  = signal(false)
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
   private _subscriptions : Subscription[] = []
   
-  constructor(private _erreurService : ErreurService){ 
+  constructor(private _erreurService : ErreurService, private _winkservice : WinksService){ 
     this._subscriptions.push(
       this._erreurService.erreursEvent$.subscribe((erreur)=>this.onErreurReceived(erreur))
+    )
+
+    this._subscriptions.push(
+      this._winkservice.winksToPlay$.subscribe((wink)=>this.onPlayWink(wink))
     )
   }
 
@@ -51,8 +60,8 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     if(componentRef?.instance.close){
       this._subscriptions.push(
           componentRef?.instance.close.subscribe(()=>{
-          componentRef.instance.disparition()
-          setTimeout(()=>this.onCloseWindow(), 500)
+            componentRef.instance.disparition()
+            setTimeout(()=>this.onCloseWindow(), 500)
         })
       )
     }
@@ -112,6 +121,28 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     this._subscriptions.push(
       componentRef?.instance.close.subscribe(()=>this.erreurContainer?.clear())
     )
+  }
+
+  onPlayWink(wink : Wink){
+    if(this._winkIsPlaying) return
+    this.winkImg.nativeElement.src = wink.gif
+    const tl = gsap.timeline()
+    const audio = new Audio(wink.sound)
+    audio.load()
+    audio.play()
+    tl.to('.wink-player', {
+      display: 'flex',
+      opacity: 1,
+    })
+    tl.to('.wink-player', {
+      display: 'none',
+      opacity: 0,
+      delay: wink.duration
+    })
+    setTimeout(()=>{
+      this.winkImg.nativeElement.src = ''
+      this._winkIsPlaying = false
+    }, wink.duration*1000 + 800)
   }
 
   ngOnDestroy(): void {

@@ -1,0 +1,48 @@
+<div class="edit-container text-edit">
+    <div class="inputs text-edit has-scrollbar">
+        <div class="input-container text-edit">
+            <label for="font-family" class="text-edit">Police </label>
+            <hr>
+            <ul class="text-edit font-selector" #fontSelector>
+                <span class="text-edit police-previous pol-btn" (click)="onScrollFont(0)"><</span>
+                <li class="text-edit" *ngFor="let font of fonts" [ngStyle]="{fontFamily: font}">{{font}}</li>
+                <span class="text-edit police-next pol-btn" (click)="onScrollFont(1)">></span>
+            </ul>
+        </div>
+        <div class="input-container text-edit">
+            <label for="color" class="text-edit">Couleur du texte </label>
+            <hr>
+            <input type="color" name="color" id="color" class="text-edit" (change)="onColorChange($event)">
+        </div>
+        <div class="input-container text-edit">
+            <label for="font-size" class="text-edit">Taille de police </label>
+            <hr>
+            <input type="range" name="font-size" id="font-size" 
+            class="text-edit" min="1" max="2" value="1" step="0.1"
+            (change)="onFontSizeChange($event)">
+        </div>
+        <div class="input-container text-edit">
+            <label for="font-weight" class="text-edit">Epaisseur de police </label>
+            <hr>
+            <input type="range" name="font-weight" 
+            id="font-weight" class="text-edit"
+            min="200" max="900" value="200" step="50" (change)="onFontWeightChange($event)">
+        </div>
+        <div class="input-container text-edit">
+            <label class="text-edit">Ombre du texte </label>
+            <hr>
+            <div class="form-row">
+                <input type="checkbox" name="text-shadow" 
+                id="text-shadow" class="text-edit"
+                (change)="onTextShadowChange($event)">
+                <label for="text-shadow" class="text-edit">Ajouter une ombre </label>
+            </div>
+        </div>
+    </div>
+    <div class="preview text-edit">
+        <span>Preview</span>
+        <hr>
+        <span class="preview-text" [ngStyle]="style">texte</span>
+    </div>
+    <button type="button" class="save-btn" (click)="onSave()">Enregistrer</button>
+</div>

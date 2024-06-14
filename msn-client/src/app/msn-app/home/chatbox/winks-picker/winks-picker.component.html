@@ -1,0 +1,8 @@
+<div class="winks-container wink">
+    <div class="winks-list wink has-scrollbar">
+        <button type="button" class="wink-item" *ngFor="let wink of winks" 
+        title="{{wink.nom}}" (click)="onWinkClick(wink)" >
+            <img src="{{wink.imgPreview}}" alt="">
+        </button>
+    </div>
+</div>

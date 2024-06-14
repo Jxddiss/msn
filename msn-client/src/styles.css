@@ -112,6 +112,14 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     0px 0px 10px 3px rgba(155, 154, 154, 0.9);
 }
 
+.message-emoji{
+    height: 25px;
+    width: 25px;
+    object-fit: contain;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
 .cdk-drag-dragging{
     z-index: 3 !important;
 }

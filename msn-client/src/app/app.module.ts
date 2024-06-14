@@ -1,5 +1,5 @@
 import { LOCALE_ID, NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +19,9 @@ import { ChatboxComponent } from './msn-app/home/chatbox/chatbox.component';
 import { ProfileHolderComponent } from './msn-app/home/chatbox/profile-holder/profile-holder.component';
 import { NotificationComponent } from './desktop/notification/notification.component';
 import { ErreurComponent } from './desktop/erreur/erreur.component';
+import { EmojiPickerComponent } from './msn-app/home/chatbox/emoji-picker/emoji-picker.component';
+import { WinksPickerComponent } from './msn-app/home/chatbox/winks-picker/winks-picker.component';
+import { TextEditComponent } from './msn-app/home/chatbox/text-edit/text-edit.component';
 
 registerLocaleData(localeFr)
 
@@ -38,6 +41,9 @@ registerLocaleData(localeFr)
     ProfileHolderComponent,
     NotificationComponent,
     ErreurComponent,
+    EmojiPickerComponent,
+    WinksPickerComponent,
+    TextEditComponent,
   ],
   imports: [
     BrowserModule,

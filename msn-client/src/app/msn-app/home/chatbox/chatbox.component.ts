@@ -2,6 +2,9 @@ import { AfterContentChecked, AfterViewInit, Component, ElementRef, OnDestroy, O
 import { WindowInfoService } from '../../../service/window-info.service';
 import gsap from 'gsap';
 import { Subject, Subscription } from 'rxjs';
+import {parseEmoji} from '../../../utils/emoji.utils'
+import { WinksService } from '../../../service/winks.service';
+import { getWink } from '../../../utils/wink.utils';
 
 @Component({
   selector: 'app-chatbox',
@@ -17,18 +20,31 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   private _appelEnCours = false
   private _appelStarted = new Subject()
   appelStarted$ = this._appelStarted.asObservable()
+  private _emojiPickerOpen = new Subject()
+  emojiPickerOpen$ = this._emojiPickerOpen.asObservable()
+  private _winksPickerOpen = new Subject()
+  winksPickerOpen$ = this._winksPickerOpen.asObservable()
+  private _textEditOpen = new Subject()
+  textEditOpen$ = this._textEditOpen.asObservable()
   @ViewChild('dialogImg') dialogImg !: ElementRef
   @ViewChild('imgDialog') imgDialog !: ElementRef
   @ViewChild('photoInput') photoInput !: ElementRef
   @ViewChild('chatList') chatList : ElementRef | undefined
+  @ViewChild('messageInput') messageInput !: ElementRef
   private _scrolledChatList = false
-
   dragPosition = {
     x: 0,
     y: 0
   }
+  style = {
+    color: '',
+    fontSize: '1rem',
+    fontWeight: '',
+    fontFamily: '',
+    textShadow: 'none'
+  }
 
-  constructor(private _windowInfoService : WindowInfoService) {}
+  constructor(private _windowInfoService : WindowInfoService, private _winksService : WinksService) {}
 
   ngOnInit(): void {
     this._windowInfoService.onChatWindowOpen(true)
@@ -55,6 +71,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     this._isMinimized = false
     this._isFullScreen = false
     this._subscriptions.forEach(sub => sub.unsubscribe())
+    this._scrolledChatList = false
   }
 
   positionAnimation() {
@@ -235,6 +252,38 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     this.dialogImg.nativeElement.style.visibility = 'hidden'
   }
 
+  onEmojiPickerOpen() : void{
+    this._emojiPickerOpen.next(null)
+  }
+
+  parseEmoji(emoji : string) : string{
+    return parseEmoji(emoji)
+  }
+
+  onEmojiPicked(emojiCode : string) : void{
+    this.messageInput.nativeElement.value += emojiCode
+  }
+
+  onWinkPickerOpen() : void{
+    this._winksPickerOpen.next(null)
+  }
+
+  onTextEditOpen() : void{
+    this._textEditOpen.next(null)
+  }
+
+  onTextEdited(textStyle : any) : void{
+    this.style = textStyle
+  }
+
+  onPlayWink($event : Event) : void{
+    const elem = $event.target as HTMLElement
+    const wink = getWink(elem.getAttribute("winkName") ?? '')
+    if(wink){
+      this._winksService.onWinksToPlay(wink)
+    }
+  }
+
   get isFullScreen(){
     return this._isFullScreen
   }
@@ -242,4 +291,5 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   get appelStarted(){
     return this.appelStarted$
   }
+  
 }
