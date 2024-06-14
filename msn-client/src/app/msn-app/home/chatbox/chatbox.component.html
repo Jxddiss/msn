@@ -99,19 +99,24 @@ cdkDragBoundary="#desktop"
                   <textarea placeholder="Écrivez un message" class="text-input" #messageInput></textarea>
                 </div>
                 <div class="chat-input-options">
-                  <button type="button" class="opt emoji" (click)="onEmojiPickerOpen()">
+                  <button type="button" class="opt emoji" 
+                  (click)="onEmojiPickerOpen()" title="Envoyer un émoticone">
                     <img class="emoji" src="assets/images/emojis/teeth_smile.png" alt="">
                   </button>
-                  <button type="button" class="opt wink" (click)="onWinkPickerOpen()">
+                  <button type="button" class="opt wink" 
+                  (click)="onWinkPickerOpen()" title="Envoyer un clin d'oeil">
                     <img src="assets/images/emojis/wink_smile.gif" alt="" class="wink">
                   </button>
-                  <button type="button" class="opt" (click)="onNudge()">
+                  <button type="button" class="opt" 
+                  (click)="onNudge()" title="Envoyer un nudge">
                     <img src="assets/images/emojis/wizz-msn.png" alt="">
                   </button>
-                  <button type="button" class="opt" (click)="onPhotoSelection()">
+                  <button type="button" class="opt" 
+                  (click)="onPhotoSelection()" title="Envoyer une image">
                     <img src="assets/images/pictures.png" alt="">
                   </button>
-                  <button type="button" class="opt" >
+                  <button type="button" class="opt" 
+                  title="Modifier le texte">
                     <img src="assets/images/text.png" alt="">
                   </button>
                   <input type="file" hidden #photoInput accept="image/*">

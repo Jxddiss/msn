@@ -60,6 +60,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     this._isMinimized = false
     this._isFullScreen = false
     this._subscriptions.forEach(sub => sub.unsubscribe())
+    this._scrolledChatList = false
   }
 
   positionAnimation() {
