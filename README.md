@@ -4,6 +4,7 @@ An attempt at recreating the Windows Live Messenger experience with Angular. <br
 It's also an attempt at recreating the windows 7 experience.
 
 ## Visuels
+<Video src="./images-readme/1.mp4" controls></Video>
 ![Connection](./images-readme/1.png)
 ![Inscription](./images-readme/2.png)
 ![Position des fenêtres](./images-readme/3.png)
