@@ -48,7 +48,6 @@ cdkDragBoundary="#desktop"
               </div>
               <hr>
               <div class="chat-list has-scrollbar" #chatList>
-                
                 <div class="chat-item">
                   <div class="sender">John Doe said</div>
                   <div class="message">
@@ -132,7 +131,7 @@ cdkDragBoundary="#desktop"
                   title="Modifier le texte" (click)="onTextEditOpen()">
                     <img src="assets/images/text.png" alt="" class="text-edit">
                   </button>
-                  <input type="file" hidden #photoInput accept="image/*">
+                  
                 </div>
               </div>
               <app-emoji-picker [open$]="emojiPickerOpen$" (emojiSelected)="onEmojiPicked($event)"></app-emoji-picker>
@@ -161,6 +160,23 @@ cdkDragBoundary="#desktop"
     </div>
   </div>
   <div class="window-body">
-    <img #imgDialog src="" alt="">
+    <img #imgDialog src="" alt="" class="img-view">
   </div>
+</div>
+
+
+<div class="window active is-bright glass" 
+  role="dialog" aria-labelledby="dialog-title" 
+  aria-modal="true" cdkDrag #dialogImgSend cdkDragBoundary="#desktop">
+  <div class="title-bar" cdkDragHandle>
+    <div class="title-bar-text" id="dialog-title">Photo</div>
+    <div class="title-bar-controls">
+      <button aria-label="Close" (click)="onHideDialogImgSend()"></button>
+    </div>
+  </div>
+  <form class="window-body img-send-dialog-body">
+    <img #imgDialogSend src="assets/images/default.png" alt="" class="img-send-preview">
+    <input type="file" #photoInput accept="image/*" (change)="onImgSendChange()">
+    <button type="button" >Envoyer</button>
+  </form>
 </div>

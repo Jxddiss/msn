@@ -5,6 +5,9 @@ import { Subject, Subscription } from 'rxjs';
 import {parseEmoji} from '../../../utils/emoji.utils'
 import { WinksService } from '../../../service/winks.service';
 import { getWink } from '../../../utils/wink.utils';
+import { verifyFile } from '../../../utils/input-verification.utils';
+import { Erreur } from '../../../model/erreur.model';
+import { ErreurService } from '../../../service/erreur.service';
 
 @Component({
   selector: 'app-chatbox',
@@ -28,6 +31,8 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   textEditOpen$ = this._textEditOpen.asObservable()
   @ViewChild('dialogImg') dialogImg !: ElementRef
   @ViewChild('imgDialog') imgDialog !: ElementRef
+  @ViewChild('dialogImgSend') dialogImgSend !: ElementRef
+  @ViewChild('imgDialogSend') imgDialogSend !: ElementRef
   @ViewChild('photoInput') photoInput !: ElementRef
   @ViewChild('chatList') chatList : ElementRef | undefined
   @ViewChild('messageInput') messageInput !: ElementRef
@@ -44,7 +49,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     textShadow: 'none'
   }
 
-  constructor(private _windowInfoService : WindowInfoService, private _winksService : WinksService) {}
+  constructor(
+    private _windowInfoService : WindowInfoService, 
+    private _winksService : WinksService,
+    private _erreurService : ErreurService) {}
 
   ngOnInit(): void {
     this._windowInfoService.onChatWindowOpen(true)
@@ -225,10 +233,6 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     tl.yoyo(true)
   }
 
-  onPhotoSelection(){
-    this.photoInput.nativeElement.click()
-  }
-
   onVideoFullScreenChange() : void{
     if(!this._isFullScreen){
       this.makeFullScreen()
@@ -247,9 +251,35 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     this.dialogImg.nativeElement.style.visibility = 'visible'
   }
 
+  onPhotoSelection() : void{
+    this.dialogImgSend.nativeElement.style.opacity = '1'
+    this.dialogImgSend.nativeElement.style.visibility = 'visible'
+  }
+
   onHideDialogImg() : void{
     this.dialogImg.nativeElement.style.opacity = '0'
     this.dialogImg.nativeElement.style.visibility = 'hidden'
+  }
+
+  onHideDialogImgSend() : void{
+    this.dialogImgSend.nativeElement.style.opacity = '0'
+    this.dialogImgSend.nativeElement.style.visibility = 'hidden'
+    setTimeout(()=>{
+      this.photoInput.nativeElement.value = ''
+      this.imgDialogSend.nativeElement.src = 'assets/images/default.png'
+    },500)
+  }
+
+  onImgSendChange() : void{
+    const file = this.photoInput.nativeElement.files[0]
+    const result = verifyFile(file)
+    if(result === "bon"){
+      this.imgDialogSend.nativeElement.src = URL.createObjectURL(file)
+    }else{
+      const erreur = new Erreur("Upload d'image", result)
+      this._erreurService.onErreursEvent(erreur)
+      this.photoInput.nativeElement.value = ''
+    }
   }
 
   onEmojiPickerOpen() : void{
