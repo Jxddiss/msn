@@ -105,6 +105,21 @@ cdkDragBoundary="#desktop"
                   </div>
                   <hr>
                 </div>
+                <div class="chat-item">
+                  <div class="sender">John Doe said</div>
+                  <div class="message">
+                    <span class="point"></span>
+                    <div class="message-body"
+                    [innerHTML]="parseEmoji('Hello , I am John Doe :no:')">
+                    </div>
+                  </div>
+                  <div class="message">
+                    <span class="point"></span>
+                    <div class="message-body"
+                    [innerHTML]="parseEmoji('Hello , I am John Doe :bruh::blaze::pro:')">
+                    </div>
+                  </div>
+                </div>
               </div>
               <div class="chat-input">
                 <div role="tooltip" class="is-top is-right">
