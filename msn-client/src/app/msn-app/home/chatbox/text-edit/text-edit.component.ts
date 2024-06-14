@@ -125,6 +125,11 @@ export class TextEditComponent implements OnInit, OnDestroy {
       textShadow: 'none'
     }
     this._currentFontIndex = 0
+    this.fontSelector.nativeElement.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    })
     this.textEditedEvent.emit(this.style)
   }
 
