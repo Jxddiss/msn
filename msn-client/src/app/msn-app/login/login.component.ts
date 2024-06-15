@@ -14,6 +14,7 @@ import { Erreur } from '../../model/erreur.model';
 export class LoginComponent implements OnInit{
   @Output() canBeFullScreenEvent = new EventEmitter<boolean>()
   canBeFullScreen = false
+  statut = 'online'
 
   constructor(private _windowInfoService : WindowInfoService, 
     private _erreurService : ErreurService,
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit{
   }
 
   onLogin(utilisateur : Utilisateur){
+    console.log(utilisateur)
     const user = this._authentificationService.login(utilisateur)
     if(user){
       this._authentificationService.addUserToLocalStorage(user)

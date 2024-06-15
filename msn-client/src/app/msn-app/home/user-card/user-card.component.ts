@@ -1,22 +1,34 @@
-import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ErreurService } from '../../../service/erreur.service';
 import { Erreur } from '../../../model/erreur.model';
 import { verifyFile } from '../../../utils/input-verification.utils';
+import { Utilisateur } from '../../../model/utilisateur.model';
+import { AuthentificationService } from '../../../service/authentification.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-card',
   templateUrl: './user-card.component.html',
   styleUrl: './user-card.component.css'
 })
-export class UserCardComponent {
+export class UserCardComponent implements OnInit{
 
   @ViewChild('avatarPicker') avatarPicker !: ElementRef
   @ViewChild('avatarImg') avatarImg !: ElementRef
   @ViewChild('bannerPicker') bannerPicker !: ElementRef
   @Output() bannerChangeEvent = new EventEmitter<File>();
-  statut = 'online';
+  loggedInUser : Utilisateur = {} as Utilisateur;
 
-  constructor(private _erreurService : ErreurService) { }
+  constructor(
+    private _erreurService : ErreurService,
+    private _authentificationService : AuthentificationService,
+    private _router : Router
+  ) { }
+
+  ngOnInit(): void {
+    if(this._authentificationService.loggedUser)
+    this.loggedInUser = this._authentificationService.loggedUser;
+  }
 
   onChooseAvatar(){
     this.avatarPicker.nativeElement.click()
@@ -62,6 +74,11 @@ export class UserCardComponent {
 
   onStatutChange(event : Event){
     const target = event.target as HTMLInputElement;
-    this.statut = target.value;
+    this.loggedInUser.statut = target.value;
+  }
+
+  onLogout(){
+    this._authentificationService.logout();
+    this._router.navigate(['/login']);
   }
 }

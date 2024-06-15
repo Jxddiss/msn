@@ -3,6 +3,8 @@ import gsap from 'gsap';
 import { WindowInfoService } from '../../service/window-info.service';
 import { ConversationService } from '../../service/conversation.service';
 import { Conversation } from '../../model/conversation.model';
+import { AuthentificationService } from '../../service/authentification.service';
+import { Utilisateur } from '../../model/utilisateur.model';
 
 @Component({
   selector: 'app-home',
@@ -12,13 +14,17 @@ import { Conversation } from '../../model/conversation.model';
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('bannerImg') bannerImg !: ElementRef
+  loggedInUser : Utilisateur = {} as Utilisateur;
 
   constructor(
-    private _windowInfoService : WindowInfoService
+    private _windowInfoService : WindowInfoService,
+    private _authentificationService : AuthentificationService
   ){ }
 
   ngOnInit(): void {
     this._windowInfoService.onHomeWindowOpen(true)
+    if(this._authentificationService.loggedUser)
+    this.loggedInUser = this._authentificationService.loggedUser
   }
 
   ngAfterViewInit(): void {

@@ -20,4 +20,13 @@ export class AuthentificationService {
   isLoggedIn() {
     return localStorage.getItem("utilisateur") !== null;
   }
+
+  logout() {
+    localStorage.removeItem("utilisateur");
+  }
+
+  get loggedUser() : Utilisateur | undefined {
+    if(!this.isLoggedIn()) return undefined
+    return JSON.parse(localStorage.getItem('utilisateur')!)
+  }
 }

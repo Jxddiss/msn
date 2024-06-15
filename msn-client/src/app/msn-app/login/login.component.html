@@ -25,8 +25,8 @@
                 <div class="field-row">
                     <label for="statut">Statut: </label>
                     <select name="statut" id="statut" class="statut" 
-                    ngModel #statut="ngModel" required >
-                        <option value="online" selected>🟩 En ligne</option>
+                    [(ngModel)]="statut" required>
+                        <option value="online" >🟩 En ligne</option>
                         <option value="disconnected">🟥 Hors ligne</option>
                         <option value="inactif">🟨 Inactif</option>
                         <option value="absent">⬜ Absent</option>
