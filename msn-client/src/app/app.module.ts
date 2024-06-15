@@ -22,6 +22,7 @@ import { ErreurComponent } from './desktop/erreur/erreur.component';
 import { EmojiPickerComponent } from './msn-app/home/chatbox/emoji-picker/emoji-picker.component';
 import { WinksPickerComponent } from './msn-app/home/chatbox/winks-picker/winks-picker.component';
 import { TextEditComponent } from './msn-app/home/chatbox/text-edit/text-edit.component';
+import { FormsModule } from '@angular/forms';
 
 registerLocaleData(localeFr)
 
@@ -49,7 +50,8 @@ registerLocaleData(localeFr)
     BrowserModule,
     AppRoutingModule,
     CdkDrag,
-    CdkDragHandle
+    CdkDragHandle,
+    FormsModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue:'fr-FR'},

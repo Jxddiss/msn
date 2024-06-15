@@ -7,13 +7,15 @@
                     <img id="buddy-img" src="assets/images/buddy2.png" alt="">
                 </div>
             </div>
-            <form>
+            <form #loginForm="ngForm" (ngSubmit)="onLogin(loginForm.value)">
                 <div class="field-row">
-                    <input class="text-input" type="email" placeholder="exemple@email.ca" name="email" id="email" required>
+                    <input class="text-input" type="email" placeholder="exemple@email.ca" 
+                    name="email" id="email" ngModel #email="ngModel" required>
                 </div>
     
                 <div class="field-row">
-                    <input class="text-input" type="password" placeholder="Entrez votre mot de passe" name="password" id="password" required>
+                    <input class="text-input" type="password" placeholder="Entrez votre mot de passe" 
+                    ngModel #password="ngModel" name="password" id="password" required>
                 </div>
     
                 <div class="field-row">
@@ -22,11 +24,12 @@
 
                 <div class="field-row">
                     <label for="statut">Statut: </label>
-                    <select name="statut" id="statut" class="statut" required >
-                        <option value="1" selected>🟩 En ligne</option>
-                        <option value="2">🟥 Hors ligne</option>
-                        <option value="3">🟨 Inactif</option>
-                        <option value="4">⬜ Absent</option>
+                    <select name="statut" id="statut" class="statut" 
+                    ngModel #statut="ngModel" required >
+                        <option value="online" selected>🟩 En ligne</option>
+                        <option value="disconnected">🟥 Hors ligne</option>
+                        <option value="inactif">🟨 Inactif</option>
+                        <option value="absent">⬜ Absent</option>
                     </select>
                 </div>
                 
@@ -44,7 +47,7 @@
                 </div>
     
                 <div class="button-container">
-                    <button [routerLink]="['/home']">Se connecter</button>
+                    <button type="submit">Se connecter</button>
                     <button type="reset">Annuler</button>
                 </div>
                 
