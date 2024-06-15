@@ -21,6 +21,9 @@ export class LoginComponent implements OnInit{
     private router : Router) { }
 
   ngOnInit(): void {
+    if(this._authentificationService.isLoggedIn()) {
+      this.router.navigate(['/home'])
+    }
     this.onFullScreen()
   }
 
