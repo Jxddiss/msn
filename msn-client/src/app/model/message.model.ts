@@ -3,8 +3,9 @@ export class Message {
         public id: number,
         public contenu: string,
         public date: Date,
-        public pseudoSender: string,
+        public nomSender: string,
         public type: string,
+        public idConversation: number,
         public winkName?: string | null
     ){}
 }

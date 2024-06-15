@@ -5,6 +5,6 @@ export class Conversation {
     constructor(
         public id: number,
         public utilisateurs: Utilisateur[],
-        public messages: Message[]
+        public type : string = 'private',
     ){}
 }

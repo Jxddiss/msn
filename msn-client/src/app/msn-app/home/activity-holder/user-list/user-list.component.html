@@ -4,69 +4,38 @@
     <span>Favoris <span class="count">(4)</span></span>
 </div>
 <ul class="user-list has-scrollbar">
-    <li class="user-card" (click)="onOpenChat()">
-        <div class="buddy-container buddy-inactif glass user-list-avatar">
-            <div class="buddy-body">
-                <img #avatarImg id="buddy-img" src="https://pbs.twimg.com/media/EcWpFnuWkAMtciP.jpg" alt="">
+    <li class="user-card" (click)="onOpenChat()" *ngFor="let conversation of conversations">
+        @if (conversation.type == 'private' && conversation.utilisateurs[0].id == loggedUser.id) {
+            <div class="buddy-container buddy-{{conversation.utilisateurs[1].statut}} glass user-list-avatar">
+                <div class="buddy-body">
+                    <img id="buddy-img" src="{{conversation.utilisateurs[1].avatar}}" alt="">
+                </div>
             </div>
-        </div>
-        <div class="user-info">
-            <span class="username-holder">
-                    <span class="username">John Doe</span>
-                    <span>( Inactif )</span>
-            </span>
-            <div class="description">
-                Hello, I am John Doe
+            <div class="user-info">
+                <span class="username-holder">
+                        <span class="username">{{conversation.utilisateurs[1].nomComplet}}</span>
+                        <span>( {{conversation.utilisateurs[1].statut}} )</span>
+                </span>
+                <div class="description">
+                    {{conversation.utilisateurs[1].description}}
+                </div>
             </div>
-        </div>
-    </li>
-    <li class="user-card">
-        <div class="buddy-container buddy-disconnected glass user-list-avatar">
-            <div class="buddy-body">
-                <img #avatarImg id="buddy-img" src="https://pbs.twimg.com/media/DwPifW4X4AEVbGY.jpg" alt="">
+        }@else{
+            <div class="buddy-container buddy-{{conversation.utilisateurs[0].statut}} glass user-list-avatar">
+                <div class="buddy-body">
+                    <img id="buddy-img" src="{{conversation.utilisateurs[0].avatar}}" alt="">
+                </div>
             </div>
-        </div>
-        <div class="user-info">
-            <span class="username-holder">
-                    <span class="username">John Doe</span>
-                    <span>( Hors ligne )</span>
-            </span>
-            <div class="description">
-                Hello, I am John Doe
+            <div class="user-info">
+                <span class="username-holder">
+                        <span class="username">{{conversation.utilisateurs[0].nomComplet}}</span>
+                        <span>( {{conversation.utilisateurs[0].statut}} )</span>
+                </span>
+                <div class="description">
+                    {{conversation.utilisateurs[0].description}}
+                </div>
             </div>
-        </div>
-    </li>
-    <li class="user-card">
-        <div class="buddy-container buddy-absent glass user-list-avatar">
-            <div class="buddy-body">
-                <img #avatarImg id="buddy-img" src="assets/images/buddy2.png" alt="">
-            </div>
-        </div>
-        <div class="user-info">
-            <span class="username-holder">
-                    <span class="username">John Doe</span>
-                    <span>( Absent )</span>
-            </span>
-            <div class="description">
-                Hello, I am John Doe
-            </div>
-        </div>
-    </li>
-    <li class="user-card">
-        <div class="buddy-container glass user-list-avatar">
-            <div class="buddy-body">
-                <img #avatarImg id="buddy-img" src="https://media.craiyon.com/2023-09-22/a5d84f8890fb44a5ae48bdcc57c261e3.webp" alt="">
-            </div>
-        </div>
-        <div class="user-info">
-            <span class="username-holder">
-                    <span class="username">John Doe</span>
-                    <span>( En ligne )</span>
-            </span>
-            <div class="description">
-                Hello, I am John Doe
-            </div>
-        </div>
+        }
     </li>
 </ul>
 <div class="title">
@@ -74,29 +43,18 @@
     <span>Amis <span class="count">(4)</span></span>
 </div>
 <ul class="user-list has-scrollbar">
-    <li class="friend">
-        <img src="assets/images/online.png" alt="" class="online-neon">
-        <span class="username">John Doe</span>
-        <span>-</span>
-        <span>Hello, I am John Doe</span>
-    </li>
-    <li class="friend">
-        <img src="assets/images/inactif.png" alt="" class="inactif-neon">
-        <span class="username">John Doe</span>
-        <span>-</span>
-        <span>Hello, I am John Doe</span>
-    </li>
-    <li class="friend">
-        <img src="assets/images/disconnected.png" alt="" class="disconnected-neon">
-        <span class="username">John Doe</span>
-        <span>-</span>
-        <span>Hello, I am John Doe</span>
-    </li>
-    <li class="friend">
-        <img src="assets/images/absent.png" alt="" class="absent-neon">
-        <span class="username">John Doe</span>
-        <span>-</span>
-        <span>Hello, I am John Doe</span>
+    <li class="friend" *ngFor="let conversation of conversations">
+        @if (conversation.type == 'private' && conversation.utilisateurs[0].id == loggedUser.id) {
+            <img src="assets/images/{{conversation.utilisateurs[1].statut}}.png" alt="" class="{{conversation.utilisateurs[1].statut}}-neon">
+            <span class="username">{{conversation.utilisateurs[1].nomComplet}}</span>
+            <span>-</span>
+            <span>{{conversation.utilisateurs[1].description}}</span>
+        }@else{
+            <img src="assets/images/{{conversation.utilisateurs[0].statut}}.png" alt="" class="{{conversation.utilisateurs[0].statut}}-neon">
+            <span class="username">{{conversation.utilisateurs[0].nomComplet}}</span>
+            <span>-</span>
+            <span>{{conversation.utilisateurs[0].description}}</span>
+        }
     </li>
 </ul>
 <div class="title">

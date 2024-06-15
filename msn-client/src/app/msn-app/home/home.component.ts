@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import gsap from 'gsap';
 import { WindowInfoService } from '../../service/window-info.service';
+import { ConversationService } from '../../service/conversation.service';
+import { Conversation } from '../../model/conversation.model';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +13,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('bannerImg') bannerImg !: ElementRef
 
-  constructor(private _windowInfoService : WindowInfoService){ }
+  constructor(
+    private _windowInfoService : WindowInfoService
+  ){ }
 
   ngOnInit(): void {
     this._windowInfoService.onHomeWindowOpen(true)

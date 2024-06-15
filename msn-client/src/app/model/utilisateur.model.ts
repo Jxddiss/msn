@@ -10,10 +10,13 @@ export class Utilisateur {
         public banniere: string | null 
     ) {
         if(this.avatar === null || !this.avatar || this.avatar === '' ) {
-            this.avatar = 'assets/images/buddy2.jpg'
+            this.avatar = 'assets/images/buddy2.png'
         }
-        if(!this.banniere) {
+        if(this.banniere === null || !this.banniere || this.banniere === '') {
             this.banniere = 'assets/images/default.png'
+        }
+        if(this.description === null || !this.description || this.description === '') {
+            this.description = 'Hello'
         }
     }
 }
