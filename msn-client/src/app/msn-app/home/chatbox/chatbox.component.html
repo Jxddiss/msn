@@ -35,12 +35,17 @@ cdkDragBoundary="#desktop"
         </div>
         <div class="content-container">
           <div class="content-card">
-            <app-profile-holder [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()" [appelStarted]="appelStarted"></app-profile-holder>
+            <app-profile-holder [utilisateurs]="conversation.utilisateurs" [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()" [appelStarted]="appelStarted"></app-profile-holder>
             <div class="chat-zone">
               <div class="ami-info">
                 <div class="name-holder">
-                  <span class="name">John Doe</span>
-                  <span class="status">(Hors ligne)</span>
+                  @if (conversation.utilisateurs[0].id == loggedUser.id) {
+                    <span class="name">{{conversation.utilisateurs[1].nomComplet}}</span>
+                    <span class="status">({{conversation.utilisateurs[1].statut}})</span>
+                  }@else {
+                    <span class="name">{{conversation.utilisateurs[0].nomComplet}}</span>
+                    <span class="status">({{conversation.utilisateurs[0].statut}})</span>
+                  }
                 </div>
                 <div class="desc">
                   Hello, I am John Doe

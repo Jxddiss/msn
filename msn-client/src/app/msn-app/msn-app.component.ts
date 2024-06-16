@@ -4,6 +4,7 @@ import { WindowInfoService } from '../service/window-info.service';
 import { ChatboxComponent } from './home/chatbox/chatbox.component';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { Conversation } from '../model/conversation.model';
 
 @Component({
   selector: 'app-msn-app',
@@ -31,22 +32,14 @@ export class MsnApp implements AfterViewInit, OnDestroy{
     )
 
     this._subscriptions.push(
-      this._windowInfoService.homeWindowOpen$.subscribe(value => {
-        if(value){
-          this.initialiseChatBox()
-        }
-      })
-    )
-
-    this._subscriptions.push(
       this._windowInfoService.msnCloseEvent$.subscribe(value => {
         this.onQuitWindow()
       })
     )
 
     this._subscriptions.push(
-      this._windowInfoService.initaliseChatBox$.subscribe(value => {
-        this.initialiseChatBox()
+      this._windowInfoService.initaliseChatBox$.subscribe(conversation => {
+        this.initialiseChatBox(conversation)
       })
     )
   }
@@ -118,7 +111,7 @@ export class MsnApp implements AfterViewInit, OnDestroy{
     tl.duration(0.2)
   }
 
-  initialiseChatBox() {
+  initialiseChatBox(conversation : Conversation) : void{
     let delay = 0
     if(this.componentRef){
       this.componentRef.instance.disparition()
@@ -127,7 +120,7 @@ export class MsnApp implements AfterViewInit, OnDestroy{
     setTimeout(()=>{
       this.secondWindowContainer?.clear();
       this.componentRef = this.secondWindowContainer?.createComponent(ChatboxComponent);
-      this.componentRef?.instance.setTest('test');
+      this.componentRef?.instance.setConversation(conversation)
     },delay)
   }
 

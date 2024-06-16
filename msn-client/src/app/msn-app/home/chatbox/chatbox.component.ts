@@ -8,6 +8,8 @@ import { getWink } from '../../../utils/wink.utils';
 import { verifyFile } from '../../../utils/input-verification.utils';
 import { Erreur } from '../../../model/erreur.model';
 import { ErreurService } from '../../../service/erreur.service';
+import { Conversation } from '../../../model/conversation.model';
+import { Utilisateur } from '../../../model/utilisateur.model';
 
 @Component({
   selector: 'app-chatbox',
@@ -16,7 +18,7 @@ import { ErreurService } from '../../../service/erreur.service';
 })
 export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterContentChecked{
   private _isLoading = true
-  private _test : string | undefined
+  private _conversation !: Conversation
   private _isMinimized = false
   private _isFullScreen = false
   private _subscriptions : Subscription[] = []
@@ -48,6 +50,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     fontFamily: '',
     textShadow: 'none'
   }
+  loggedUser : Utilisateur = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined
 
   constructor(
     private _windowInfoService : WindowInfoService, 
@@ -93,13 +96,17 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     })
   }
 
-  setTest(value : string | undefined){
-    this._test = value
+  setConversation(conversation : Conversation){
+    this._conversation = conversation
     this._isLoading = false
   }
 
   get isLoading(){
     return this._isLoading
+  }
+
+  get conversation(){
+    return this._conversation
   }
 
   minimizeOrResume(){

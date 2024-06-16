@@ -21,7 +21,7 @@ export class UserListComponent implements OnInit {
     this.conversations = this._conversationService.getConversations(this.loggedUser.id)
   }
 
-  onOpenChat(){
-    this._windowInfoService.onInitialiseChatBox()
+  onOpenChat(conversation : Conversation) {
+    this._windowInfoService.onInitialiseChatBox(conversation)
   }
 }

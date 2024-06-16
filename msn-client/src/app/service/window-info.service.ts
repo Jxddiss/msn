@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Conversation } from '../model/conversation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +16,7 @@ export class WindowInfoService {
   chatWidowMinimizeOrResume$ = this._chatWidowMinimizeOrResume.asObservable();
   private _msnCloseEvent = new Subject();
   msnCloseEvent$ = this._msnCloseEvent.asObservable();
-  private _initaliseChatBox = new Subject();
+  private _initaliseChatBox = new Subject<Conversation>();
   initaliseChatBox$ = this._initaliseChatBox.asObservable();
 
   constructor() { }
@@ -40,8 +41,8 @@ export class WindowInfoService {
     this._msnCloseEvent.next(null)
   }
 
-  onInitialiseChatBox(){
-    this._initaliseChatBox.next(null)
+  onInitialiseChatBox(conversation : Conversation){
+    this._initaliseChatBox.next(conversation)
   }
 
 }

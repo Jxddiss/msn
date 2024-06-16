@@ -1,6 +1,7 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import gsap from 'gsap';
 import { Observable, Subscription } from 'rxjs';
+import { Utilisateur } from '../../../../model/utilisateur.model';
 
 @Component({
   selector: 'app-profile-holder',
@@ -17,7 +18,9 @@ export class ProfileHolderComponent implements OnInit,OnDestroy{
   @Output() videoFullScreen = new EventEmitter()
   @Input() fullScreen = false
   @Input() appelStarted !: Observable<any>
+  @Input() utilisateurs : Utilisateur[] = []
   private _subscriptions : Subscription[] = []
+  loggedUser : Utilisateur = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined
 
   constructor() {}
 
