@@ -127,7 +127,14 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     this._subscriptions.push(
       this._messageService.getMessages(this._conversation.id).subscribe(
         {
-          next : (messages)=>{this.messages = messages},
+          next : (messages)=>{
+            this.messages = messages
+            setTimeout(()=>{
+              if(this.chatList){
+                this.chatList.nativeElement.scrollTop = this.chatList.nativeElement.scrollHeight
+              }
+            },10)
+          },
           error : (error)=>{console.log(error)}
         }
       )
@@ -364,11 +371,6 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
       this._messageService.sendMessage(message)
       this.getMesages()
       this.messageInput.nativeElement.value = ""
-      setTimeout(()=>{
-        if(this.chatList){
-          this.chatList.nativeElement.scrollTop = this.chatList.nativeElement.scrollHeight
-        }
-      },10)
     }
   }
 }

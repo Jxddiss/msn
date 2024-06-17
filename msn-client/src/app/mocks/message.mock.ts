@@ -17,7 +17,7 @@ const MESSAGES : Message[] = [
     new Message(14, 'https://images.pexels.com/photos/7408586/pexels-photo-7408586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', new Date(), 'John Doe', 'image', 1),
     new Message(15, 'https://images.pexels.com/photos/7408586/pexels-photo-7408586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', new Date(), 'John Doe', 'image', 2),
     new Message(16, 'https://images.pexels.com/photos/7408586/pexels-photo-7408586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', new Date(), 'John Doe', 'image', 3),
-    new Message(17, '', new Date(), 'John Doe', 'interaction', 1,null,'kiss'),
+    new Message(17, '', new Date(), 'John Doe', 'interaction', 1,null,'assets/images/winks/kiss.png'),
 ]
 
 export function getMessages(idConversation : number) : Message[]{
@@ -27,4 +27,8 @@ export function getMessages(idConversation : number) : Message[]{
 export function sendMessage(message : Message) : Message{
     MESSAGES.push(message);
     return message;
+}
+
+export function getMessagesCount(idConversation : number) : number{
+    return getMessages(idConversation).length
 }
