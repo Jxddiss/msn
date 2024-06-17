@@ -22,8 +22,8 @@ export class ConversationService {
 
   public getFavoris(utilisateurId: number) {
     const favoris = localStorage.getItem('favoris_' + utilisateurId.toString()) ? JSON.parse(localStorage.getItem('favoris_' + utilisateurId.toString())!) : []
-    this._favorisSubject.next(CONVERSATIONS.filter(conversation => favoris.includes(conversation.id)))
-    return of(CONVERSATIONS.filter(conversation => favoris.includes(conversation.id)))
+    const filteredConversations = CONVERSATIONS.filter(conversation => favoris.includes(conversation.id));
+    this._favorisSubject.next(filteredConversations)
   }
 
   public addToFavoris(utilisateurId: number, conversationId: number) {
