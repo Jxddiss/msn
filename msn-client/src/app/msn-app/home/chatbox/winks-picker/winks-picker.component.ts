@@ -58,10 +58,10 @@ export class WinksPickerComponent implements OnInit, OnDestroy {
   }
 
   onWinkClick( wink: Wink) {
+    this._winksService.onWinksToPlay(wink)
     const id = getMessagesCount(this.conversationId)
     const message = new Message(id,'',new Date(),this.loggedUser.nomComplet,'wink',this.conversationId,null,wink.imgPreview)
     this._messageService.sendMessage(message)
-    this._winksService.onWinksToPlay(wink)
     this.winkEmitter.emit(null)
   }
 
