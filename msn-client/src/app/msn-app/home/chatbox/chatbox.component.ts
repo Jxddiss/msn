@@ -247,6 +247,9 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
 
   onNudge() : void{
     this.nudge()
+    const message = new Message(this.messages.length,'',new Date(),this.loggedUser.nomComplet,'interaction',this._conversation.id)
+    this._messageService.sendMessage(message)
+    this.getMesages()
   }
 
   nudge(){

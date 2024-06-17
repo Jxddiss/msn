@@ -60,7 +60,7 @@ cdkDragBoundary="#desktop"
                   @if (message.type == 'text') {
                     @if ($index > 0) {
                       <div class="chat-item">
-                        @if(message.nomSender != messages[$index-1].nomSender) {
+                        @if(message.nomSender != messages[$index-1].nomSender || messages[$index-1].type != 'text') {
                           <div class="sender">{{message.nomSender}} à dit</div>
                         }
                         <div class="message">
