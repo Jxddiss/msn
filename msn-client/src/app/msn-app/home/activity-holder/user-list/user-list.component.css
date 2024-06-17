@@ -53,12 +53,15 @@
     margin-top: 0.5em;
     padding: 4px;
     overflow-y: auto;
-    height: 25%;
-    max-height: 30%;
     display: flex;
     flex-direction: column;
     gap: 0.5em;
     transition: height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+
+.user-list:not(:has(.empty-title)){
+    height: 25%;
+    max-height: 30%;
 }
 
 .user-card{
@@ -146,4 +149,11 @@
 
 .grp-img{
     height: 20px !important;
+}
+
+.empty-title{
+    font-weight: 600;
+    font-size: 12pt;
+    color: rgb(59, 61, 63);
+    text-align: center;
 }

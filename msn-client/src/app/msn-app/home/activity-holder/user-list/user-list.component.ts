@@ -11,6 +11,7 @@ import { Conversation } from '../../../../model/conversation.model';
 export class UserListComponent implements OnInit {
   loggedUser = JSON.parse(localStorage.getItem('utilisateur')!)
   conversations : Conversation[] = []
+  favoris : Conversation[] = []
 
   constructor(
     private _windowInfoService : WindowInfoService,
@@ -19,6 +20,8 @@ export class UserListComponent implements OnInit {
 
   ngOnInit(): void {
     this.conversations = this._conversationService.getConversations(this.loggedUser.id)
+    // this.favoris = this._conversationService.getFavoris(this.loggedUser.id)
+    this.favoris = this.conversations
   }
 
   onOpenChat(conversation : Conversation) {

@@ -1,17 +1,19 @@
-import { AfterViewInit, Component, ComponentRef, EventEmitter, OnDestroy, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, EventEmitter, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import gsap from 'gsap';
 import { WindowInfoService } from '../service/window-info.service';
 import { ChatboxComponent } from './home/chatbox/chatbox.component';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Conversation } from '../model/conversation.model';
+import { ConversationService } from '../service/conversation.service';
+import { Utilisateur } from '../model/utilisateur.model';
 
 @Component({
   selector: 'app-msn-app',
   templateUrl: './msn-app.component.html',
   styleUrl: './msn-app.component.css'
 })
-export class MsnApp implements AfterViewInit, OnDestroy{
+export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
   @ViewChild('secondWindowContainer', { read: ViewContainerRef })
   secondWindowContainer: ViewContainerRef | undefined;
   componentRef : ComponentRef<ChatboxComponent> | undefined
@@ -24,7 +26,11 @@ export class MsnApp implements AfterViewInit, OnDestroy{
     y: 0
   }
 
-  constructor(private _windowInfoService : WindowInfoService, private _router : Router) {
+  constructor(
+    private _windowInfoService : WindowInfoService, 
+    private _router : Router,
+    private _conversationService : ConversationService
+  ) {
     this._subscriptions.push(
       this._windowInfoService.canBeFullScreen$.subscribe(value => {
         this.canBeFullScreen = value
@@ -40,6 +46,18 @@ export class MsnApp implements AfterViewInit, OnDestroy{
     this._subscriptions.push(
       this._windowInfoService.initaliseChatBox$.subscribe(conversation => {
         this.initialiseChatBox(conversation)
+      })
+    )
+  }
+
+  ngOnInit(){
+    this._subscriptions.push(
+      this._windowInfoService.homeWindowOpen$.subscribe(value => {
+        if(value){
+          const loggedUser = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined
+          const conversation = this._conversationService.getFirstConversation(loggedUser.id)
+          if(conversation) this.initialiseChatBox(conversation)
+        }
       })
     )
   }

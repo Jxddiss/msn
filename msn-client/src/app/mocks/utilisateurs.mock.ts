@@ -9,4 +9,5 @@ export const USERS : Utilisateur[] = [
     new Utilisateur(6, 'Martha Smith','john@example', 'online', 'Hello, I am Jane Smith','1',null,null),
     new Utilisateur(7, 'Emmanuel Jacques','john@example', 'inactif', 'Hello, I am Emmanuel','1','https://robohash.org/7',null),
     new Utilisateur(8, 'Ethan Smith','ethan@example', 'disconnected', 'Hello, I am Ethan Smith','1',null,null),
+    new Utilisateur(9, 'test user','test@example', 'disconnected', 'test','1',null,null),
 ]

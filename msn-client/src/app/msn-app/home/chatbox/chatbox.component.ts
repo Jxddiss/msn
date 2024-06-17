@@ -10,6 +10,8 @@ import { Erreur } from '../../../model/erreur.model';
 import { ErreurService } from '../../../service/erreur.service';
 import { Conversation } from '../../../model/conversation.model';
 import { Utilisateur } from '../../../model/utilisateur.model';
+import { Message } from '../../../model/message.model';
+import { MessageService } from '../../../service/message.service';
 
 @Component({
   selector: 'app-chatbox',
@@ -51,11 +53,30 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     textShadow: 'none'
   }
   loggedUser : Utilisateur = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined
+  messages : Message[] = []
 
   constructor(
     private _windowInfoService : WindowInfoService, 
     private _winksService : WinksService,
-    private _erreurService : ErreurService) {}
+    private _erreurService : ErreurService,
+    private _messageService : MessageService
+  ) {}
+
+  get isLoading(){
+    return this._isLoading
+  }
+
+  get conversation(){
+    return this._conversation
+  }
+
+  get isFullScreen(){
+    return this._isFullScreen
+  }
+
+  get appelStarted(){
+    return this.appelStarted$
+  }
 
   ngOnInit(): void {
     this._windowInfoService.onChatWindowOpen(true)
@@ -98,15 +119,19 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
 
   setConversation(conversation : Conversation){
     this._conversation = conversation
+    this.getMesages()
     this._isLoading = false
   }
 
-  get isLoading(){
-    return this._isLoading
-  }
-
-  get conversation(){
-    return this._conversation
+  getMesages(){
+    this._subscriptions.push(
+      this._messageService.getMessages(this._conversation.id).subscribe(
+        {
+          next : (messages)=>{this.messages = messages},
+          error : (error)=>{console.log(error)}
+        }
+      )
+    )
   }
 
   minimizeOrResume(){
@@ -297,6 +322,11 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     return parseEmoji(emoji)
   }
 
+  parseStyle(style : string | null | undefined) : any{
+    if(!style || style === null) return {}
+    return JSON.parse(style)
+  }
+
   onEmojiPicked(emojiCode : string) : void{
     this.messageInput.nativeElement.value += emojiCode
   }
@@ -320,13 +350,24 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
       this._winksService.onWinksToPlay(wink)
     }
   }
-
-  get isFullScreen(){
-    return this._isFullScreen
-  }
-
-  get appelStarted(){
-    return this.appelStarted$
-  }
   
+  onSendMessage($event : KeyboardEvent) : void{
+    if($event.key === "Enter"){
+      this.sendMessage()
+    }
+  }
+
+  sendMessage() : void{
+    if(this.messageInput.nativeElement.value !== ""){
+      const message = new Message(this.messages.length, this.messageInput.nativeElement.value, new Date(), this.loggedUser.nomComplet, "text", this.conversation.id, JSON.stringify(this.style))
+      this._messageService.sendMessage(message)
+      this.getMesages()
+      this.messageInput.nativeElement.value = ""
+      setTimeout(()=>{
+        if(this.chatList){
+          this.chatList.nativeElement.scrollTop = this.chatList.nativeElement.scrollHeight
+        }
+      },10)
+    }
+  }
 }

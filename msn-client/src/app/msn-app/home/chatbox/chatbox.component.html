@@ -56,82 +56,79 @@ cdkDragBoundary="#desktop"
               </div>
               <hr>
               <div class="chat-list has-scrollbar" #chatList>
-                <div class="chat-item">
-                  <div class="sender">John Doe said</div>
-                  <div class="message">
-                    <span class="point"></span>
-                    <div class="message-body"
-                    [innerHTML]="parseEmoji('Hello , I am John Doe :cry_smile:')">
+                @for (message of messages; track $index) {
+                  @if (message.type == 'text') {
+                    @if ($index > 0) {
+                      <div class="chat-item">
+                        @if(message.nomSender != messages[$index-1].nomSender) {
+                          <div class="sender">{{message.nomSender}} à dit</div>
+                        }
+                        <div class="message">
+                          <span class="point"></span>
+                          <div class="message-body"
+                          [innerHTML]="parseEmoji(message.contenu)"
+                          [ngStyle]="parseStyle(message.style)">
+                          </div>
+                        </div>
+                      </div>
+                    }@else{
+                      <div class="chat-item">
+                        <div class="sender">{{message.nomSender}} à dit</div>
+                        <div class="message">
+                          <span class="point"></span>
+                          <div class="message-body"
+                          [innerHTML]="parseEmoji(message.contenu)"
+                          [ngStyle]="parseStyle(message.style)">
+                          </div>
+                        </div>
+                      </div>
+                    }
+                  }@else if (message.type == 'wink') {
+                    <div class="chat-item">
+                      <div class="sender">{{message.nomSender}} à envoyée un clin d'oeil</div>
+                      <hr>
+                      <div class="message">
+                        <div class="message-body">
+                          <img 
+                          src="assets/images/winks/{{message.winkName}}.png" 
+                          alt="" title="Cliquez pour jouer le clin d'oeil" 
+                          [attr.winkName]="message.winkName"  (click)="onPlayWink($event)">
+                        </div>
+                      </div>
+                      <hr>
                     </div>
-                  </div>
-                </div>
-                <div class="chat-item">
-                  <div class="sender">John Doe said</div>
-                  <div class="message">
-                    <span class="point"></span>
-                    <div class="message-body" 
-                    [innerHTML]="parseEmoji('Hello :birthday:, I am John Doe :angel_smile:')">
+                  }@else if (message.type == 'image') {
+                    <div class="chat-item">
+                      <div class="sender">{{message.nomSender}} à envoyée une image</div>
+                      <hr>
+                      <div class="message">
+                        <div class="message-body">
+                          <img (click)="onShowDialogImg($event)" 
+                          src="{{message.contenu}}" 
+                          alt="" title="Cliquez pour agrandir">
+                        </div>
+                      </div>
+                      <hr>
                     </div>
-                  </div>
-                </div>
-                <div class="interaction">
-                  <hr>
-                  <div class="sender">John Doe à envoyé un Wizz</div>
-                  <hr>
-                </div>
-                <div class="chat-item">
-                  <div class="sender">John Doe said</div>
-                  <div class="message">
-                    <span class="point"></span>
-                    <div class="message-body"
-                    [innerHTML]="parseEmoji(':birthday: SAlljipjoirg rettr retrtert:shades_smile::kiss::blaze::devil_smile:terertre etrert ertret:bruh::\(O_O\)::=P:')">
+                  }@else if (message.type == 'interaction') {
+                    <div class="interaction">
+                      <hr>
+                      <div class="sender">{{message.nomSender}} à envoyé un Wizz</div>
+                      <hr>
                     </div>
-                  </div>
-                </div>
-                <div class="chat-item">
-                  <div class="sender">John Doe à envoyée une image</div>
-                  <hr>
-                  <div class="message">
-                    <div class="message-body">
-                      <img (click)="onShowDialogImg($event)" 
-                      src="https://images.unsplash.com/photo-1481988535861-271139e06469?q=80&w=2090&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
-                      alt="" title="Cliquez pour agrandir">
-                    </div>
-                  </div>
-                  <hr>
-                </div>
-                <div class="chat-item">
-                  <div class="sender">John Doe à envoyée un clin d'oeil</div>
-                  <hr>
-                  <div class="message">
-                    <div class="message-body">
-                      <img 
-                      src="assets/images/winks/kiss.png" 
-                      alt="" title="Cliquez pour jouer le clin d'oeil" 
-                      winkName="Kiss" (click)="onPlayWink($event)">
-                    </div>
-                  </div>
-                  <hr>
-                </div>
-                <div class="chat-item">
-                  <div class="sender">John Doe said</div>
-                  <div class="message">
-                    <span class="point"></span>
-                    <div class="message-body"
-                    [innerHTML]="parseEmoji('Hello , I am John Doe :no:')">
-                    </div>
-                  </div>
-                  <div class="message">
-                    <span class="point"></span>
-                    <div class="message-body"
-                    [innerHTML]="parseEmoji('Hello , I am John Doe :bruh::blaze::pro:')">
-                    </div>
-                  </div>
-                </div>
+                  }
+              }@empty {
+                  @if (conversation.utilisateurs[0].id == loggedUser.id) {
+                    <div class="sender">Commencer une conversation avec {{conversation.utilisateurs[1].nomComplet}}</div>
+                  }@else {
+                    <div class="sender">Commencer une conversation avec {{conversation.utilisateurs[0].nomComplet}}</div>
+                  }
+              }
               </div>
               <div class="chat-input">
                 <div role="tooltip" class="is-top is-right">
-                  <textarea [ngStyle]="style" placeholder="Écrivez un message" class="text-input" #messageInput></textarea>
+                  <input type="text" [ngStyle]="style" placeholder="Écrivez un message" 
+                  class="text-input" #messageInput (keydown)="onSendMessage($event)">
                 </div>
                 <div class="chat-input-options">
                   <button type="button" class="opt emoji" 

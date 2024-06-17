@@ -11,4 +11,8 @@ export class ConversationService {
   public getConversations(utilisateurId: number) {
     return CONVERSATIONS.filter(conversation => conversation.utilisateurs.find(utilisateur => utilisateur.id === utilisateurId));
   }
+  
+  public getFirstConversation(utilisateurId: number) {
+    return CONVERSATIONS.find(conversation => conversation.utilisateurs.find(utilisateur => utilisateur.id === utilisateurId));
+  }
 }

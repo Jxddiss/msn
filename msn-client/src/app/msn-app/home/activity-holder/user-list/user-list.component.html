@@ -4,7 +4,7 @@
     <span>Favoris <span class="count">({{conversations.length}})</span></span>
 </div>
 <ul class="user-list has-scrollbar">
-    @for (conversation of conversations; track $index) {
+    @for (conversation of favoris; track $index) {
         <li class="user-card" (click)="onOpenChat(conversation)" >
             @if (conversation.utilisateurs[0].id == loggedUser.id) {
                 <div class="buddy-container buddy-{{conversation.utilisateurs[1].statut}} glass user-list-avatar">
@@ -38,6 +38,8 @@
                 </div>
             }
         </li>
+    }@empty {
+        <li class="empty-title">Vous n'avez pas de favoris</li>
     }
 </ul>
 <div class="title">
@@ -59,5 +61,7 @@
                 <span>{{conversation.utilisateurs[0].description}}</span>
             }
         </li>
+    }@empty {
+        <li class="empty-title">Vous n'avez pas d'amis</li>
     }
 </ul>
