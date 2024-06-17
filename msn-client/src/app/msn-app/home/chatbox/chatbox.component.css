@@ -203,6 +203,7 @@ ul[role="menubar"] li:active{
     gap: 0.5em;
     width: 95%;
     margin-left: 1em;
+    word-break: break-word;
 }
 
 .message-body{
@@ -245,8 +246,8 @@ ul[role="menubar"] li:active{
     height: 5px;
     border-radius: 50%;
     background-color: rgba(29, 29, 29, 0.664);
-    align-self: center;
-    margin-top: 0.5em;
+    align-self: start;
+    margin-top: 1em;
 }
 
 .chat-input{
