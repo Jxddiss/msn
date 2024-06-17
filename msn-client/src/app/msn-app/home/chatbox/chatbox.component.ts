@@ -329,6 +329,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
 
   onEmojiPicked(emojiCode : string) : void{
     this.messageInput.nativeElement.value += emojiCode
+    this.messageInput.nativeElement.focus()
   }
 
   onWinkPickerOpen() : void{
