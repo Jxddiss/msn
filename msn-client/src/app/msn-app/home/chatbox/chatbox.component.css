@@ -329,6 +329,25 @@ ul[role="menubar"] li:active{
     gap: 1em;
 }
 
+.name-holder button{
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    min-width: 0;
+    padding: 0;
+    box-shadow: none;
+    margin-left: auto;
+}
+
+.name-holder button img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
+}
+
 .name{
     font-size: 2rem;
     font-weight: 400;

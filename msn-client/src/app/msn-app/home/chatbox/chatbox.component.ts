@@ -12,6 +12,7 @@ import { Conversation } from '../../../model/conversation.model';
 import { Utilisateur } from '../../../model/utilisateur.model';
 import { Message } from '../../../model/message.model';
 import { MessageService } from '../../../service/message.service';
+import { ConversationService } from '../../../service/conversation.service';
 
 @Component({
   selector: 'app-chatbox',
@@ -54,12 +55,14 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   }
   loggedUser : Utilisateur = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined
   messages : Message[] = []
+  isFavoris = false
 
   constructor(
     private _windowInfoService : WindowInfoService, 
     private _winksService : WinksService,
     private _erreurService : ErreurService,
-    private _messageService : MessageService
+    private _messageService : MessageService,
+    private _conversationService : ConversationService
   ) {}
 
   get isLoading(){
@@ -121,6 +124,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     this._conversation = conversation
     this.getMesages()
     this._isLoading = false
+    this.isFavoris = this._conversationService.isFavoris(this.loggedUser.id, this._conversation.id)
   }
 
   getMesages(){
@@ -379,5 +383,14 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
 
   onCloseChat(){
     this._windowInfoService.onChatWindowClose()
+  }
+
+  onFavorisClick(){
+    if(this.isFavoris){
+      this._conversationService.removeFromFavoris(this.loggedUser.id, this.conversation.id)
+    }else{
+      this._conversationService.addToFavoris(this.loggedUser.id, this.conversation.id)
+    }
+    this.isFavoris = !this.isFavoris
   }
 }

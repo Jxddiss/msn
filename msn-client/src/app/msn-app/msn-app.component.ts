@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { Conversation } from '../model/conversation.model';
 import { ConversationService } from '../service/conversation.service';
-import { Utilisateur } from '../model/utilisateur.model';
 
 @Component({
   selector: 'app-msn-app',

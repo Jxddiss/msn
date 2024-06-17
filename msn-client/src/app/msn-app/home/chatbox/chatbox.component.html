@@ -49,6 +49,9 @@ cdkDragBoundary="#desktop"
                     <span class="name">{{conversation.utilisateurs[0].nomComplet}}</span>
                     <span class="status">({{conversation.utilisateurs[0].statut}})</span>
                   }
+                  <button type="button" [title]="isFavoris ? 'Enlever des favoris' : 'Ajouter aux favoris'" (click)="onFavorisClick()" [ngStyle]="isFavoris ? {filter: 'grayscale(100%)'} : {}">
+                    <img src="assets/images/star.png" alt="">
+                  </button>
                 </div>
                 <div class="desc">
                   Hello, I am John Doe
