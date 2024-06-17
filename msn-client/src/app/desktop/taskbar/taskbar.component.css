@@ -207,7 +207,7 @@
     linear-gradient(transparent 20%, #ffffffb3 40%, transparent 41%), 
     linear-gradient(90deg, #ffffff66, #0000001a, #ffffff33), 
   rgba(15, 159, 202, 0.747);
-  box-shadow: inset 0 0 0 1px #fffd, 0px 0px 10px 3px rgba(115, 141, 151, 0.9);
+  box-shadow: inset 0 0 0 1px #fffd, 0px 0px 10px 3px rgba(15, 159, 202, 0.5);
 }
 
 #links .start-icon {
