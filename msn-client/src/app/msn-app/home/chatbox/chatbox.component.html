@@ -7,7 +7,7 @@ cdkDragBoundary="#desktop"
       <div class="title-bar-controls">
         <button aria-label="Minimize" (click)="minimizeOrResume()"></button>
         <button [ariaLabel]="!isFullScreen ? 'Maximize' : 'Restore'" (click)="onFullScreen()"></button>
-        <button aria-label="Close" (click)="minimizeOrResume()"></button>
+        <button aria-label="Close" (click)="onCloseChat()"></button>
       </div>
     </div>
     <div class="window-body" *ngIf="!isLoading">

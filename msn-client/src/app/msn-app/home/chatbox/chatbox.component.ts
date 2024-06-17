@@ -376,4 +376,8 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
       this.messageInput.nativeElement.value = ""
     }
   }
+
+  onCloseChat(){
+    this._windowInfoService.onChatWindowClose()
+  }
 }

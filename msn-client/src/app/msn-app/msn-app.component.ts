@@ -60,6 +60,12 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
         }
       })
     )
+    this._subscriptions.push(
+      this._windowInfoService.chatWindowClose$.subscribe(value => {
+        this.componentRef?.instance.disparition()
+        setTimeout(()=>{this.secondWindowContainer?.clear()},500)
+      })
+    )
   }
 
   ngAfterViewInit(){

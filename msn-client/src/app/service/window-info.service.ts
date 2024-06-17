@@ -18,6 +18,8 @@ export class WindowInfoService {
   msnCloseEvent$ = this._msnCloseEvent.asObservable();
   private _initaliseChatBox = new Subject<Conversation>();
   initaliseChatBox$ = this._initaliseChatBox.asObservable();
+  private _chatWindowClose = new Subject();
+  chatWindowClose$ = this._chatWindowClose.asObservable();
 
   constructor() { }
 
@@ -43,6 +45,11 @@ export class WindowInfoService {
 
   onInitialiseChatBox(conversation : Conversation){
     this._initaliseChatBox.next(conversation)
+  }
+
+  onChatWindowClose(){
+    this._chatWindowOpen.next(false)
+    this._chatWindowClose.next(null)
   }
 
 }
