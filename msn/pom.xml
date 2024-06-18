@@ -8,7 +8,7 @@
 		<version>3.2.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.nicholsonrainville.examen_film</groupId>
+	<groupId>com.nicholsonrainville.msn</groupId>
 	<artifactId>msn</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>msn</name>

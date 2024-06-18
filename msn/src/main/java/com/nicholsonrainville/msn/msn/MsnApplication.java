@@ -1,4 +1,4 @@
-package com.nicholsonrainville.examen_film.msn;
+package com.nicholsonrainville.msn.msn;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
