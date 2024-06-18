@@ -184,6 +184,7 @@ ul[role="menubar"] li:active{
     overflow-y: auto;
     gap: 1.2em;
     padding: 0.5em;
+    padding-bottom: 2em;
 }
 
 .chat-item:first-child{
