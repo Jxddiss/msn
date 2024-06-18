@@ -1,14 +1,14 @@
 <div class="rechercher">
     <input type="search" placeholder="Rechercher" name="email" id="email" title="Rechercher">
-    <div class="button">
-        <label role="button" type="button" for="add">
-            <img src="assets/images/add.png" alt="">
+    <div class="button show-menu">
+        <label role="button" type="button" for="add" class="show-menu">
+            <img src="assets/images/add.png" alt="" class="show-menu">
         </label>
-        <input type="checkbox" name="add" id="add">
-        <ul role="menu" >
-            <li role="menuitem" tabindex="0"><a>Ajouter un ami</a></li>
-            <li role="menuitem" tabindex="0"><a>Inviter un ami</a></li>
-            <li role="menuitem" tabindex="0"><a>Demandes d'amis</a></li>
+        <input type="checkbox" name="add" id="add" #showMenu class="show-menu">
+        <ul role="menu" class="show-menu">
+            <li role="menuitem" tabindex="0" (click)="onShowDialogAjout()" ><a>Ajouter un ami</a></li>
+            <li role="menuitem" tabindex="0" (click)="onShowDialogInviter()" ><a>Inviter un ami</a></li>
+            <li role="menuitem" tabindex="0" (click)="onShowDialogDemandes()" ><a>Demandes d'amis</a></li>
         </ul>
     </div>
 </div>

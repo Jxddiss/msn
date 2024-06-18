@@ -23,6 +23,7 @@ import { EmojiPickerComponent } from './msn-app/home/chatbox/emoji-picker/emoji-
 import { WinksPickerComponent } from './msn-app/home/chatbox/winks-picker/winks-picker.component';
 import { TextEditComponent } from './msn-app/home/chatbox/text-edit/text-edit.component';
 import { FormsModule } from '@angular/forms';
+import { AmisEditComponent } from './msn-app/amis-edit/amis-edit.component';
 
 registerLocaleData(localeFr)
 
@@ -45,6 +46,7 @@ registerLocaleData(localeFr)
     EmojiPickerComponent,
     WinksPickerComponent,
     TextEditComponent,
+    AmisEditComponent,
   ],
   imports: [
     BrowserModule,

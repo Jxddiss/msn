@@ -14,6 +14,7 @@ import { Utilisateur } from '../../model/utilisateur.model';
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('bannerImg') bannerImg !: ElementRef
+  
   loggedInUser : Utilisateur = {} as Utilisateur;
 
   constructor(
@@ -50,5 +51,4 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this._windowInfoService.onHomeWindowOpen(false)
   }
-
 }

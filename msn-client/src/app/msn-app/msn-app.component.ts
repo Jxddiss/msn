@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ComponentRef, EventEmitter, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, ElementRef, EventEmitter, OnDestroy, OnInit, ViewChild, ViewContainerRef, signal } from '@angular/core';
 import gsap from 'gsap';
 import { WindowInfoService } from '../service/window-info.service';
 import { ChatboxComponent } from './home/chatbox/chatbox.component';
@@ -24,6 +24,7 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
     x: 0,
     y: 0
   }
+  renderDialog = signal(false)
 
   constructor(
     private _windowInfoService : WindowInfoService, 
@@ -50,12 +51,16 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
   }
 
   ngOnInit(){
+
     this._subscriptions.push(
       this._windowInfoService.homeWindowOpen$.subscribe(value => {
         if(value){
           const loggedUser = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined
           const conversation = this._conversationService.getFirstConversation(loggedUser.id)
           if(conversation) this.initialiseChatBox(conversation)
+          this.renderDialog.set(true)
+        }else{
+          this.renderDialog.set(false)
         }
       })
     )
@@ -159,4 +164,5 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
       this.isMinimized = false
     }
   }
+
 }

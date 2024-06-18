@@ -20,6 +20,12 @@ export class WindowInfoService {
   initaliseChatBox$ = this._initaliseChatBox.asObservable();
   private _chatWindowClose = new Subject();
   chatWindowClose$ = this._chatWindowClose.asObservable();
+  private _openDialogAjout = new Subject();
+  openDialogAjout$ = this._openDialogAjout.asObservable();
+  private _openDialogInviter = new Subject();
+  openDialogInviter$ = this._openDialogInviter.asObservable();
+  private _openDialogDemandes = new Subject();
+  openDialogDemandes$ = this._openDialogDemandes.asObservable();
 
   constructor() { }
 
@@ -50,6 +56,18 @@ export class WindowInfoService {
   onChatWindowClose(){
     this._chatWindowOpen.next(false)
     this._chatWindowClose.next(null)
+  }
+
+  onOpenDialogAjout(){
+    this._openDialogAjout.next(null)
+  }
+
+  onOpenDialogInviter(){
+    this._openDialogInviter.next(null)
+  }
+
+  onOpenDialogDemandes(){
+    this._openDialogDemandes.next(null)
   }
 
 }

@@ -1,0 +1,100 @@
+[role="dialog"]{
+    transform: none;
+    translate: -80% -80%;
+}
+
+[role="dialog"] .window-body{
+    background: rgb(154, 220, 246);
+    background: linear-gradient(180deg, rgba(154, 220, 246, 1) 0%, rgba(236, 247, 251, 1) 37%, rgba(255, 255, 255, 1) 100%);
+}
+
+.ajout, .inviter{
+    min-height: 250px;
+    min-width: 450px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
+    padding: 2em;
+}
+
+.ajout form, .inviter form{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    flex-grow: 1;
+}
+
+.ajout form label, .inviter form label{
+    font-size: 1.2rem;
+}
+
+.ajout form input, .inviter form input{
+    padding: 0.5em;
+    font-size: 1rem;
+}
+
+.ajout form button, .inviter form button{
+    padding: 0.5em;
+    font-size: 1rem;
+    position: absolute;
+    bottom: 2em;
+    right: 2em;
+    cursor: pointer;
+}
+
+.demandes{
+    height: 400px;
+    width: 400px;
+    max-height: 60dvh;
+    padding-left: 2em;
+    padding-top: 1.5em;
+    position: relative;
+}
+
+.liste-demandes{
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    list-style: none;
+    padding: 0;
+    overflow-y: auto;
+    height: 85%;
+}
+
+.demande{
+    display: flex;
+    gap: 1em;
+    padding: 0.5em;
+    padding-right: 1em;
+    border-radius: 5px;
+}
+
+.demande-list-avatar{
+    width: 70px;
+    height: 70px;
+    margin-right: 0.5em;
+    padding: 6px;
+    border: none;
+    flex-shrink: 0;
+}
+
+.demande-list-info{
+    flex-grow: 1;
+    font-size: 1rem;
+}
+
+.demande-btn-holder{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+}
+
+.title{
+    position: sticky;
+    align-items: center;
+    font-weight: 600;
+    font-size: 15pt;
+    color: rgb(7, 65, 124);
+    margin-bottom: 1em;
+}
