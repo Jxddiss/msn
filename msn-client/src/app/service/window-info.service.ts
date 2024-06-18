@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Conversation } from '../model/conversation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,16 @@ export class WindowInfoService {
   chatWidowMinimizeOrResume$ = this._chatWidowMinimizeOrResume.asObservable();
   private _msnCloseEvent = new Subject();
   msnCloseEvent$ = this._msnCloseEvent.asObservable();
-  private _initaliseChatBox = new Subject();
+  private _initaliseChatBox = new Subject<Conversation>();
   initaliseChatBox$ = this._initaliseChatBox.asObservable();
+  private _chatWindowClose = new Subject();
+  chatWindowClose$ = this._chatWindowClose.asObservable();
+  private _openDialogAjout = new Subject();
+  openDialogAjout$ = this._openDialogAjout.asObservable();
+  private _openDialogInviter = new Subject();
+  openDialogInviter$ = this._openDialogInviter.asObservable();
+  private _openDialogDemandes = new Subject();
+  openDialogDemandes$ = this._openDialogDemandes.asObservable();
 
   constructor() { }
 
@@ -40,8 +49,25 @@ export class WindowInfoService {
     this._msnCloseEvent.next(null)
   }
 
-  onInitialiseChatBox(){
-    this._initaliseChatBox.next(null)
+  onInitialiseChatBox(conversation : Conversation){
+    this._initaliseChatBox.next(conversation)
+  }
+
+  onChatWindowClose(){
+    this._chatWindowOpen.next(false)
+    this._chatWindowClose.next(null)
+  }
+
+  onOpenDialogAjout(){
+    this._openDialogAjout.next(null)
+  }
+
+  onOpenDialogInviter(){
+    this._openDialogInviter.next(null)
+  }
+
+  onOpenDialogDemandes(){
+    this._openDialogDemandes.next(null)
   }
 
 }

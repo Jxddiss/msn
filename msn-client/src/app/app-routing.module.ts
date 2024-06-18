@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './msn-app/login/login.component';
 import { InscriptionComponent } from './msn-app/inscription/inscription.component';
 import { HomeComponent } from './msn-app/home/home.component';
+import { authentificationGuard } from './guard/authentification.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -16,7 +17,8 @@ const routes: Routes = [
       {path: '', component: InscriptionComponent, outlet: 'main'},
     ]
   },
-  { path: 'home', 
+  { path: 'home',
+    canActivate: [authentificationGuard],
     children: [
       {path: '', component: HomeComponent, outlet: 'main'},
     ]

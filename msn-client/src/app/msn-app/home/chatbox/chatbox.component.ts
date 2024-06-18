@@ -8,6 +8,11 @@ import { getWink } from '../../../utils/wink.utils';
 import { verifyFile } from '../../../utils/input-verification.utils';
 import { Erreur } from '../../../model/erreur.model';
 import { ErreurService } from '../../../service/erreur.service';
+import { Conversation } from '../../../model/conversation.model';
+import { Utilisateur } from '../../../model/utilisateur.model';
+import { Message } from '../../../model/message.model';
+import { MessageService } from '../../../service/message.service';
+import { ConversationService } from '../../../service/conversation.service';
 
 @Component({
   selector: 'app-chatbox',
@@ -16,7 +21,7 @@ import { ErreurService } from '../../../service/erreur.service';
 })
 export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterContentChecked{
   private _isLoading = true
-  private _test : string | undefined
+  private _conversation !: Conversation
   private _isMinimized = false
   private _isFullScreen = false
   private _subscriptions : Subscription[] = []
@@ -48,11 +53,33 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     fontFamily: '',
     textShadow: 'none'
   }
+  loggedUser : Utilisateur = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined
+  messages : Message[] = []
+  isFavoris = false
 
   constructor(
     private _windowInfoService : WindowInfoService, 
     private _winksService : WinksService,
-    private _erreurService : ErreurService) {}
+    private _erreurService : ErreurService,
+    private _messageService : MessageService,
+    private _conversationService : ConversationService
+  ) {}
+
+  get isLoading(){
+    return this._isLoading
+  }
+
+  get conversation(){
+    return this._conversation
+  }
+
+  get isFullScreen(){
+    return this._isFullScreen
+  }
+
+  get appelStarted(){
+    return this.appelStarted$
+  }
 
   ngOnInit(): void {
     this._windowInfoService.onChatWindowOpen(true)
@@ -93,13 +120,29 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     })
   }
 
-  setTest(value : string | undefined){
-    this._test = value
+  setConversation(conversation : Conversation){
+    this._conversation = conversation
+    this.getMesages()
     this._isLoading = false
+    this.isFavoris = this._conversationService.isFavoris(this.loggedUser.id, this._conversation.id)
   }
 
-  get isLoading(){
-    return this._isLoading
+  getMesages(){
+    this._subscriptions.push(
+      this._messageService.getMessages(this._conversation.id).subscribe(
+        {
+          next : (messages)=>{
+            this.messages = messages
+            setTimeout(()=>{
+              if(this.chatList){
+                this.chatList.nativeElement.scrollTop = this.chatList.nativeElement.scrollHeight
+              }
+            },10)
+          },
+          error : (error)=>{console.log(error)}
+        }
+      )
+    )
   }
 
   minimizeOrResume(){
@@ -208,6 +251,9 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
 
   onNudge() : void{
     this.nudge()
+    const message = new Message(this.messages.length,'',new Date(),this.loggedUser.nomComplet,'interaction',this._conversation.id)
+    this._messageService.sendMessage(message)
+    this.getMesages()
   }
 
   nudge(){
@@ -290,8 +336,14 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     return parseEmoji(emoji)
   }
 
+  parseStyle(style : string | null | undefined) : any{
+    if(!style || style === null) return {}
+    return JSON.parse(style)
+  }
+
   onEmojiPicked(emojiCode : string) : void{
     this.messageInput.nativeElement.value += emojiCode
+    this.messageInput.nativeElement.focus()
   }
 
   onWinkPickerOpen() : void{
@@ -313,13 +365,32 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
       this._winksService.onWinksToPlay(wink)
     }
   }
-
-  get isFullScreen(){
-    return this._isFullScreen
-  }
-
-  get appelStarted(){
-    return this.appelStarted$
-  }
   
+  onSendMessage($event : KeyboardEvent) : void{
+    if($event.key === "Enter"){
+      this.sendMessage()
+    }
+  }
+
+  sendMessage() : void{
+    if(this.messageInput.nativeElement.value !== ""){
+      const message = new Message(this.messages.length, this.messageInput.nativeElement.value, new Date(), this.loggedUser.nomComplet, "text", this.conversation.id, JSON.stringify(this.style))
+      this._messageService.sendMessage(message)
+      this.getMesages()
+      this.messageInput.nativeElement.value = ""
+    }
+  }
+
+  onCloseChat(){
+    this._windowInfoService.onChatWindowClose()
+  }
+
+  onFavorisClick(){
+    if(this.isFavoris){
+      this._conversationService.removeFromFavoris(this.loggedUser.id, this.conversation.id)
+    }else{
+      this._conversationService.addToFavoris(this.loggedUser.id, this.conversation.id)
+    }
+    this.isFavoris = !this.isFavoris
+  }
 }

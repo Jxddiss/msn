@@ -1,6 +1,6 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { WindowInfoService } from '../../service/window-info.service';
-import { Subscription, reduce } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Erreur } from '../../model/erreur.model';
 import { ErreurService } from '../../service/erreur.service';
 import { verifyFile } from '../../utils/input-verification.utils';
@@ -10,12 +10,14 @@ import { verifyFile } from '../../utils/input-verification.utils';
   templateUrl: './taskbar.component.html',
   styleUrl: './taskbar.component.css'
 })
-export class TaskbarComponent implements OnDestroy{
+export class TaskbarComponent implements AfterViewInit, OnDestroy{
   @Input() msnOpened = false
   @Output() msnOpenEvent = new EventEmitter()
   @ViewChild('startMenu') startMenu : ElementRef | undefined
   @ViewChild('startIcon') startIcon : ElementRef | undefined
   @ViewChild('backgroundFile') backgroundFile : ElementRef | undefined
+  @ViewChild('winProfileInput') winProfileInput : ElementRef | undefined
+  @ViewChild('winProfileImg') winProfileImg !: ElementRef 
   startOpened = false
   currentDate = new Date();
   intervalDate = setInterval(() => {
@@ -34,6 +36,10 @@ export class TaskbarComponent implements OnDestroy{
         this.chatOpened = value
       })
     )
+  }
+
+  ngAfterViewInit(): void {
+    this.setWinProfileImg()
   }
 
   onMsnOpen(){
@@ -81,6 +87,33 @@ export class TaskbarComponent implements OnDestroy{
         this._erreurService.onErreursEvent(erreur);
       }
     }
+  }
+
+  onOpenWinProfile(){
+    this.winProfileInput?.nativeElement.click()
+  }
+
+  onChangeWinProfile(){
+    const file = this.winProfileInput?.nativeElement.files[0]
+    if(file){
+      const result = verifyFile(file)
+      if(result === "bon"){
+        const reader = new FileReader();
+        reader.onload = () => {
+          localStorage.setItem('profilewindows', reader.result as string)
+          this.winProfileImg.nativeElement.src = reader.result as string
+        };
+        reader.readAsDataURL(file);
+      }else{
+        const erreur = new Erreur("Upload d'image", result);
+        this._erreurService.onErreursEvent(erreur);
+      }
+    }
+  }
+
+  setWinProfileImg(){
+    if(localStorage.getItem('profilewindows') === null) return
+    this.winProfileImg.nativeElement.src = localStorage.getItem('profilewindows')
   }
 
   ngOnDestroy(): void {

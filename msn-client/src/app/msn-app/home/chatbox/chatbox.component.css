@@ -184,6 +184,7 @@ ul[role="menubar"] li:active{
     overflow-y: auto;
     gap: 1.2em;
     padding: 0.5em;
+    padding-bottom: 2em;
 }
 
 .chat-item:first-child{
@@ -201,7 +202,9 @@ ul[role="menubar"] li:active{
     align-items: center;
     font-size: 1rem;
     gap: 0.5em;
-    width: 100%;
+    width: 95%;
+    margin-left: 1em;
+    word-break: break-word;
 }
 
 .message-body{
@@ -244,8 +247,8 @@ ul[role="menubar"] li:active{
     height: 5px;
     border-radius: 50%;
     background-color: rgba(29, 29, 29, 0.664);
-    align-self: center;
-    margin-top: 0.5em;
+    align-self: start;
+    margin-top: 1em;
 }
 
 .chat-input{
@@ -325,6 +328,25 @@ ul[role="menubar"] li:active{
     display: flex;
     align-items: center;
     gap: 1em;
+}
+
+.name-holder button{
+    border: none;
+    outline: none;
+    background: transparent;
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
+    min-width: 0;
+    padding: 0;
+    box-shadow: none;
+    margin-left: auto;
+}
+
+.name-holder button img{
+    height: 100%;
+    width: 100%;
+    object-fit: contain;
 }
 
 .name{

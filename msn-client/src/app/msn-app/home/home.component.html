@@ -1,6 +1,6 @@
 <div class="content-container">
     <div class="banner-holder">
-        <img src="assets/images/default.png" alt="" #bannerImg>
+        <img src="{{loggedInUser.banniere}}" alt="" #bannerImg>
     </div>
     <div class="content-card">
         <app-user-card (bannerChangeEvent)="onBannerChangeEvent($event)"></app-user-card>
@@ -8,3 +8,4 @@
         <app-activity-holder></app-activity-holder>
     </div>
 </div>
+
