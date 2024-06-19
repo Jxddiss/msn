@@ -9,7 +9,7 @@ public class Utilisateur {
     private Long id;
     @Column(nullable = false)
     private String nomComplet;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false)
     private String statut;
