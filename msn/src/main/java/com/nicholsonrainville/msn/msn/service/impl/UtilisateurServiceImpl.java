@@ -99,7 +99,7 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
         File saveFile = new File(parentDir.getAbsolutePath() + File.separator + finalName);
         Files.copy(avatar.getInputStream(),saveFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
         avatar.getInputStream().close();
-        utilisateur.setAvatar(BASE_URL_PROFILE);
+        utilisateur.setAvatar(BASE_URL_PROFILE+finalName);
         return utilisateur;
     }
 }

@@ -3,6 +3,7 @@ package com.nicholsonrainville.msn.msn.controlleur;
 import com.nicholsonrainville.msn.msn.domain.HttpResponse;
 import com.nicholsonrainville.msn.msn.domain.UserPrincipal;
 import com.nicholsonrainville.msn.msn.entity.Utilisateur;
+import com.nicholsonrainville.msn.msn.exception.domain.EmailExistException;
 import com.nicholsonrainville.msn.msn.exception.domain.NotAnImageFileException;
 import com.nicholsonrainville.msn.msn.service.UtilisateurService;
 import com.nicholsonrainville.msn.msn.utils.JWTTokenProvider;
@@ -20,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+import static com.nicholsonrainville.msn.msn.constant.ExceptionConstant.EMAIL_EXIST;
 import static com.nicholsonrainville.msn.msn.constant.SecurityConstant.JWT_TOKEN_HEADER;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.OK;
@@ -60,9 +62,13 @@ public class AuthenticationController {
                                                     @RequestParam("nom") String nom,
                                                     @RequestParam("password") String password,
                                                     @RequestParam(name = "avatar",required = false) MultipartFile avatar)
-            throws IOException, NotAnImageFileException {
+            throws IOException, NotAnImageFileException, EmailExistException {
 
-       Utilisateur savedUser = utilisateurService.inscription(email,nom,password,avatar);
+        if (!utilisateurService.emailIsValid(email)){
+            throw new EmailExistException(EMAIL_EXIST);
+        }
+
+        Utilisateur savedUser = utilisateurService.inscription(email,nom,password,avatar);
 
         if(savedUser != null){
             HttpResponse httpResponse = new HttpResponse(OK.value(),OK,OK.getReasonPhrase(),"Compte créer avec succès");
