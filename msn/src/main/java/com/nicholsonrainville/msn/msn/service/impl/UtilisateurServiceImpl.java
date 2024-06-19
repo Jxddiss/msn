@@ -4,12 +4,16 @@ import com.nicholsonrainville.msn.msn.domain.UserPrincipal;
 import com.nicholsonrainville.msn.msn.entity.Utilisateur;
 import com.nicholsonrainville.msn.msn.repository.UtilisateurRepository;
 import com.nicholsonrainville.msn.msn.service.UtilisateurService;
+import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
+@Service
+@Transactional
 public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsService {
     private final UtilisateurRepository utilisateurRepository;
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -32,5 +36,10 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
     @Override
     public boolean emailIsValid(String email) {
         return !utilisateurRepository.existsByEmail(email);
+    }
+
+    @Override
+    public Utilisateur findByEmail(String email) {
+        return utilisateurRepository.findByEmail(email);
     }
 }

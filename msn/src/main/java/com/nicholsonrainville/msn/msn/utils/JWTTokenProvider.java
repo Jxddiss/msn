@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.nicholsonrainville.msn.msn.domain.UserPrincipal;
+import com.nicholsonrainville.msn.msn.service.UtilisateurService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -32,9 +33,10 @@ public class JWTTokenProvider {
     @Value("${jwt.secret}")
     private String secret;
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
-    //private final UtilisateurService utilisateurService;
+    private final UtilisateurService utilisateurService;
 
-    public JWTTokenProvider() {
+    public JWTTokenProvider(UtilisateurService utilisateurService) {
+        this.utilisateurService = utilisateurService;
     }
 
     public String generateJwtToken(UserPrincipal userPrincipal){
@@ -77,8 +79,8 @@ public class JWTTokenProvider {
     public boolean isTokenValid(String username, String token){
         JWTVerifier verifier = getJWTVerifier();
         return StringUtils.isNotEmpty(username)
-                && !isTokenExpired(verifier, token);
-                //&& !utilisateurService.pseudoIsValid(username,0L);
+                && !isTokenExpired(verifier, token)
+                && !utilisateurService.emailIsValid(username);
     }
 
     public String getSubject(String token){
