@@ -13,6 +13,7 @@ import { Utilisateur } from '../../../model/utilisateur.model';
 import { Message } from '../../../model/message.model';
 import { MessageService } from '../../../service/message.service';
 import { ConversationService } from '../../../service/conversation.service';
+import { CdkDragEnd } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-chatbox',
@@ -43,6 +44,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   @ViewChild('messageInput') messageInput !: ElementRef
   private _scrolledChatList = false
   dragPosition = {
+    x: 0,
+    y: 0
+  }
+  private _lastPosition = {
     x: 0,
     y: 0
   }
@@ -199,6 +204,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     tl.duration(0.2)
   }
 
+  onDragEnd($event : CdkDragEnd){
+    this._lastPosition = $event.source.getFreeDragPosition()
+  }
+
   onFullScreen() : void{
     const tl = gsap.timeline()
     if(this._isFullScreen){
@@ -215,6 +224,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
       tl.to('.second-window .content-container', {
         clearProps:true,
       })
+      this.dragPosition = this._lastPosition
     }else{
       this.makeFullScreen()
     }
