@@ -14,4 +14,5 @@ public class ExceptionConstant {
     public static final String WARN = "warn";
     public static final String DEMANDE = "demande";
     public static final String ERROR = "error";
+    public static final String NOT_AN_IMAGE_FILE = " is not an image file, please upload an image";
 }
