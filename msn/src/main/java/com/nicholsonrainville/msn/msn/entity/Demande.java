@@ -1,27 +1,28 @@
 package com.nicholsonrainville.msn.msn.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
 public class Demande {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
     private Utilisateur receveur;
     @ManyToOne
     private Utilisateur envoyeur;
     private String statut;
+    private Boolean accepter;
 
     public Demande() {
     }
 
-    public Demande(Long id, Utilisateur receveur, Utilisateur envoyeur, String statut) {
+    public Demande(Long id, Utilisateur receveur, Utilisateur envoyeur, String statut, Boolean accepter) {
         this.id = id;
         this.receveur = receveur;
         this.envoyeur = envoyeur;
         this.statut = statut;
+        this.accepter = accepter;
     }
 
     public void setId(Long id) {
@@ -54,5 +55,13 @@ public class Demande {
 
     public void setStatut(String statut) {
         this.statut = statut;
+    }
+
+    public Boolean getAccepter() {
+        return accepter;
+    }
+
+    public void setAccepter(Boolean accepter) {
+        this.accepter = accepter;
     }
 }

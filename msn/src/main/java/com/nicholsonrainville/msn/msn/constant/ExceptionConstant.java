@@ -11,6 +11,7 @@ public class ExceptionConstant {
     public static final String UNAUTHORIZED = "Non authorisé!";
     public static final String TOKEN_NON_VALIDE = "Connexion non valide";
     public static final String NOT_FOUND = "Ressources impossible à trouvé";
+    public static final String USER_NOT_FOUND = "Utilisateur introuvable";
     public static final String EMAIL_EXIST = "Cette addresse courriel est déjà associé à un compte";
     public static final String NOT_AN_IMAGE_FILE = " is not an image file, please upload an image";
 }
