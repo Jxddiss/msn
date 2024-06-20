@@ -29,7 +29,7 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
   constructor(
     private _windowInfoService : WindowInfoService, 
     private _router : Router,
-    private _conversationService : ConversationService
+    private _conversationService : ConversationService,
   ) {
     this._subscriptions.push(
       this._windowInfoService.canBeFullScreen$.subscribe(value => {

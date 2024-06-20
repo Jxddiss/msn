@@ -26,6 +26,8 @@ import { FormsModule } from '@angular/forms';
 import { AmisEditComponent } from './msn-app/amis-edit/amis-edit.component';
 import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptorInterceptor } from './interceptor/auth-interceptor.interceptor';
+import { RxStompService } from './service/rx-stomp.service';
+import { rxStompServiceFactory } from './rx-stomp-service-factory';
 
 registerLocaleData(localeFr)
 
@@ -61,7 +63,7 @@ registerLocaleData(localeFr)
   providers: [
     {provide: LOCALE_ID, useValue:'fr-FR'},
     {provide: LocationStrategy, useClass: HashLocationStrategy},
-    provideHttpClient(withInterceptors([authInterceptorInterceptor]))
+    provideHttpClient(withInterceptors([authInterceptorInterceptor])),
   ],
   bootstrap: [AppComponent]
 })

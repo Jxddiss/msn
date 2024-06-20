@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, OnDestroy, Output, ViewChild } from '@angular/core';
 import gsap from 'gsap';
+import { Notification } from '../../model/notification.model';
+import { RxStompService } from '../../service/rx-stomp.service';
 
 @Component({
   selector: 'app-notification',
@@ -7,9 +9,14 @@ import gsap from 'gsap';
   styleUrl: './notification.component.css'
 })
 export class NotificationComponent implements AfterViewInit, OnDestroy {
-  @ViewChild('notification') notification !: ElementRef
+  @ViewChild('notificationElem') notificationElem !: ElementRef
   close = new EventEmitter()
   destroyTimeout : NodeJS.Timeout | undefined
+  notification : Notification | undefined
+
+  constructor(private _rxStompService : RxStompService) { 
+    this._rxStompService.activate()
+  }
 
 
   ngAfterViewInit(): void {
@@ -24,7 +31,7 @@ export class NotificationComponent implements AfterViewInit, OnDestroy {
   }
 
   apparition(){
-    const el = this.notification.nativeElement
+    const el = this.notificationElem.nativeElement
 
     gsap.fromTo(el,{
       opacity:0.5,
@@ -38,12 +45,15 @@ export class NotificationComponent implements AfterViewInit, OnDestroy {
   }
 
   disparition(){
-    const el = this.notification.nativeElement
+    const el = this.notificationElem.nativeElement
     gsap.to(el,{
       opacity:0,
       translateX: '100%',
       duration: 0.5,
       ease: 'power1.inOut'
+    })
+    gsap.to(el,{
+      display: 'none',
     })
   }
 
@@ -52,4 +62,9 @@ export class NotificationComponent implements AfterViewInit, OnDestroy {
       clearTimeout(this.destroyTimeout)
     }
   }
+
+  setNotification(notification : Notification){
+    this.notification = notification
+  }
+
 }

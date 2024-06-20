@@ -12,7 +12,8 @@ public class SecurityConstant {
     public static final String OPTIONS_HTTP_METHOD = "OPTIONS";
     public static final String[] PUBLIC_URLS = {
             "/login",
-            "/media/**"
+            "/media/**",
+            "/ws"
     };
     //public static final String[] PUBLIC_URLS = {"**"};
 }

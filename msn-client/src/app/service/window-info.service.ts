@@ -40,7 +40,6 @@ export class WindowInfoService {
   }
 
   onHomeWindowOpen(value : boolean){
-    console.log("onHomeWindowOpen")
     this._homeWindowOpen.next(value)
   }
 

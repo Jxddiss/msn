@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit{
             this._authentificationService.saveToken(token!);
             this._authentificationService.addUserToLocalStorage(response.body!)
             this._windowInfoService.onDisparition()
+            this._authentificationService.configureWebsocket()
             setTimeout(()=>{this.router.navigate(['/home'])},500)
           },
           error: (error) => {
