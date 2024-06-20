@@ -30,6 +30,11 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
+    public boolean existsById(Long id) {
+        return conversationRepository.existsById(id);
+    }
+
+    @Override
     public Conversation save(Conversation conversation) {
         return conversationRepository.save(conversation);
     }

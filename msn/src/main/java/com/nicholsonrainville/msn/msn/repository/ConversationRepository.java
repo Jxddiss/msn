@@ -16,4 +16,5 @@ public interface ConversationRepository extends JpaRepository<Conversation,Long>
     @Query("SELECT c FROM Conversation c JOIN c.utilisateurs u WHERE u.id = ?1")
     List<Conversation> getConversationByUtilisateurs(Long idUtilisateur);
 
+    boolean existsById(Long id);
 }

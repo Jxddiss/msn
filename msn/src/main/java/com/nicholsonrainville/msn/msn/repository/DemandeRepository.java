@@ -15,5 +15,6 @@ public interface DemandeRepository extends JpaRepository<Demande,Long> {
     List<Demande> getDemandesByUtilisateurId(Long idUtilisateur);
     @Modifying
     @Query("UPDATE Demande d SET d.accepter = ?1, d.statut = ?3 WHERE d.id = ?2")
-    Long accepter(Boolean accepter, Long id, String statut);
+    int accepter(Boolean accepter, Long id, String statut);
+    boolean existsById(Long id);
 }

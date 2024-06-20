@@ -11,4 +11,6 @@ public interface ConversationService {
     Conversation save(Conversation conversation);
     void delete(Conversation conversation);
 
+    boolean existsById(Long id);
+
 }
