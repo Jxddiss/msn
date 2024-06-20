@@ -1,5 +1,6 @@
 package com.nicholsonrainville.msn.msn.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.Set;
@@ -12,6 +13,7 @@ public class Conversation {
     @ManyToMany
     private Set<Utilisateur> utilisateurs;
     @OneToMany
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Message> messages;
 
     public Conversation() {

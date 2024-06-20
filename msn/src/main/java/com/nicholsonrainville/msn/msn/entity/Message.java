@@ -1,5 +1,6 @@
 package com.nicholsonrainville.msn.msn.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -18,6 +19,7 @@ public class Message {
     private String style;
     private String winkName;
     @ManyToOne
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Conversation conversation;
 
     public Message() {

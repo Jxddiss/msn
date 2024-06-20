@@ -10,5 +10,9 @@ public class SecurityConstant {
     public static final String AUTHORITIES = "authorities";
     public static final String ACCESS_DENIED_MESSAGE = "Vous n'avez pas l'authorisation d'accéder à cette page";
     public static final String OPTIONS_HTTP_METHOD = "OPTIONS";
-    public static final String[] PUBLIC_URLS = {"**"};
+    public static final String[] PUBLIC_URLS = {
+            "/login",
+            "/media/**"
+    };
+    //public static final String[] PUBLIC_URLS = {"**"};
 }

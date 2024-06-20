@@ -2,27 +2,36 @@ import { Injectable } from '@angular/core';
 import { CONVERSATIONS } from '../mocks/conversation.mock';
 import { BehaviorSubject, of } from 'rxjs';
 import { Conversation } from '../model/conversation.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../constants/environment.constant';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConversationService {
+  private backendUrl = environment.apiUrl;
+  private _conversationsSubject = new BehaviorSubject<Conversation[]>([]);
+  public conversations$ = this._conversationsSubject.asObservable();
   private _favorisSubject = new BehaviorSubject<Conversation[]>([]);
   public favoris$ = this._favorisSubject.asObservable();
+  private _conversations : Conversation[] = [];
 
-  constructor() { }
+  constructor(private _httpClient: HttpClient) { }
 
   public getConversations(utilisateurId: number) {
-    return CONVERSATIONS.filter(conversation => conversation.utilisateurs.find(utilisateur => utilisateur.id === utilisateurId));
+    this._httpClient.get<Conversation[]>(this.backendUrl + 'conversations/' + utilisateurId).subscribe(conversations => {
+      this._conversationsSubject.next(conversations);
+      this._conversations = conversations
+    })
   }
   
   public getFirstConversation(utilisateurId: number) {
-    return CONVERSATIONS.find(conversation => conversation.utilisateurs.find(utilisateur => utilisateur.id === utilisateurId));
+    return this._conversations.find(conversation => conversation.utilisateurs.find(utilisateur => utilisateur.id === utilisateurId));
   }
 
   public getFavoris(utilisateurId: number) {
     const favoris = localStorage.getItem('favoris_' + utilisateurId.toString()) ? JSON.parse(localStorage.getItem('favoris_' + utilisateurId.toString())!) : []
-    const filteredConversations = CONVERSATIONS.filter(conversation => favoris.includes(conversation.id));
+    const filteredConversations = this._conversations.filter(conversation => favoris.includes(conversation.id));
     this._favorisSubject.next(filteredConversations)
   }
 
@@ -42,7 +51,7 @@ export class ConversationService {
 
   private updateFavoris(utilisateurId: number): void {
     const favoris = localStorage.getItem('favoris_' + utilisateurId.toString()) ? JSON.parse(localStorage.getItem('favoris_' + utilisateurId.toString())!) : [];
-    const filteredConversations = CONVERSATIONS.filter(conversation => favoris.includes(conversation.id));
+    const filteredConversations = this._conversations.filter(conversation => favoris.includes(conversation.id));
     this._favorisSubject.next(filteredConversations);
   }
 

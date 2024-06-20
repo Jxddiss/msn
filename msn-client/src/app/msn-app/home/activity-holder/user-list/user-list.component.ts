@@ -21,7 +21,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.conversations = this._conversationService.getConversations(this.loggedUser.id)
+    this._subscriptions.push(this._conversationService.conversations$.subscribe(conversations => this.conversations = conversations))
+    this._conversationService.getConversations(this.loggedUser.id)
     this._subscriptions.push(this._conversationService.favoris$.subscribe(favoris => this.favoris = favoris))
     this._conversationService.getFavoris(this.loggedUser.id)
   }

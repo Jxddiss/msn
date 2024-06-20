@@ -58,4 +58,8 @@ export class AuthentificationService {
     if(!this.isLoggedIn()) return undefined
     return JSON.parse(localStorage.getItem('utilisateur')!)
   }
+
+  getToken() : string | null{
+    return this._token;
+  }
 }
