@@ -13,4 +13,5 @@ public interface NotificationService {
     List<Notification> getNotificationByReceveurId(Long receveurId);
 
     void deleteNotification(Long id);
+    Notification save(Notification notification);
 }
