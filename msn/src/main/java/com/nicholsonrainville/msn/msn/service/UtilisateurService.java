@@ -16,4 +16,10 @@ public interface UtilisateurService {
                              String nom,
                              String password,
                              MultipartFile avatar) throws NotAnImageFileException, IOException;
+    Utilisateur update(Long userId,
+                       String nom,
+                       String description,
+                       String statut,
+                       MultipartFile avatar,
+                       MultipartFile banniere) throws NotAnImageFileException, IOException;
 }

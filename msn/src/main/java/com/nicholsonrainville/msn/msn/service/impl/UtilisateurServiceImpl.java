@@ -24,8 +24,7 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import static com.nicholsonrainville.msn.msn.constant.ExceptionConstant.NOT_AN_IMAGE_FILE;
-import static com.nicholsonrainville.msn.msn.constant.FileConstant.BASE_URL_PROFILE;
-import static com.nicholsonrainville.msn.msn.constant.FileConstant.USER_FOLDER;
+import static com.nicholsonrainville.msn.msn.constant.FileConstant.*;
 import static org.springframework.http.MediaType.*;
 
 @Service
@@ -89,17 +88,53 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
         return save(utilisateur);
     }
 
-    private Utilisateur saveAvatar(Utilisateur utilisateur, MultipartFile avatar) throws NotAnImageFileException, IOException {
-        if(!Arrays.asList(IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE, IMAGE_GIF_VALUE).contains(avatar.getContentType())){
-            throw new NotAnImageFileException(avatar.getOriginalFilename() + NOT_AN_IMAGE_FILE);
+    @Override
+    public Utilisateur update(Long userId,
+                              String nom,
+                              String description,
+                              String statut,
+                              MultipartFile avatar,
+                              MultipartFile banniere) throws NotAnImageFileException, IOException {
+
+        Utilisateur utilisateur = utilisateurRepository.findById(userId).orElse(null);
+        if (utilisateur != null){
+            if (avatar != null){
+                saveAvatar(utilisateur, avatar);
+            }
+            if (banniere != null){
+                saveBanniere(utilisateur, banniere);
+            }
+            utilisateur.setNomComplet(nom);
+            utilisateur.setDescription(description);
+            utilisateur.setStatut(statut);
+            return save(utilisateur);
         }
-        String originalFilename = StringUtils.cleanPath(avatar.getOriginalFilename());
+        return null;
+    }
+
+    private Utilisateur saveAvatar(Utilisateur utilisateur, MultipartFile avatar) throws NotAnImageFileException, IOException {
+        String finalName = saveImage(avatar);
+        utilisateur.setAvatar(BASE_URL_PROFILE+finalName);
+        return utilisateur;
+    }
+
+    private Utilisateur saveBanniere(Utilisateur utilisateur, MultipartFile banniere) throws NotAnImageFileException, IOException {
+        String finalName = saveImage(banniere);
+        utilisateur.setBanniere(BASE_URL_BANNIERE+finalName);
+        return utilisateur;
+    }
+
+    private String saveImage(MultipartFile banniere) throws NotAnImageFileException, IOException {
+        if(!Arrays.asList(IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE, IMAGE_GIF_VALUE).contains(banniere.getContentType())){
+            throw new NotAnImageFileException(banniere.getOriginalFilename() + NOT_AN_IMAGE_FILE);
+        }
+        String originalFilename = StringUtils.cleanPath(banniere.getOriginalFilename());
         String finalName = UUID.randomUUID().toString().replace("-","") +"."+originalFilename.split("\\.")[1];
         File parentDir = new File(USER_FOLDER);
         File saveFile = new File(parentDir.getAbsolutePath() + File.separator + finalName);
-        Files.copy(avatar.getInputStream(),saveFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-        avatar.getInputStream().close();
-        utilisateur.setAvatar(BASE_URL_PROFILE+finalName);
-        return utilisateur;
+        Files.copy(banniere.getInputStream(),saveFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+        banniere.getInputStream().close();
+
+        return finalName;
     }
 }
