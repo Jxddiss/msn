@@ -23,9 +23,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ){ }
 
   ngOnInit(): void {
-    this._windowInfoService.onHomeWindowOpen(true)
     if(this._authentificationService.loggedUser)
     this.loggedInUser = this._authentificationService.loggedUser
+    this._windowInfoService.onHomeWindowOpen(true)
   }
 
   ngAfterViewInit(): void {

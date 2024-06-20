@@ -50,7 +50,6 @@ public class DemandeController {
         return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
-    // A convertir en websocket
     @PostMapping("/demandes/send")
     public ResponseEntity<Demande> sendDemande(@RequestParam("emailReceveur") String emailReceveur,
                                                @RequestParam("emailEmetteur") String emailEmetteur) throws UserNotFoundException {

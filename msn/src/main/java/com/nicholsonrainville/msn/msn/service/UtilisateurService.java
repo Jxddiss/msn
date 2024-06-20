@@ -22,4 +22,6 @@ public interface UtilisateurService {
                        String statut,
                        MultipartFile avatar,
                        MultipartFile banniere) throws NotAnImageFileException, IOException;
+
+    void logout(String email);
 }

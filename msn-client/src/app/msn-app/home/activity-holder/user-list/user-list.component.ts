@@ -21,10 +21,13 @@ export class UserListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this._subscriptions.push(this._conversationService.conversations$.subscribe(conversations => this.conversations = conversations))
-    this._conversationService.getConversations(this.loggedUser.id)
     this._subscriptions.push(this._conversationService.favoris$.subscribe(favoris => this.favoris = favoris))
-    this._conversationService.getFavoris(this.loggedUser.id)
+    this._subscriptions.push(this._conversationService.conversations$.subscribe({
+      next: (conversations) => {
+        this.conversations = conversations
+      }
+    }))
+    this._conversationService.getConversations(this.loggedUser.id)
   }
 
   onOpenChat(conversation : Conversation) {
@@ -33,5 +36,6 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this._subscriptions.forEach(sub => sub.unsubscribe())
+    this._conversationService.cleanUp()
   }
 }

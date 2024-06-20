@@ -112,6 +112,14 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
         return null;
     }
 
+    @Override
+    public void logout(String email) {
+        Utilisateur utilisateur = findByEmail(email);
+        if (utilisateur != null){
+            utilisateurRepository.changeStatut("disconnected", utilisateur.getId());
+        }
+    }
+
     private Utilisateur saveAvatar(Utilisateur utilisateur, MultipartFile avatar) throws NotAnImageFileException, IOException {
         String finalName = saveImage(avatar);
         utilisateur.setAvatar(BASE_URL_PROFILE+finalName);

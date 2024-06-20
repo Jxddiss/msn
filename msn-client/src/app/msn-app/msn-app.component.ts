@@ -52,11 +52,13 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
 
   ngOnInit(){
     this._subscriptions.push(
+      this._conversationService.firstConversation$.subscribe(conversation => {
+        if(conversation !== null) this.initialiseChatBox(conversation)
+      })
+    )
+    this._subscriptions.push(
       this._windowInfoService.homeWindowOpen$.subscribe(value => {
         if(value){
-          const loggedUser = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined
-          const conversation = this._conversationService.getFirstConversation(loggedUser.id)
-          if(conversation) this.initialiseChatBox(conversation)
           this.renderDialog.set(true)
         }else{
           this.renderDialog.set(false)

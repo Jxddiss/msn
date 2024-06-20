@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Utilisateur } from '../model/utilisateur.model';
-import { USERS } from '../mocks/utilisateurs.mock';
 import { environment } from '../constants/environment.constant';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +42,11 @@ export class AuthentificationService {
     this._token = null;
     localStorage.removeItem('user');
     localStorage.removeItem('token');
+  }
+
+  setDisconnected() : void{
+    const sub = this._httpClient.put(this._backend + 'logout/'+this._jwtHelper.decodeToken(this._token!).sub, null).subscribe();
+    setTimeout(()=>{sub.unsubscribe()},500)
   }
 
   loadToken() : void{

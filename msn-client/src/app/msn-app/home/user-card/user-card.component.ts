@@ -80,9 +80,12 @@ export class UserCardComponent implements OnInit{
   }
 
   onLogout(){
-    this._authentificationService.logout();
+    this._authentificationService.setDisconnected();
     this._windowInfoService.onDisparition();
     this._windowInfoService.onChatWidowMinimizeOrResume();
-    setTimeout(()=>{this._router.navigate(['/login'])},500)
+    setTimeout(()=>{
+      this._authentificationService.logout();
+      this._router.navigate(['/login'])
+    },500)
   }
 }

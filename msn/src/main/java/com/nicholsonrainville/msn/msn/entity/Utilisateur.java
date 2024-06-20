@@ -1,5 +1,6 @@
 package com.nicholsonrainville.msn.msn.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,6 +17,7 @@ public class Utilisateur {
     @Column(nullable = false)
     private String description;
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     @Column(nullable = false)
     private String avatar;
