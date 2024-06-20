@@ -69,6 +69,7 @@
 .notification-image{
     width: 30%;
     height: 100%;
+    min-width: 45px;
 }
 
 .buddy-container, .notification-image > img{

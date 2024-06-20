@@ -20,6 +20,7 @@ public class Message {
     private String winkName;
     @ManyToOne
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JoinTable(name = "conversation_message", joinColumns = @JoinColumn(name = "message_id"), inverseJoinColumns = @JoinColumn(name = "conversation_id"))
     private Conversation conversation;
 
     public Message() {

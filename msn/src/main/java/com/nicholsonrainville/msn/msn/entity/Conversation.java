@@ -14,6 +14,7 @@ public class Conversation {
     private Set<Utilisateur> utilisateurs;
     @OneToMany
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JoinTable(name = "conversation_message", joinColumns = @JoinColumn(name = "conversation_id"), inverseJoinColumns = @JoinColumn(name = "message_id"))
     private Set<Message> messages;
 
     public Conversation() {

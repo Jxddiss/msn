@@ -14,6 +14,7 @@ import { Message } from '../../../model/message.model';
 import { MessageService } from '../../../service/message.service';
 import { ConversationService } from '../../../service/conversation.service';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
+import { RxStompService } from '../../../service/rx-stomp.service';
 
 @Component({
   selector: 'app-chatbox',
@@ -67,7 +68,8 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     private _winksService : WinksService,
     private _erreurService : ErreurService,
     private _messageService : MessageService,
-    private _conversationService : ConversationService
+    private _conversationService : ConversationService,
+    private _rxStompService : RxStompService
   ) {}
 
   get isLoading(){
@@ -90,6 +92,30 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     this._windowInfoService.onChatWindowOpen(true)
     this._subscriptions.push(
       this._windowInfoService.chatWidowMinimizeOrResume$.subscribe(()=>this.minimizeOrResume())
+    )
+    this._subscriptions.push(
+      this._rxStompService.watch("/topic/conversation/" + this._conversation.id).subscribe({
+        next:(response) => {
+          const message : Message = JSON.parse(response.body)
+          if(message){
+            if(message.type === 'wink'){
+              const wink = getWink(message.winkName ?? '')
+              if(wink && message.nomSender !== this.loggedUser.nomComplet){
+                this._winksService.onWinksToPlay(wink)
+              }
+            }else if(message.type === 'nudge' && message.nomSender !== this.loggedUser.nomComplet){
+              this.nudge()
+            }
+            this.messages.push(message)
+            setTimeout(()=>{
+              if(this.chatList){
+                this.chatList.nativeElement.scrollTop = this.chatList.nativeElement.scrollHeight
+              }
+            },10)
+          }
+          
+        }
+      })
     )
   }
 
@@ -136,15 +162,19 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     this._subscriptions.push(
       this._messageService.getMessages(this._conversation.id).subscribe(
         {
-          next : (messages)=>{
-            this.messages = messages
+          next : (response)=>{
+            if(response.body == null) return
+            this.messages = response.body
             setTimeout(()=>{
               if(this.chatList){
                 this.chatList.nativeElement.scrollTop = this.chatList.nativeElement.scrollHeight
               }
             },10)
           },
-          error : (error)=>{console.log(error)}
+          error : (error)=>{
+            const erreur = new Erreur(error.error.httpStatus ?? error.error.code,error.error.message)
+            this._erreurService.onErreursEvent(erreur)
+          }
         }
       )
     )
@@ -260,10 +290,11 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
   }
 
   onNudge() : void{
-    this.nudge()
-    const message = new Message(this.messages.length,'',new Date(),this.loggedUser.nomComplet,'interaction',this._conversation.id)
-    this._messageService.sendMessage(message)
-    this.getMesages()
+    const message = new Message(0,'',new Date(),this.loggedUser.nomComplet,'nudge',{id:this._conversation.id})
+    this._rxStompService.publish({
+      destination: '/app/chat/' + this.conversation.id,
+      body: JSON.stringify(message)
+    })
   }
 
   nudge(){
@@ -384,9 +415,11 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
 
   sendMessage() : void{
     if(this.messageInput.nativeElement.value !== ""){
-      const message = new Message(this.messages.length, this.messageInput.nativeElement.value, new Date(), this.loggedUser.nomComplet, "text", this.conversation.id, JSON.stringify(this.style))
-      this._messageService.sendMessage(message)
-      this.getMesages()
+      const message = new Message(0, this.messageInput.nativeElement.value, new Date(), this.loggedUser.nomComplet, "text", {id:this._conversation.id}, JSON.stringify(this.style))
+      this._rxStompService.publish({
+        destination: '/app/chat/' + this.conversation.id,
+        body: JSON.stringify(message)
+      })
       this.messageInput.nativeElement.value = ""
     }
   }

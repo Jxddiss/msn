@@ -29,7 +29,7 @@ export class ConversationService {
           this._conversationsSubject.next(response.body!);
           this._conversations = response.body!
           this.getFavoris(utilisateurId)
-          this.getFirstConversation(utilisateurId)
+          this.getFirstConversation()
         },
         error: (error) => {
           const erreur = new Erreur(error.error.httpStatus ?? error.error.code,error.error.message)
@@ -39,8 +39,8 @@ export class ConversationService {
     )
   }
   
-  public getFirstConversation(utilisateurId: number) {
-    const conversation = this._conversations.find(conversation => conversation.id === utilisateurId)
+  public getFirstConversation() {
+    const conversation = this._conversations[0]
     if(conversation) {
       this._firstConversationSubject.next(conversation)
 

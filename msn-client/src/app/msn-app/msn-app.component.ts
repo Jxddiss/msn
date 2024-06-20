@@ -52,11 +52,6 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
 
   ngOnInit(){
     this._subscriptions.push(
-      this._conversationService.firstConversation$.subscribe(conversation => {
-        if(conversation !== null) this.initialiseChatBox(conversation)
-      })
-    )
-    this._subscriptions.push(
       this._windowInfoService.homeWindowOpen$.subscribe(value => {
         if(value){
           this.renderDialog.set(true)
@@ -88,6 +83,12 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
       this._router.events.subscribe(() => {
         this.secondWindowContainer?.clear();
         this.resetPosition()
+      })
+    )
+    this._subscriptions.push(
+      this._conversationService.firstConversation$.subscribe(conversation => {
+        console.log("firstConversation"+conversation)
+        if(conversation !== null) this.initialiseChatBox(conversation)
       })
     )
   }
