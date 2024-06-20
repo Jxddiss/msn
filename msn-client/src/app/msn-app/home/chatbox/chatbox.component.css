@@ -187,10 +187,6 @@ ul[role="menubar"] li:active{
     padding-bottom: 2em;
 }
 
-.chat-item:first-child{
-    margin-top: auto;
-}
-
 .sender{
     font-size: 1.1rem;
     font-weight: 475;
