@@ -12,7 +12,7 @@ export class NotificationComponent implements AfterViewInit, OnDestroy {
   @ViewChild('notificationElem') notificationElem !: ElementRef
   close = new EventEmitter()
   destroyTimeout : NodeJS.Timeout | undefined
-  notification : Notification | undefined
+  notification : Notification = {} as Notification
 
   constructor(private _rxStompService : RxStompService) { 
     this._rxStompService.activate()
@@ -64,6 +64,7 @@ export class NotificationComponent implements AfterViewInit, OnDestroy {
   }
 
   setNotification(notification : Notification){
+    console.log(notification.titre)
     this.notification = notification
   }
 

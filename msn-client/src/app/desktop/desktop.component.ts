@@ -10,6 +10,8 @@ import gsap from 'gsap';
 import { WinksService } from '../service/winks.service';
 import { NotificationService } from '../service/notification.service';
 import { Notification } from '../model/notification.model';
+import { RxStompService } from '../service/rx-stomp.service';
+import { AuthentificationService } from '../service/authentification.service';
 
 
 @Component({
@@ -36,6 +38,8 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     private _erreurService : ErreurService, 
     private _winkservice : WinksService,
     private _notificationService : NotificationService,
+    private _rxStompService : RxStompService,
+    private _authentificationService : AuthentificationService
   ){ 
     this._subscriptions.push(
       this._erreurService.erreursEvent$.subscribe((erreur)=>this.onErreurReceived(erreur))
@@ -44,12 +48,13 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     this._subscriptions.push(
       this._winkservice.winksToPlay$.subscribe((wink)=>this.onPlayWink(wink))
     )
-
   }
 
   ngOnInit(){
     this._subscriptions.push(
-      this._notificationService.notification$.subscribe((notification)=>this.onNotificationReceived(notification))
+      this._notificationService.notification$.subscribe((notification)=>{
+        this.onNotificationReceived(notification)
+      })
     )
   }
     
