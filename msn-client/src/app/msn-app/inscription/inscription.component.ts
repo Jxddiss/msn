@@ -3,6 +3,8 @@ import { WindowInfoService } from '../../service/window-info.service';
 import { Erreur } from '../../model/erreur.model';
 import { ErreurService } from '../../service/erreur.service';
 import { verifyFile } from '../../utils/input-verification.utils';
+import { Router } from '@angular/router';
+import { AuthentificationService } from '../../service/authentification.service';
 
 @Component({
   selector: 'app-inscription',
@@ -16,10 +18,15 @@ export class InscriptionComponent implements OnInit{
 
   constructor(
     private _windowInfoService : WindowInfoService,
-    private _erreurService : ErreurService
+    private _erreurService : ErreurService,
+    private _router : Router,
+    private _authentificationService : AuthentificationService
   ) { }
 
   ngOnInit(): void {
+    if(this._authentificationService.isLoggedIn()) {
+      this._router.navigate(['/home'])
+    }
     this.onFullScreen()
   }
 
@@ -48,5 +55,10 @@ export class InscriptionComponent implements OnInit{
         this.avatarPicker.nativeElement.value = '';
       }
     }
+  }
+
+  onGoToLogin(){
+    this._windowInfoService.onDisparition()
+    setTimeout(()=>{this._router.navigate(['/login'])},500)
   }
 }

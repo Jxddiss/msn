@@ -30,7 +30,7 @@
                 </div>
                 
                 <div style="margin-top: 1em;">
-                    Vous avez un compte? <a [routerLink]="['/login']">Connectez-vous</a>
+                    Vous avez un compte? <a (click)="onGoToLogin()" style="cursor: pointer;">Connectez-vous</a>
                 </div>
 
                 <input type="file" hidden id="avatar" name="avatar" #avatarPicker 

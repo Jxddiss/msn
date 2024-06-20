@@ -51,7 +51,6 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
   }
 
   ngOnInit(){
-
     this._subscriptions.push(
       this._windowInfoService.homeWindowOpen$.subscribe(value => {
         if(value){
@@ -68,6 +67,15 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
       this._windowInfoService.chatWindowClose$.subscribe(value => {
         this.componentRef?.instance.disparition()
         setTimeout(()=>{this.secondWindowContainer?.clear()},500)
+      })
+    )
+
+    this._subscriptions.push(
+      this._windowInfoService.disparition$.subscribe(()=>{
+        this.disparition('.msn-window')
+        setTimeout(()=>{
+          this.apparition('.msn-window')
+        },600)
       })
     )
   }

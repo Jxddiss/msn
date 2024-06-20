@@ -5,6 +5,7 @@ import { verifyFile } from '../../../utils/input-verification.utils';
 import { Utilisateur } from '../../../model/utilisateur.model';
 import { AuthentificationService } from '../../../service/authentification.service';
 import { Router } from '@angular/router';
+import { WindowInfoService } from '../../../service/window-info.service';
 
 @Component({
   selector: 'app-user-card',
@@ -22,7 +23,8 @@ export class UserCardComponent implements OnInit{
   constructor(
     private _erreurService : ErreurService,
     private _authentificationService : AuthentificationService,
-    private _router : Router
+    private _router : Router,
+    private _windowInfoService : WindowInfoService
   ) { }
 
   ngOnInit(): void {
@@ -79,6 +81,8 @@ export class UserCardComponent implements OnInit{
 
   onLogout(){
     this._authentificationService.logout();
-    this._router.navigate(['/login']);
+    this._windowInfoService.onDisparition();
+    this._windowInfoService.onChatWidowMinimizeOrResume();
+    setTimeout(()=>{this._router.navigate(['/login'])},500)
   }
 }
