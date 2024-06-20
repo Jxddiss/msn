@@ -20,6 +20,9 @@ public class Message {
     @ManyToOne
     private Conversation conversation;
 
+    public Message() {
+    }
+
     public Message(Conversation conversation) {
         this.conversation = conversation;
     }
