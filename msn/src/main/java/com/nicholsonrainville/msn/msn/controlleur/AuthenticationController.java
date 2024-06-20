@@ -5,6 +5,7 @@ import com.nicholsonrainville.msn.msn.domain.UserPrincipal;
 import com.nicholsonrainville.msn.msn.entity.Utilisateur;
 import com.nicholsonrainville.msn.msn.exception.domain.EmailExistException;
 import com.nicholsonrainville.msn.msn.exception.domain.NotAnImageFileException;
+import com.nicholsonrainville.msn.msn.exception.domain.UserNotFoundException;
 import com.nicholsonrainville.msn.msn.service.UtilisateurService;
 import com.nicholsonrainville.msn.msn.utils.JWTTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Utilisateur> login(@RequestBody Utilisateur user){
+    public ResponseEntity<Utilisateur> login(@RequestBody Utilisateur user) throws UserNotFoundException {
+        if (utilisateurService.emailIsValid(user.getEmail())){
+            throw new UserNotFoundException();
+        }
         authenticate(user.getEmail(), user.getPassword());
         Utilisateur loginUser = utilisateurService.findByEmail(user.getEmail());
         if(user.getStatut() != null){
