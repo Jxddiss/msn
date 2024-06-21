@@ -28,6 +28,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptor
 import { authInterceptorInterceptor } from './interceptor/auth-interceptor.interceptor';
 import { RxStompService } from './service/rx-stomp.service';
 import { rxStompServiceFactory } from './rx-stomp-service-factory';
+import { StatutPipePipe } from './pipe/statut-pipe.pipe';
 
 registerLocaleData(localeFr)
 
@@ -51,6 +52,7 @@ registerLocaleData(localeFr)
     WinksPickerComponent,
     TextEditComponent,
     AmisEditComponent,
+    StatutPipePipe,
   ],
   imports: [
     BrowserModule,

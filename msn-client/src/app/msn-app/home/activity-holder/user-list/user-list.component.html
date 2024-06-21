@@ -15,7 +15,7 @@
                 <div class="user-info">
                     <span class="username-holder">
                             <span class="username">{{conversation.utilisateurs[1].nomComplet}}</span>
-                            <span>( {{conversation.utilisateurs[1].statut}} )</span>
+                            <span>( {{conversation.utilisateurs[1].statut | statutPipe}} )</span>
                     </span>
                     <div class="description">
                         {{conversation.utilisateurs[1].description}}
@@ -30,7 +30,7 @@
                 <div class="user-info">
                     <span class="username-holder">
                             <span class="username">{{conversation.utilisateurs[0].nomComplet}}</span>
-                            <span>( {{conversation.utilisateurs[0].statut}} )</span>
+                            <span>( {{conversation.utilisateurs[0].statut | statutPipe}} )</span>
                     </span>
                     <div class="description">
                         {{conversation.utilisateurs[0].description}}

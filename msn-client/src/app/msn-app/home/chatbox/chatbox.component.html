@@ -45,10 +45,10 @@ cdkDragBoundary="#desktop"
                 <div class="name-holder">
                   @if (conversation.utilisateurs[0].id == loggedUser.id) {
                     <span class="name">{{conversation.utilisateurs[1].nomComplet}}</span>
-                    <span class="status">({{conversation.utilisateurs[1].statut}})</span>
+                    <span class="status">({{conversation.utilisateurs[1].statut | statutPipe}})</span>
                   }@else {
                     <span class="name">{{conversation.utilisateurs[0].nomComplet}}</span>
-                    <span class="status">({{conversation.utilisateurs[0].statut}})</span>
+                    <span class="status">({{conversation.utilisateurs[0].statut | statutPipe}})</span>
                   }
                   <button type="button" [title]="isFavoris ? 'Enlever des favoris' : 'Ajouter aux favoris'" (click)="onFavorisClick()" [ngStyle]="isFavoris ? {filter: 'grayscale(100%)'} : {}">
                     <img src="assets/images/star.png" alt="">
