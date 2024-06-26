@@ -67,9 +67,14 @@
 }
 
 .notification-image{
-    width: 30%;
-    height: 100%;
-    min-width: 45px;
+    min-width: 80px;
+    min-height: 80px;
+    max-width: 80px;
+    max-height: 80px;
+}
+
+.notification-message{
+    max-width: 60%;
 }
 
 .buddy-container, .notification-image > img{

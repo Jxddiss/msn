@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, 
 import gsap from 'gsap';
 import { Observable, Subscription } from 'rxjs';
 import { Utilisateur } from '../../../../model/utilisateur.model';
+import { AuthentificationService } from '../../../../service/authentification.service';
 
 @Component({
   selector: 'app-profile-holder',
@@ -20,14 +21,15 @@ export class ProfileHolderComponent implements OnInit,OnDestroy{
   @Input() appelStarted !: Observable<any>
   @Input() utilisateurs : Utilisateur[] = []
   private _subscriptions : Subscription[] = []
-  loggedUser : Utilisateur = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined
+  loggedUser : Utilisateur | undefined
 
-  constructor() {}
+  constructor(private _authentificationService : AuthentificationService) {}
 
   ngOnInit(): void {
     this._subscriptions.push(
       this.appelStarted.subscribe(()=>this.onStartVideoShare())
     )
+    this.loggedUser = this._authentificationService.loggedUser
   }
 
   get videoShared(){

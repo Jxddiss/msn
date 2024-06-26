@@ -17,6 +17,7 @@ export class AuthentificationService {
   private _tokenSubject = new Subject<string>();
   token$ = this._tokenSubject.asObservable();
   private _websocketConfigured :boolean = false;
+  loggedUser : Utilisateur | undefined = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined;
 
   constructor(private _httpClient : HttpClient, private _rxStompService : RxStompService) { }
 
@@ -36,6 +37,7 @@ export class AuthentificationService {
 
   addUserToLocalStorage(utilisateur : Utilisateur) {
     localStorage.setItem("utilisateur", JSON.stringify(utilisateur));
+    this.updateLoggedUser()
   }
 
   isLoggedIn():boolean{
@@ -77,9 +79,8 @@ export class AuthentificationService {
     this._tokenSubject.next(token)
   }
 
-  get loggedUser() : Utilisateur | undefined {
-    if(!this.isLoggedIn()) return undefined
-    return JSON.parse(localStorage.getItem('utilisateur')!)
+  updateLoggedUser() : void{
+    this.loggedUser = JSON.parse(localStorage.getItem('utilisateur')!)
   }
 
   getToken() : string | null{
