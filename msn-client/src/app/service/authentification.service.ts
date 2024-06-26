@@ -86,4 +86,17 @@ export class AuthentificationService {
   getToken() : string | null{
     return this._token;
   }
+
+  createInscriptionFormData(email : string, password : string, nom : string, avatar : File | null) : FormData{
+    const formData = new FormData();
+    formData.append('email', email);
+    formData.append('password', password);
+    formData.append('nom', nom);
+    formData.append('avatar', avatar!);
+    return formData
+  }
+
+  inscription(formData : FormData) : Observable<HttpResponse<any>>{
+    return this._httpClient.post(this._backend + 'inscription', formData, {observe : 'response'})
+  }
 }

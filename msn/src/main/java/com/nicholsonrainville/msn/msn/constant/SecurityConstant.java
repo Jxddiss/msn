@@ -13,7 +13,8 @@ public class SecurityConstant {
     public static final String[] PUBLIC_URLS = {
             "/login",
             "/media/**",
-            "/ws"
+            "/ws",
+            "/inscription"
     };
     //public static final String[] PUBLIC_URLS = {"**"};
 }
