@@ -15,6 +15,8 @@ import { MessageService } from '../../../service/message.service';
 import { ConversationService } from '../../../service/conversation.service';
 import { CdkDragEnd } from '@angular/cdk/drag-drop';
 import { RxStompService } from '../../../service/rx-stomp.service';
+import { Notification } from '../../../model/notification.model';
+import { NotificationService } from '../../../service/notification.service';
 
 @Component({
   selector: 'app-chatbox',
@@ -69,7 +71,8 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     private _erreurService : ErreurService,
     private _messageService : MessageService,
     private _conversationService : ConversationService,
-    private _rxStompService : RxStompService
+    private _rxStompService : RxStompService,
+    private _notificationService : NotificationService
   ) {}
 
   get isLoading(){
@@ -116,6 +119,10 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
           
         }
       })
+    )
+
+    this._notificationService.setCurrentConversationNom(
+      this.conversation?.utilisateurs.find(u => u.id != this.loggedUser.id)!.nomComplet
     )
   }
 
@@ -295,6 +302,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
       destination: '/app/chat/' + this.conversation.id,
       body: JSON.stringify(message)
     })
+    this.sendNotification('nudge')
   }
 
   nudge(){
@@ -421,6 +429,7 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
         body: JSON.stringify(message)
       })
       this.messageInput.nativeElement.value = ""
+      this.sendNotification("message")
     }
   }
 
@@ -435,5 +444,11 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
       this._conversationService.addToFavoris(this.loggedUser.id, this.conversation.id)
     }
     this.isFavoris = !this.isFavoris
+  }
+
+  sendNotification(origine : string){
+    const receiverId = this.conversation.utilisateurs.find(u => u.id != this.loggedUser.id)!.id
+    const notification = new Notification(0, this.loggedUser.nomComplet,`Vous a envoyé un ${origine}`, new Date(), "msn", receiverId, false, this.loggedUser.avatar as string)
+    this._notificationService.sendNotification(notification)
   }
 }

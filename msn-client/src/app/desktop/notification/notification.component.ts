@@ -64,7 +64,6 @@ export class NotificationComponent implements AfterViewInit, OnDestroy {
   }
 
   setNotification(notification : Notification){
-    console.log(notification.titre)
     this.notification = notification
   }
 

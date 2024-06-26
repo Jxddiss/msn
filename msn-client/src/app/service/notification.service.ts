@@ -11,6 +11,7 @@ import { DemandeService } from './demande.service';
 export class NotificationService {
   private _notificationSubject = new BehaviorSubject<Notification>({} as Notification)
   notification$ = this._notificationSubject.asObservable()
+  private _currentConversationNom = ''
 
   private _subscriptions : Subscription[] = []
 
@@ -24,7 +25,11 @@ export class NotificationService {
         (response)=>{
           const notification : Notification = JSON.parse(response.body) as Notification
           if(notification){
-            this._notificationSubject.next(notification)
+            if(this._currentConversationNom !== notification.titre){
+              console.log("notification titre" + notification.titre)
+              console.log("current conversation nom" + this._currentConversationNom)
+              this._notificationSubject.next(notification)
+            }
             this._demandeService.getDemandes(this._authentificationService.loggedUser?.id!)
           }
         }
@@ -40,6 +45,12 @@ export class NotificationService {
   }
 
   sendInternalNotification(notification : Notification){
-    this._notificationSubject.next(notification)
+    if(notification.titre !== this._currentConversationNom){
+      this._notificationSubject.next(notification)
+    }
+  }
+
+  setCurrentConversationNom(nom : string){
+    this._currentConversationNom = nom
   }
 }

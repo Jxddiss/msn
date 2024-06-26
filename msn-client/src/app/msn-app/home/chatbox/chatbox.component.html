@@ -159,7 +159,7 @@ cdkDragBoundary="#desktop"
                 </div>
               </div>
               <app-emoji-picker [open$]="emojiPickerOpen$" (emojiSelected)="onEmojiPicked($event)"></app-emoji-picker>
-              <app-winks-picker [open$]="winksPickerOpen$" [conversationId]="conversation.id" (winkEmitter)="getMesages()"></app-winks-picker>
+              <app-winks-picker [open$]="winksPickerOpen$" [conversationId]="conversation.id" [otherUserId]="conversation.utilisateurs[0].id === loggedUser.id ? conversation.utilisateurs[1].id : conversation.utilisateurs[0].id" (winkEmitter)="getMesages()"></app-winks-picker>
               <app-text-edit [open$]="textEditOpen$" (textEditedEvent)="onTextEdited($event)"></app-text-edit>
             </div>
           </div>

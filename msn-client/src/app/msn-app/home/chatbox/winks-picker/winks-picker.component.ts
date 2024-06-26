@@ -5,6 +5,8 @@ import { Wink } from '../../../../model/wink.model';
 import { WINKS } from '../../../../utils/wink.utils';
 import { Message } from '../../../../model/message.model';
 import { RxStompService } from '../../../../service/rx-stomp.service';
+import { NotificationService } from '../../../../service/notification.service';
+import { Notification } from '../../../../model/notification.model';
 
 @Component({
   selector: 'app-winks-picker',
@@ -14,12 +16,14 @@ import { RxStompService } from '../../../../service/rx-stomp.service';
 export class WinksPickerComponent implements OnInit, OnDestroy {
   @Input() open$ !: Observable<any>
   @Input() conversationId !: number
+  @Input() otherUserId !: number
   private _subscriptions : Subscription[] = []
   private _open = false
   private loggedUser = JSON.parse(localStorage.getItem('utilisateur')!)
 
   constructor(
-    private _rxStompService : RxStompService
+    private _rxStompService : RxStompService,
+    private _notificationService : NotificationService
   ){}
 
   ngOnInit(): void {
@@ -59,10 +63,16 @@ export class WinksPickerComponent implements OnInit, OnDestroy {
       destination: '/app/chat/' + this.conversationId,
       body: JSON.stringify(message)
     })
+    this.sendNotification('wink')
   }
 
   get winks(): Wink[] {
     return WINKS
+  }
+
+  sendNotification(origine : string){
+    const notification = new Notification(0, this.loggedUser.nomComplet,`Vous a envoyé un ${origine}`, new Date(), "msn", this.otherUserId, false, this.loggedUser.avatar as string)
+    this._notificationService.sendNotification(notification)
   }
 
   ngOnDestroy(): void {
