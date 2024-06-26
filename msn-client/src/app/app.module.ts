@@ -24,11 +24,9 @@ import { WinksPickerComponent } from './msn-app/home/chatbox/winks-picker/winks-
 import { TextEditComponent } from './msn-app/home/chatbox/text-edit/text-edit.component';
 import { FormsModule } from '@angular/forms';
 import { AmisEditComponent } from './msn-app/amis-edit/amis-edit.component';
-import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptorInterceptor } from './interceptor/auth-interceptor.interceptor';
-import { RxStompService } from './service/rx-stomp.service';
-import { rxStompServiceFactory } from './rx-stomp-service-factory';
-import { StatutPipePipe } from './pipe/statut-pipe.pipe';
+import { StatutPipe } from './pipe/statut.pipe';
 
 registerLocaleData(localeFr)
 
@@ -52,7 +50,7 @@ registerLocaleData(localeFr)
     WinksPickerComponent,
     TextEditComponent,
     AmisEditComponent,
-    StatutPipePipe,
+    StatutPipe,
   ],
   imports: [
     BrowserModule,

@@ -4,7 +4,7 @@ import { Status } from '../constants/status.const';
 @Pipe({
   name: 'statutPipe'
 })
-export class StatutPipePipe implements PipeTransform {
+export class StatutPipe implements PipeTransform {
 
   transform(value: unknown, ...args: unknown[]): unknown {
     const statut = value as string;
