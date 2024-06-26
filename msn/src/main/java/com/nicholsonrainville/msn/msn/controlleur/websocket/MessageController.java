@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -23,7 +24,7 @@ public class MessageController {
 
     @MessageMapping("/chat/{conversationId}")
     @SendTo("/topic/conversation/{conversationId}")
-    public Message sendMessage(Message message) {
+    public Message sendMessage(Message message, @AuthenticationPrincipal String userPrincipal) {
         message.setDate(LocalDateTime.now());
         return messageService.save(message);
     }

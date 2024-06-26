@@ -120,6 +120,23 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
         }
     }
 
+    @Override
+    public void changeStatut(String statut, Long id) {
+        Utilisateur utilisateur = utilisateurRepository.findById(id).orElse(null);
+        if (utilisateur != null){
+            utilisateurRepository.changeStatut(statut, id);
+        }
+    }
+
+    @Override
+    public boolean validateUser(String email, Long id) {
+        Utilisateur utilisateur = findByEmail(email);
+        if (utilisateur != null && utilisateur.getId().equals(id)){
+            return true;
+        }
+        return false;
+    }
+
     private Utilisateur saveAvatar(Utilisateur utilisateur, MultipartFile avatar) throws NotAnImageFileException, IOException {
         String finalName = saveImage(avatar);
         utilisateur.setAvatar(BASE_URL_PROFILE+finalName);
