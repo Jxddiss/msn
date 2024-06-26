@@ -7,21 +7,21 @@
                     <img #avatarImg (click)="onChooseAvatar()" id="buddy-img" src="assets/images/buddy2.png" alt="">
                 </div>
             </div>
-            <form>
+            <form #inscriptionForm="ngForm" (ngSubmit)="onInscription(inscriptionForm.value)">
                 <div class="field-row">
-                    <input class="text-input" type="email" placeholder="exemple@email.ca" name="email" id="email" required>
+                    <input class="text-input" type="email" [(ngModel)]="formData.email" placeholder="exemple@email.ca" name="email" id="email" [required]="true">
                 </div>
 
                 <div class="field-row">
-                    <input class="text-input" type="text" placeholder="Nom complet" name="nom" id="nom" required>
+                    <input class="text-input" type="text" [(ngModel)]="formData.nom" placeholder="Nom complet" name="nom" id="nom" [required]="true">
                 </div>
     
                 <div class="field-row">
-                    <input class="text-input" type="password" placeholder="Entrez votre mot de passe" name="password" id="password" required>
+                    <input class="text-input" type="password" [(ngModel)]="formData.password" placeholder="Entrez votre mot de passe" name="password" id="password" [required]="true">
                 </div>
     
                 <div class="field-row">
-                    <input class="text-input" type="password" placeholder="Confirmez votre mot de passe" name="confirm" id="confirm" required>
+                    <input class="text-input" type="password" [(ngModel)]="formData.confirm" placeholder="Confirmez votre mot de passe" name="confirm" id="confirm" [required]="true">
                 </div>
     
                 <div class="button-container">
@@ -32,10 +32,9 @@
                 <div style="margin-top: 1em;">
                     Vous avez un compte? <a (click)="onGoToLogin()" style="cursor: pointer;">Connectez-vous</a>
                 </div>
-
-                <input type="file" hidden id="avatar" name="avatar" #avatarPicker 
-                accept="image/*" (change)="onAvatarImgChange($event)">
             </form>
         </div>
     </div>
 </div>
+<input type="file" hidden id="avatar" name="avatar" #avatarPicker 
+                accept="image/*" (change)="onAvatarImgChange($event)" [required]="false">
