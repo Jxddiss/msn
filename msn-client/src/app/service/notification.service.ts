@@ -38,4 +38,8 @@ export class NotificationService {
       body: JSON.stringify(notification)
     })
   }
+
+  sendInternalNotification(notification : Notification){
+    this._notificationSubject.next(notification)
+  }
 }

@@ -4,6 +4,8 @@ import { ConversationService } from '../../../../service/conversation.service';
 import { Conversation } from '../../../../model/conversation.model';
 import { Subscription } from 'rxjs';
 import { RxStompService } from '../../../../service/rx-stomp.service';
+import { NotificationService } from '../../../../service/notification.service';
+import { Notification } from '../../../../model/notification.model';
 
 @Component({
   selector: 'app-user-list',
@@ -20,6 +22,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     private _windowInfoService : WindowInfoService,
     private _conversationService : ConversationService,
     private _rxStompService : RxStompService,
+    private _notificationService : NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -45,8 +48,12 @@ export class UserListComponent implements OnInit, OnDestroy {
           .watch(`/topic/user/status/${otherUserId}`)
           .subscribe((response) => {
             const status = response.body
-            conversation.utilisateurs.find(u => u.id != this.loggedUser.id)!.statut = status
-
+            const otherUser = conversation.utilisateurs.find(u => u.id != this.loggedUser.id)!
+            otherUser.statut = status
+            if(status == "online"){
+              const notification = new Notification(0,otherUser.nomComplet,"Est en ligne",new Date(),"msn",0,false,otherUser.avatar as string)
+              this._notificationService.sendInternalNotification(notification)
+            }
           })
       )
     })
