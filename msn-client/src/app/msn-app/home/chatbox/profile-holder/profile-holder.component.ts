@@ -3,7 +3,6 @@ import gsap from 'gsap';
 import { Observable, Subscription } from 'rxjs';
 import { Utilisateur } from '../../../../model/utilisateur.model';
 import { AuthentificationService } from '../../../../service/authentification.service';
-import { MessageService } from '../../../../service/message.service';
 import { NotificationService } from '../../../../service/notification.service';
 import { Notification } from '../../../../model/notification.model';
 import { RxStompService } from '../../../../service/rx-stomp.service';
