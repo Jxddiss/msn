@@ -60,4 +60,10 @@ public class MessageController {
         LOGGER.info("idUserEtIdAmi Deconnexion : " + idUserEtIdAmi);
         return "{message : 'disconnected'}";
     }
+
+    @MessageMapping("/chat/appel/isCaller/{conversationId}/{userId}")
+    @SendTo("/topic/appel/isCaller/{conversationId}/{userId}")
+    public String isCaller(String isCaller) {
+        return isCaller;
+    }
 }

@@ -39,7 +39,7 @@ cdkDragBoundary="#desktop"
         </div>
         <div class="content-container">
           <div class="content-card">
-            <app-profile-holder [utilisateurs]="conversation.utilisateurs" [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()" [appelStarted]="appelStarted"></app-profile-holder>
+            <app-profile-holder [conversationId]="conversation.id" [utilisateurs]="conversation.utilisateurs" [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()" [appelStarted]="appelStarted"></app-profile-holder>
             <div class="chat-zone">
               <div class="ami-info">
                 <div class="name-holder">
@@ -118,6 +118,12 @@ cdkDragBoundary="#desktop"
                     <div class="interaction">
                       <hr>
                       <div class="sender">{{message.nomSender}} à envoyé un Wizz</div>
+                      <hr>
+                    </div>
+                  }@else if(message.type == 'video') {
+                    <div class="interaction">
+                      <hr>
+                      <div class="sender video-interaction" (click)="onAppelStarted()">{{message.nomSender}} à commencer à partager sa caméra</div>
                       <hr>
                     </div>
                   }
