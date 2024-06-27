@@ -34,6 +34,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
   private _subscriptions : Subscription[] = []
   
+  
   constructor(
     private _erreurService : ErreurService, 
     private _winkservice : WinksService,
@@ -109,6 +110,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
         componentRef?.instance.close.subscribe(()=>this.onCloseNotification(index))
       )
     }
+    
   }
 
   onCloseNotification(index : number){

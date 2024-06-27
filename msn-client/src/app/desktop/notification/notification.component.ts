@@ -13,6 +13,7 @@ export class NotificationComponent implements AfterViewInit, OnDestroy {
   close = new EventEmitter()
   destroyTimeout : NodeJS.Timeout | undefined
   notification : Notification = {} as Notification
+  private _audioNotification : HTMLAudioElement | undefined
 
   constructor(private _rxStompService : RxStompService) { 
     this._rxStompService.activate()
@@ -65,6 +66,22 @@ export class NotificationComponent implements AfterViewInit, OnDestroy {
 
   setNotification(notification : Notification){
     this.notification = notification
+    let audioAsset
+    if(notification.message.includes("demande")){
+      audioAsset = 'assets/sounds/new alert.mp3'
+    }else if(notification.message.includes("caméra")){
+      audioAsset = 'assets/sounds/incoming call.mp3'
+    }else if(notification.message.includes("ligne")){
+      audioAsset = 'assets/sounds/contact online.mp3'
+    }else{
+      audioAsset = 'assets/sounds/type.mp3'
+    }
+    if(this._audioNotification){
+      this._audioNotification.pause()
+      this._audioNotification = undefined
+    }
+    this._audioNotification = new Audio(audioAsset)
+    this._audioNotification.play()
   }
 
 }
