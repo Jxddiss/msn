@@ -43,6 +43,7 @@ public class DemandeServiceImpl implements DemandeService {
                 Conversation conversation = new Conversation();
                 conversation.setUtilisateurs(Set.of(demande.getEnvoyeur(), demande.getReceveur()));
                 conversationRepository.save(conversation);
+                demandeRepository.delete(demande);
                 return true;
             }
         }

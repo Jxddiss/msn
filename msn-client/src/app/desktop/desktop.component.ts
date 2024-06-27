@@ -1,7 +1,6 @@
-import { AfterViewInit, Component, ComponentRef, ElementRef, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, ViewRef, signal } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, ElementRef, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, signal } from '@angular/core';
 import { MsnApp } from '../msn-app/msn-app.component';
 import { Subscription } from 'rxjs';
-import { WindowInfoService } from '../service/window-info.service';
 import { NotificationComponent } from './notification/notification.component';
 import { ErreurService } from '../service/erreur.service';
 import { ErreurComponent } from './erreur/erreur.component';
@@ -9,6 +8,11 @@ import { Erreur } from '../model/erreur.model';
 import { Wink } from '../model/wink.model';
 import gsap from 'gsap';
 import { WinksService } from '../service/winks.service';
+import { NotificationService } from '../service/notification.service';
+import { Notification } from '../model/notification.model';
+import { RxStompService } from '../service/rx-stomp.service';
+import { AuthentificationService } from '../service/authentification.service';
+
 
 @Component({
   selector: 'app-desktop',
@@ -30,7 +34,12 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
   private _subscriptions : Subscription[] = []
   
-  constructor(private _erreurService : ErreurService, private _winkservice : WinksService){ 
+  
+  constructor(
+    private _erreurService : ErreurService, 
+    private _winkservice : WinksService,
+    private _notificationService : NotificationService,
+  ){ 
     this._subscriptions.push(
       this._erreurService.erreursEvent$.subscribe((erreur)=>this.onErreurReceived(erreur))
     )
@@ -41,17 +50,17 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   }
 
   ngOnInit(){
-    
+    this._subscriptions.push(
+      this._notificationService.notification$.subscribe((notification)=>{
+        this.onNotificationReceived(notification)
+      })
+    )
   }
     
   ngAfterViewInit(){
     this.onBackgroundChange()
     this.openMsn()
-    for (let index = 0; index < 3; index++) {
-      setTimeout(() => {
-        this.onNotificationReceived(index)
-      }, index*1000);
-    }
+    
   }
 
   openMsn(){
@@ -90,25 +99,28 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     }
   }
 
-  onNotificationReceived(index : number){
+  onNotificationReceived(notification : Notification){
     if(this.notificationContainer === undefined) return
     const componentRef = this.notificationContainer?.createComponent(NotificationComponent)
+    componentRef.instance.setNotification(notification)
+    const index = this.notificationContainer?.indexOf(componentRef.hostView)
     this.componentsRefs['notification-'+index] = componentRef
     if(componentRef){
       this._subscriptions.push(
         componentRef?.instance.close.subscribe(()=>this.onCloseNotification(index))
       )
     }
+    
   }
 
   onCloseNotification(index : number){
     const componentRef = this.componentsRefs['notification-'+index]
     if(!componentRef) return
     const instance = componentRef.instance
-    const indexNot = this.notificationContainer?.indexOf(componentRef.hostView)
+    const indexUpToDate = this.notificationContainer?.indexOf(componentRef.hostView)
     instance.disparition()
     setTimeout(()=>{
-      this.notificationContainer?.remove(indexNot)
+      this.notificationContainer?.remove(indexUpToDate)
     }, 500)
     delete this.componentsRefs['notification-'+index]
   }

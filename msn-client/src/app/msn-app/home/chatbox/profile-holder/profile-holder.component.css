@@ -73,7 +73,7 @@
 
 .buddy-container:has(video){
     height: 100%;
-    width: 100%;
+    width: 85%;
     padding: 7px;
     transition: height 0.2s ease-in-out, width 0.2s ease-in-out;
 }

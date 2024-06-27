@@ -12,8 +12,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import java.util.Collections;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 public class ConversationController {
@@ -38,8 +41,14 @@ public class ConversationController {
         if (conversation == null) {
             throw new NoResourceFoundException(httpMethod,"La conversation n'existe pas id : "+idConversation);
         }
-        Set<Message> messages = conversation.getMessages();
-        return new ResponseEntity<>(messages, HttpStatus.OK);
+        List<Message> messages = conversation.getMessages().stream()
+                .sorted((message1, message2) -> message2.getId().compareTo(message1.getId()))
+                .collect(Collectors.toList());
+
+        Collections.reverse(messages);
+        Set<Message> messagesSet = new LinkedHashSet<>(messages);
+
+        return new ResponseEntity<>(messagesSet, HttpStatus.OK);
     }
 
 }

@@ -1,10 +1,9 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import gsap from 'gsap';
 import { WindowInfoService } from '../../service/window-info.service';
-import { ConversationService } from '../../service/conversation.service';
-import { Conversation } from '../../model/conversation.model';
 import { AuthentificationService } from '../../service/authentification.service';
 import { Utilisateur } from '../../model/utilisateur.model';
+import { RxStompService } from '../../service/rx-stomp.service';
 
 @Component({
   selector: 'app-home',
@@ -19,13 +18,18 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(
     private _windowInfoService : WindowInfoService,
-    private _authentificationService : AuthentificationService
+    private _authentificationService : AuthentificationService,
+    private _rxStompService : RxStompService
   ){ }
 
   ngOnInit(): void {
-    this._windowInfoService.onHomeWindowOpen(true)
     if(this._authentificationService.loggedUser)
     this.loggedInUser = this._authentificationService.loggedUser
+    this._windowInfoService.onHomeWindowOpen(true)
+    this._rxStompService.publish({
+      destination: '/app/user/status/'+this.loggedInUser.id,
+      body: this.loggedInUser.statut
+    })
   }
 
   ngAfterViewInit(): void {
@@ -50,5 +54,6 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this._windowInfoService.onHomeWindowOpen(false)
+    this._rxStompService.deactivate()
   }
 }

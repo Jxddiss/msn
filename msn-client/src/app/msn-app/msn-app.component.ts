@@ -29,7 +29,7 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
   constructor(
     private _windowInfoService : WindowInfoService, 
     private _router : Router,
-    private _conversationService : ConversationService
+    private _conversationService : ConversationService,
   ) {
     this._subscriptions.push(
       this._windowInfoService.canBeFullScreen$.subscribe(value => {
@@ -51,13 +51,9 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
   }
 
   ngOnInit(){
-
     this._subscriptions.push(
       this._windowInfoService.homeWindowOpen$.subscribe(value => {
         if(value){
-          const loggedUser = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined
-          const conversation = this._conversationService.getFirstConversation(loggedUser.id)
-          if(conversation) this.initialiseChatBox(conversation)
           this.renderDialog.set(true)
         }else{
           this.renderDialog.set(false)
@@ -70,6 +66,15 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
         setTimeout(()=>{this.secondWindowContainer?.clear()},500)
       })
     )
+
+    this._subscriptions.push(
+      this._windowInfoService.disparition$.subscribe(()=>{
+        this.disparition('.msn-window')
+        setTimeout(()=>{
+          this.apparition('.msn-window')
+        },600)
+      })
+    )
   }
 
   ngAfterViewInit(){
@@ -78,6 +83,12 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
       this._router.events.subscribe(() => {
         this.secondWindowContainer?.clear();
         this.resetPosition()
+      })
+    )
+    this._subscriptions.push(
+      this._conversationService.firstConversation$.subscribe(conversation => {
+        console.log("firstConversation"+conversation)
+        if(conversation !== null) this.initialiseChatBox(conversation)
       })
     )
   }

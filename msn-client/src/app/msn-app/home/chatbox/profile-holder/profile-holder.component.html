@@ -8,9 +8,9 @@
       <ul role="menu" >
           <li role="menuitem" tabindex="0"><img src="assets/images/block.png" alt=""><a>Retirer l'ami</a></li>
       </ul>
-      <div class="buddy-container glass remote-holder" [ngClass]="loggedUser.id == utilisateurs[0].id ? 'buddy-'+utilisateurs[1].statut : 'buddy-'+utilisateurs[0].statut">
+      <div class="buddy-container glass remote-holder" [ngClass]="loggedUser?.id == utilisateurs[0].id ? 'buddy-'+utilisateurs[1].statut : 'buddy-'+utilisateurs[0].statut">
         <div class="buddy-body">
-          @if (loggedUser.id == utilisateurs[0].id) {
+          @if (loggedUser?.id == utilisateurs[0].id) {
             <img *ngIf="!gotRemoteVideo" #remoteAvatarImg  src="{{utilisateurs[1].avatar}}" alt="">
           }@else {
             <img *ngIf="!gotRemoteVideo" #remoteAvatarImg  src="{{utilisateurs[0].avatar}}" alt="">
@@ -25,9 +25,9 @@
       <button type="button" (click)="onStartVideoShare()" [title]="!videoShared ? 'Commencer un appel video' : 'Arrêter l\'appel video'">
         <img src="assets/images/webcam.png" alt="">
       </button>
-      <div class="buddy-container glass local-holder buddy-{{loggedUser.statut}}">
+      <div class="buddy-container glass local-holder buddy-{{loggedUser?.statut}}">
         <div class="buddy-body">
-            <img *ngIf="!videoShared" #localAvatarImg  src="{{loggedUser.avatar}}" alt="">
+            <img *ngIf="!videoShared" #localAvatarImg  src="{{loggedUser?.avatar}}" alt="">
             <video *ngIf="videoShared" src="" #localVideo autoplay (click)="onVideoFullScreen()" [muted]="true"></video>
             <div *ngIf="videoShared" role="tooltip" class="is-top is-right">Cliquer pour redimensionner</div>
         </div>

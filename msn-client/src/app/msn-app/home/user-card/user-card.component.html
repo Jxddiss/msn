@@ -1,4 +1,4 @@
-<form class="profil-info" #profilForm="ngForm">
+<form class="profil-info" #profilForm="ngForm" (ngSubmit)="onUpdateUser(profilForm.value)">
     <div class="buddy-container glass" [ngClass]="'buddy-'+loggedInUser.statut" title="Changez votre photo de profil">
         <div class="buddy-body" (click)="onChooseAvatar()">
             <img #avatarImg id="buddy-img" src="{{loggedInUser.avatar}}" alt="">
@@ -23,7 +23,7 @@
                 <button type="button" class="btn" (click)="onChooseBanner()" title="Changez votre bannière">
                     <img src="assets/images/pictures.png" alt="" class="edit-icon">
                 </button>
-                <button type="button" class="btn" title="Enregistrez vos modifications.">
+                <button type="submit" class="btn" title="Enregistrez vos modifications.">
                     <img src="assets/images/diskette.png" alt="" class="edit-icon">
                 </button>
                 <button type="button" class="btn" title="Deconnectez-vous" (click)="onLogout()">

@@ -1,12 +1,12 @@
 import { Component, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import gsap from 'gsap';
-import { WinksService } from '../../../../service/winks.service';
 import { Wink } from '../../../../model/wink.model';
 import { WINKS } from '../../../../utils/wink.utils';
-import { MessageService } from '../../../../service/message.service';
 import { Message } from '../../../../model/message.model';
-import { getMessagesCount } from '../../../../mocks/message.mock';
+import { RxStompService } from '../../../../service/rx-stomp.service';
+import { NotificationService } from '../../../../service/notification.service';
+import { Notification } from '../../../../model/notification.model';
 
 @Component({
   selector: 'app-winks-picker',
@@ -16,14 +16,14 @@ import { getMessagesCount } from '../../../../mocks/message.mock';
 export class WinksPickerComponent implements OnInit, OnDestroy {
   @Input() open$ !: Observable<any>
   @Input() conversationId !: number
-  @Output() winkEmitter = new EventEmitter() // a enlever
+  @Input() otherUserId !: number
   private _subscriptions : Subscription[] = []
   private _open = false
   private loggedUser = JSON.parse(localStorage.getItem('utilisateur')!)
 
   constructor(
-    private _winksService : WinksService,
-    private _messageService : MessageService
+    private _rxStompService : RxStompService,
+    private _notificationService : NotificationService
   ){}
 
   ngOnInit(): void {
@@ -58,15 +58,21 @@ export class WinksPickerComponent implements OnInit, OnDestroy {
   }
 
   onWinkClick( wink: Wink) {
-    this._winksService.onWinksToPlay(wink)
-    const id = getMessagesCount(this.conversationId)
-    const message = new Message(id,'',new Date(),this.loggedUser.nomComplet,'wink',this.conversationId,null,wink.imgPreview)
-    this._messageService.sendMessage(message)
-    this.winkEmitter.emit(null)
+    const message = new Message(0,'',new Date(),this.loggedUser.nomComplet,'wink',{id:this.conversationId},null,wink.imgPreview)
+    this._rxStompService.publish({
+      destination: '/app/chat/' + this.conversationId,
+      body: JSON.stringify(message)
+    })
+    this.sendNotification('wink')
   }
 
   get winks(): Wink[] {
     return WINKS
+  }
+
+  sendNotification(origine : string){
+    const notification = new Notification(0, this.loggedUser.nomComplet,`Vous a envoyé un ${origine}`, new Date(), "msn", this.otherUserId, false, this.loggedUser.avatar as string)
+    this._notificationService.sendNotification(notification)
   }
 
   ngOnDestroy(): void {

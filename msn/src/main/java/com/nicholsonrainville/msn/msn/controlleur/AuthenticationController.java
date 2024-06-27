@@ -5,18 +5,18 @@ import com.nicholsonrainville.msn.msn.domain.UserPrincipal;
 import com.nicholsonrainville.msn.msn.entity.Utilisateur;
 import com.nicholsonrainville.msn.msn.exception.domain.EmailExistException;
 import com.nicholsonrainville.msn.msn.exception.domain.NotAnImageFileException;
+import com.nicholsonrainville.msn.msn.exception.domain.UserNotFoundException;
 import com.nicholsonrainville.msn.msn.service.UtilisateurService;
 import com.nicholsonrainville.msn.msn.utils.JWTTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -42,7 +42,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Utilisateur> login(@RequestBody Utilisateur user){
+    public ResponseEntity<Utilisateur> login(@RequestBody Utilisateur user) throws UserNotFoundException {
+        if (utilisateurService.emailIsValid(user.getEmail())){
+            throw new UserNotFoundException();
+        }
         authenticate(user.getEmail(), user.getPassword());
         Utilisateur loginUser = utilisateurService.findByEmail(user.getEmail());
         if(user.getStatut() != null){
@@ -80,6 +83,14 @@ public class AuthenticationController {
                     INTERNAL_SERVER_ERROR.getReasonPhrase(),"Une erreur est survenu");
             return new ResponseEntity<>(httpResponse,INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @PutMapping("/logout/{email}")
+    public ResponseEntity<Utilisateur> logout(@AuthenticationPrincipal String email, @PathVariable("email") String emailPath) {
+        if (email != null && email.equals(emailPath)) {
+            utilisateurService.logout(email);
+        }
+        return new ResponseEntity<>(OK);
     }
 
     private void authenticate(String username, String password) {

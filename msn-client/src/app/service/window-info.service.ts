@@ -26,6 +26,8 @@ export class WindowInfoService {
   openDialogInviter$ = this._openDialogInviter.asObservable();
   private _openDialogDemandes = new Subject();
   openDialogDemandes$ = this._openDialogDemandes.asObservable();
+  private _disparition = new Subject();
+  disparition$ = this._disparition.asObservable();
 
   constructor() { }
 
@@ -70,4 +72,7 @@ export class WindowInfoService {
     this._openDialogDemandes.next(null)
   }
 
+  onDisparition(){
+    this._disparition.next(null)
+  }
 }

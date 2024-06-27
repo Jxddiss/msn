@@ -26,8 +26,7 @@ public class UtilisateurController {
                                                   @RequestParam(name = "avatar", required = false) MultipartFile avatar,
                                                   @RequestParam(name = "banniere", required = false) MultipartFile banniere,
                                                   @PathVariable Long userId) throws IOException, NotAnImageFileException {
-
+        System.out.println("utilisateur update");
         return ResponseEntity.ok(utilisateurService.update(userId, nom, description, statut, avatar, banniere));
     }
-
 }

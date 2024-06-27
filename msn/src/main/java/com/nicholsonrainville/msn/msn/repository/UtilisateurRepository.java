@@ -16,4 +16,7 @@ public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long> 
     @Query("UPDATE Utilisateur u SET u.password = ?1 WHERE u.id = ?2")
     int changePassword(String password, Long id);
 
+    @Modifying
+    @Query("UPDATE Utilisateur u SET u.statut = ?1 WHERE u.id = ?2")
+    int changeStatut(String statut, Long id);
 }

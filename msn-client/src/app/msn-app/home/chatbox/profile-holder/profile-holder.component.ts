@@ -2,6 +2,12 @@ import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, 
 import gsap from 'gsap';
 import { Observable, Subscription } from 'rxjs';
 import { Utilisateur } from '../../../../model/utilisateur.model';
+import { AuthentificationService } from '../../../../service/authentification.service';
+import { NotificationService } from '../../../../service/notification.service';
+import { Notification } from '../../../../model/notification.model';
+import { RxStompService } from '../../../../service/rx-stomp.service';
+import { Message } from '../../../../model/message.model';
+import { peerConnectionConfig } from '../../../../constants/video.constant';
 
 @Component({
   selector: 'app-profile-holder',
@@ -19,15 +25,27 @@ export class ProfileHolderComponent implements OnInit,OnDestroy{
   @Input() fullScreen = false
   @Input() appelStarted !: Observable<any>
   @Input() utilisateurs : Utilisateur[] = []
+  @Input() conversationId !: number
   private _subscriptions : Subscription[] = []
-  loggedUser : Utilisateur = localStorage.getItem('utilisateur') ? JSON.parse(localStorage.getItem('utilisateur')!) : undefined
+  private _videoSubscriptions : Subscription[] = []
+  loggedUser : Utilisateur | undefined
+  private _localPeer : RTCPeerConnection | undefined
+  private _otherUserId : number = 0
+  
 
-  constructor() {}
+  constructor(
+    private _authentificationService : AuthentificationService,
+    private _notificationService : NotificationService,
+    private _rxStompService : RxStompService
+  ) {}
 
   ngOnInit(): void {
     this._subscriptions.push(
       this.appelStarted.subscribe(()=>this.onStartVideoShare())
     )
+    this.loggedUser = this._authentificationService.loggedUser
+    this._otherUserId = this.utilisateurs[0].id === this.loggedUser?.id ? this.utilisateurs[1].id : this.utilisateurs[0].id
+    window.onbeforeunload = () => this.ngOnDestroy();
   }
 
   get videoShared(){
@@ -40,22 +58,173 @@ export class ProfileHolderComponent implements OnInit,OnDestroy{
 
   onStartVideoShare(){
     this._videoShared = !this._videoShared
-    this.getStream()
+    if(this._videoShared){
+      this._localPeer = new RTCPeerConnection(peerConnectionConfig)
+      this.getStream()
+      const notif = new Notification(0,this.loggedUser?.nomComplet ?? "Utilisateur",
+        "a commencé à partager sa caméra",new Date(),"msn",
+        this._otherUserId,false,this.loggedUser?.avatar ?? undefined)
+      this._notificationService.sendNotification(notif)
+      const message = new Message(0,'',new Date(),this.loggedUser?.nomComplet ?? "Utilisateur",'video',{id:this.conversationId})
+      this._rxStompService.publish({
+        destination: '/app/chat/' + this.conversationId,
+        body: JSON.stringify(message)
+      })
+    }else{
+      this._rxStompService.publish({
+        destination: '/app/chat/appel/remove/' + this.conversationId,
+        body: JSON.stringify({toUser: this._otherUserId,fromUser: this.loggedUser?.id})
+      })
+    }
+  }
+
+  joinOrStartVideoCall(){
+    this._rxStompService.publish({
+      destination: '/app/chat/appel/call/' + this.conversationId + '/' + this._otherUserId,
+      body: this.loggedUser?.id.toString()
+    })
+  }
+
+  setUpVideoSubscriptions(){
+    this._videoSubscriptions.push(
+      this._rxStompService.watch('/topic/appel/call/' + this.conversationId + '/' + this.loggedUser?.id).subscribe({
+        next:()=>{
+          if(!this._localPeer) return
+          this.setupPeerConnection()
+          this._localPeer.createOffer().then((description) => {
+            if(!this._localPeer) return
+            this._localPeer.setLocalDescription(description)
+            this._rxStompService.publish({
+              destination: '/app/chat/appel/offer/' + this.conversationId + '/' + this._otherUserId,
+              body: JSON.stringify({
+                toUser: this._otherUserId,
+                fromUser: this.loggedUser?.id,
+                offer: description
+              })
+            })
+          })
+          console.log("tracks offer" + this._localPeer.getSenders().length)
+        }
+      })
+    )
+
+    this._videoSubscriptions.push(
+      this._rxStompService.watch('/topic/appel/offer/' + this.conversationId + '/' + this.loggedUser?.id).subscribe({
+        next:(response) => {
+          if(!this._localPeer) return
+          this._gotRemoteVideo = true
+          this.setupPeerConnection()
+          const offer = JSON.parse(response.body)['offer']
+          this._localPeer.setRemoteDescription(new RTCSessionDescription(offer))
+          this._localPeer.createAnswer().then((description) => {
+            if(!this._localPeer) return
+            this._localPeer.setLocalDescription(description)
+            this._rxStompService.publish({
+              destination: '/app/chat/appel/answer/' + this.conversationId + '/' + this._otherUserId,
+              body: JSON.stringify({
+                toUser: this._otherUserId,
+                fromUser: this.loggedUser?.id,
+                answer: description
+              })
+            })
+          })
+          console.log("tracks answer" + this._localPeer.getSenders().length)
+        },
+        error:(error)=>console.log(error)
+      })
+    )
+
+    this._videoSubscriptions.push(
+      this._rxStompService.watch('/topic/appel/candidate/' + this.conversationId + '/' + this.loggedUser?.id).subscribe({
+        next:(response) => {
+          if(!this._localPeer) return
+          const candidate = JSON.parse(response.body)['candidate']
+          const candidateObj = new RTCIceCandidate({
+            sdpMLineIndex: candidate.label,
+            candidate: candidate.id
+          })
+          this._localPeer.addIceCandidate(candidateObj)
+        },
+        error:(error)=>console.log(error)
+      })
+    )
+
+    this._videoSubscriptions.push(
+      this._rxStompService.watch('/topic/appel/answer/' + this.conversationId + '/' + this.loggedUser?.id).subscribe({
+        next:(response) => {
+          this._gotRemoteVideo = true
+          const answer = JSON.parse(response.body)['answer']
+          this._localPeer?.setRemoteDescription(new RTCSessionDescription(answer))
+        },
+        error:(error)=>console.log(error)
+      })
+    )
+    this._subscriptions.push(
+      this._rxStompService.watch('/topic/appel/remove/' + this.conversationId).subscribe({
+        next:() => {
+          this.resetPeerConnection()
+        },
+        error:(error)=>console.log(error)
+      })
+    )
+  }
+
+  setupPeerConnection(){
+    console.log("set up peer connection local stream " + this._localStream) 
+    if(!this._localPeer) return
+    this._localPeer.ontrack = (event) => {
+      if(this.remoteVideo === undefined || this.remoteVideo === null) return
+      this.remoteVideo.nativeElement.srcObject = event.streams[0]
+    }
+
+    this._localStream?.getTracks().forEach(track => this._localPeer?.addTrack(track, this._localStream!))
+
+    this._localPeer.onicecandidate = (event) => {
+      if(event.candidate){
+        let candidate = {
+          type: 'candidate',
+          label: event.candidate.sdpMLineIndex,
+          id: event.candidate.candidate,
+        }
+        this._rxStompService.publish({
+          destination: '/app/chat/appel/candidate/' + this.conversationId + '/' + this._otherUserId,
+          body: JSON.stringify({
+            toUser: this._otherUserId,
+            fromUser: this.loggedUser?.id,
+            candidate: candidate
+          })
+        })
+      }
+    }
+    
   }
 
   getStream(){
-    if(!this._videoShared){
-      this._localStream?.getTracks().forEach(track => track.stop())
-      if(this._isVideoFullScreen) this.MakeVideoFullScreen()
-    }else{
-      navigator.mediaDevices
-        .getUserMedia({video:true,audio:true})
-        .then((stream) => {
-              if(this.localVideo === undefined || this.localVideo === null) return
-              this._localStream = stream
-              this.localVideo.nativeElement.srcObject = this._localStream 
-            })
+    navigator.mediaDevices
+      .getUserMedia({video:true,audio:true})
+      .then((stream) => {
+            if(this.localVideo === undefined || this.localVideo === null) return
+            this._localStream = stream
+            this.localVideo.nativeElement.srcObject = this._localStream 
+            this.setUpVideoSubscriptions()
+            this.joinOrStartVideoCall()
+          })
+  }
+
+  resetPeerConnection(){
+    this._gotRemoteVideo = false
+    this._videoShared = false
+    this._localPeer?.close()
+    this._localPeer = undefined
+    this._localStream?.getTracks().forEach(track => track.stop())
+    if(this._isVideoFullScreen) this.MakeVideoFullScreen()
+    if(this.remoteVideo !== undefined && this.remoteVideo !== null){
+      this.remoteVideo.nativeElement.srcObject = null
     }
+    if(this.localVideo !== undefined && this.localVideo !== null){
+      this.localVideo.nativeElement.srcObject = null
+    }
+    this._videoSubscriptions.forEach(sub => sub.unsubscribe())
   }
 
   onVideoFullScreen(){
@@ -110,8 +279,9 @@ export class ProfileHolderComponent implements OnInit,OnDestroy{
   }
 
   ngOnDestroy(): void {
-    this._localStream?.getTracks().forEach(track => track.stop())
     this._subscriptions.forEach(sub => sub.unsubscribe())
+    this.resetPeerConnection()
+    this._videoShared = false
   }
   
 }

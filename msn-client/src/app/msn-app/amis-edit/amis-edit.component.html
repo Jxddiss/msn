@@ -12,9 +12,9 @@
     <div class="img-holder">
       <img src="assets/images/buddy.png" alt="">
     </div>
-    <form>
+    <form #sendDemande="ngForm" (ngSubmit)="onSendDemande(sendDemande)">
       <label for="email">Ajouter un ami</label>
-      <input class="text-input" type="text" placeholder="Entrez l'email de votre ami" name="email" id="email" required>
+      <input class="text-input" type="text" placeholder="Entrez l'email de votre ami" name="email" id="email" ngModel [required]="true">
       <button type="submit">Ajouter</button>
     </form>
   </div>
@@ -54,79 +54,43 @@
   </div>
   <div class="window-body demandes">
     <div class="title">
-      <span>Demandes <span class="count">(5)</span></span>
+      <span>Demandes <span class="count">({{demandes.length}})</span></span>
     </div>
     <ul class="liste-demandes has-scrollbar">
-      <li class="demande">
-        <div class="buddy-container buddy-absent glass demande-list-avatar">
-          <div class="buddy-body">
-              <img id="buddy-img" src="assets/images/buddy2.png" alt="">
-          </div>
-        </div>
-        <div class="demande-list-info">
-          <p class="demande-list-name">Nom du contact</p>
-        </div>
-        <div class="demande-btn-holder">
-          <button class="demande-list-button">Accepter</button>
-          <button class="demande-list-button">Refuser</button>
-        </div>
-      </li>
-      <li class="demande">
-        <div class="buddy-container buddy-absent glass demande-list-avatar">
-          <div class="buddy-body">
-              <img id="buddy-img" src="assets/images/buddy2.png" alt="">
-          </div>
-        </div>
-        <div class="demande-list-info">
-          <p class="demande-list-name">Nom du contact</p>
-          <p class="demande-list-status">En attente</p>
-        </div>
-        <div class="demande-btn-holder">
-          <button class="demande-list-button">Annuler</button>
-        </div>
-      </li>
-      <li class="demande">
-        <div class="buddy-container buddy-absent glass demande-list-avatar">
-          <div class="buddy-body">
-              <img id="buddy-img" src="assets/images/buddy2.png" alt="">
-          </div>
-        </div>
-        <div class="demande-list-info">
-          <p class="demande-list-name">Nom du contact</p>
-          <p class="demande-list-status">En attente</p>
-        </div>
-        <div class="demande-btn-holder">
-          <button class="demande-list-button">Annuler</button>
-        </div>
-      </li>
-      <li class="demande">
-        <div class="buddy-container buddy-absent glass demande-list-avatar">
-          <div class="buddy-body">
-              <img id="buddy-img" src="assets/images/buddy2.png" alt="">
-          </div>
-        </div>
-        <div class="demande-list-info">
-          <p class="demande-list-name">Nom du contact</p>
-          <p class="demande-list-status">En attente</p>
-        </div>
-        <div class="demande-btn-holder">
-          <button class="demande-list-button">Annuler</button>
-        </div>
-      </li>
-      <li class="demande">
-        <div class="buddy-container buddy-absent glass demande-list-avatar">
-          <div class="buddy-body">
-              <img id="buddy-img" src="assets/images/buddy2.png" alt="">
-          </div>
-        </div>
-        <div class="demande-list-info">
-          <p class="demande-list-name">Nom du contact</p>
-          <p class="demande-list-status">En attente</p>
-        </div>
-        <div class="demande-btn-holder">
-          <button class="demande-list-button">Annuler</button>
-        </div>
-      </li>
+      @for (demande of demandes; track $index) {
+        @if (demande.receveur.id == loggedId) {
+          <li class="demande">
+            <div class="buddy-container buddy-absent glass demande-list-avatar">
+              <div class="buddy-body">
+                  <img id="buddy-img" src="{{demande.envoyeur.avatar}}" alt="">
+              </div>
+            </div>
+            <div class="demande-list-info">
+              <p class="demande-list-name">{{demande.envoyeur.nomComplet}}</p>
+              <p class="demande-list-status">{{demande.statut}}</p>
+            </div>
+            <div class="demande-btn-holder">
+              <button class="demande-list-button" (click)="onAccepterDemande(demande.id)">Accepter</button>
+              <button class="demande-list-button" (click)="onRefuserDemande(demande.id)">Refuser</button>
+            </div>
+          </li>
+        }@else {
+          <li class="demande">
+            <div class="buddy-container buddy-absent glass demande-list-avatar">
+              <div class="buddy-body">
+                  <img id="buddy-img" src="{{demande.receveur.avatar}}" alt="">
+              </div>
+            </div>
+            <div class="demande-list-info">
+              <p class="demande-list-name">{{demande.receveur.nomComplet}}</p>
+              <p class="demande-list-status">{{demande.statut}}</p>
+            </div>
+            <div class="demande-btn-holder">
+              <button class="demande-list-button">Annuler</button>
+            </div>
+          </li>
+        }
+      }
     </ul>
   </div>
 </div>

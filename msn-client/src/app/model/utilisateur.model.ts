@@ -5,7 +5,7 @@ export class Utilisateur {
         public email : string,
         public statut: string,
         public description: string | null,
-        public password : string, // pour mock seulement
+        public password : string, 
         public avatar: string | null,
         public banniere: string | null 
     ) {

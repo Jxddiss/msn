@@ -39,16 +39,16 @@ cdkDragBoundary="#desktop"
         </div>
         <div class="content-container">
           <div class="content-card">
-            <app-profile-holder [utilisateurs]="conversation.utilisateurs" [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()" [appelStarted]="appelStarted"></app-profile-holder>
+            <app-profile-holder [conversationId]="conversation.id" [utilisateurs]="conversation.utilisateurs" [fullScreen]="isFullScreen" (videoFullScreen)="onVideoFullScreenChange()" [appelStarted]="appelStarted"></app-profile-holder>
             <div class="chat-zone">
               <div class="ami-info">
                 <div class="name-holder">
                   @if (conversation.utilisateurs[0].id == loggedUser.id) {
                     <span class="name">{{conversation.utilisateurs[1].nomComplet}}</span>
-                    <span class="status">({{conversation.utilisateurs[1].statut}})</span>
+                    <span class="status">({{conversation.utilisateurs[1].statut | statutPipe}})</span>
                   }@else {
                     <span class="name">{{conversation.utilisateurs[0].nomComplet}}</span>
-                    <span class="status">({{conversation.utilisateurs[0].statut}})</span>
+                    <span class="status">({{conversation.utilisateurs[0].statut | statutPipe}})</span>
                   }
                   <button type="button" [title]="isFavoris ? 'Enlever des favoris' : 'Ajouter aux favoris'" (click)="onFavorisClick()" [ngStyle]="isFavoris ? {filter: 'grayscale(100%)'} : {}">
                     <img src="assets/images/star.png" alt="">
@@ -114,10 +114,16 @@ cdkDragBoundary="#desktop"
                       </div>
                       <hr>
                     </div>
-                  }@else if (message.type == 'interaction') {
+                  }@else if (message.type == 'nudge') {
                     <div class="interaction">
                       <hr>
                       <div class="sender">{{message.nomSender}} à envoyé un Wizz</div>
+                      <hr>
+                    </div>
+                  }@else if(message.type == 'video') {
+                    <div class="interaction">
+                      <hr>
+                      <div class="sender video-interaction" (click)="onAppelStarted()">{{message.nomSender}} à commencer à partager sa caméra</div>
                       <hr>
                     </div>
                   }
@@ -159,7 +165,7 @@ cdkDragBoundary="#desktop"
                 </div>
               </div>
               <app-emoji-picker [open$]="emojiPickerOpen$" (emojiSelected)="onEmojiPicked($event)"></app-emoji-picker>
-              <app-winks-picker [open$]="winksPickerOpen$" [conversationId]="conversation.id" (winkEmitter)="getMesages()"></app-winks-picker>
+              <app-winks-picker [open$]="winksPickerOpen$" [conversationId]="conversation.id" [otherUserId]="conversation.utilisateurs[0].id === loggedUser.id ? conversation.utilisateurs[1].id : conversation.utilisateurs[0].id" (winkEmitter)="getMesages()"></app-winks-picker>
               <app-text-edit [open$]="textEditOpen$" (textEditedEvent)="onTextEdited($event)"></app-text-edit>
             </div>
           </div>

@@ -24,6 +24,9 @@ import { WinksPickerComponent } from './msn-app/home/chatbox/winks-picker/winks-
 import { TextEditComponent } from './msn-app/home/chatbox/text-edit/text-edit.component';
 import { FormsModule } from '@angular/forms';
 import { AmisEditComponent } from './msn-app/amis-edit/amis-edit.component';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptorInterceptor } from './interceptor/auth-interceptor.interceptor';
+import { StatutPipe } from './pipe/statut.pipe';
 
 registerLocaleData(localeFr)
 
@@ -47,17 +50,20 @@ registerLocaleData(localeFr)
     WinksPickerComponent,
     TextEditComponent,
     AmisEditComponent,
+    StatutPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CdkDrag,
     CdkDragHandle,
-    FormsModule
+    FormsModule,
+    HttpClientModule,
   ],
   providers: [
     {provide: LOCALE_ID, useValue:'fr-FR'},
-    {provide: LocationStrategy, useClass: HashLocationStrategy}
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    provideHttpClient(withInterceptors([authInterceptorInterceptor])),
   ],
   bootstrap: [AppComponent]
 })

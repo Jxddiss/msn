@@ -5,7 +5,7 @@ export class Message {
         public date: Date,
         public nomSender: string,
         public type: string,
-        public idConversation: number,
+        public conversation: any,
         public style ?: string | null,
         public winkName?: string | null
     ){}
