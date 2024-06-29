@@ -10,9 +10,6 @@ import gsap from 'gsap';
 import { WinksService } from '../service/winks.service';
 import { NotificationService } from '../service/notification.service';
 import { Notification } from '../model/notification.model';
-import { RxStompService } from '../service/rx-stomp.service';
-import { AuthentificationService } from '../service/authentification.service';
-
 
 @Component({
   selector: 'app-desktop',
