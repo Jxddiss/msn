@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject, Subscription } from 'rxjs';
+import { BehaviorSubject,  Subscription } from 'rxjs';
 import { RxStompService } from './rx-stomp.service';
 import { Notification } from '../model/notification.model';
 import { AuthentificationService } from './authentification.service';

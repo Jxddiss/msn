@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Message } from '../model/message.model';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from '../constants/environment.constant';

@@ -10,9 +10,6 @@ import gsap from 'gsap';
 import { WinksService } from '../service/winks.service';
 import { NotificationService } from '../service/notification.service';
 import { Notification } from '../model/notification.model';
-import { RxStompService } from '../service/rx-stomp.service';
-import { AuthentificationService } from '../service/authentification.service';
-
 
 @Component({
   selector: 'app-desktop',
@@ -107,7 +104,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     this.componentsRefs['notification-'+index] = componentRef
     if(componentRef){
       this._subscriptions.push(
-        componentRef?.instance.close.subscribe(()=>this.onCloseNotification(index))
+        componentRef.instance.close.subscribe(()=>this.onCloseNotification(index))
       )
     }
     

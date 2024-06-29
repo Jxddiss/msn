@@ -1,6 +1,4 @@
-import { inject } from '@angular/core';
 import { RxStompConfig } from '@stomp/rx-stomp';
-import { AuthentificationService } from './service/authentification.service';
 
 export const myRxStompConfig: RxStompConfig = {
     brokerURL: 'ws://localhost:8080/ws',
