@@ -1,7 +1,7 @@
 import { RxStompConfig } from '@stomp/rx-stomp';
 
 export const myRxStompConfig: RxStompConfig = {
-    brokerURL: 'ws://api.nicholsonrj.com/ws',
+    brokerURL: 'ws://localhost:8080/ws',
   
     heartbeatIncoming: 0, 
     heartbeatOutgoing: 0, 

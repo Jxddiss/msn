@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'https://api.nicholsonrj.com/'
+    apiUrl: 'http://localhost:8080/'
 }
