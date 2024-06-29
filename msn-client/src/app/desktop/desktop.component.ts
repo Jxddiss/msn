@@ -107,7 +107,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     this.componentsRefs['notification-'+index] = componentRef
     if(componentRef){
       this._subscriptions.push(
-        componentRef?.instance.close.subscribe(()=>this.onCloseNotification(index))
+        componentRef.instance.close.subscribe(()=>this.onCloseNotification(index))
       )
     }
     
