@@ -15,4 +15,8 @@ export class MessageService {
   getMessages(idConversation : number) : Observable<HttpResponse<Message[]>> {
     return this._httpClient.get<Message[]>(this._backend + 'conversations/messages/' + idConversation, {observe : 'response'});
   }
+
+  sendImgMessage(formData : FormData, idConversation : number)  {
+    return this._httpClient.post(this._backend + 'messages/image/'+idConversation, formData);
+  }
 }

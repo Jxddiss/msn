@@ -451,4 +451,31 @@ export class ChatboxComponent implements OnInit,AfterViewInit, OnDestroy, AfterC
     const notification = new Notification(0, this.loggedUser.nomComplet,`Vous a envoyé un ${origine}`, new Date(), "msn", receiverId, false, this.loggedUser.avatar as string)
     this._notificationService.sendNotification(notification)
   }
+
+  onSendImg(){
+    const file = this.photoInput.nativeElement.files[0]
+    const result = verifyFile(file)
+    if(result === "bon"){
+      const message = new Message(0, '', new Date(), this.loggedUser.nomComplet, "image", {id:this._conversation.id}, JSON.stringify(this.style))
+      const formData = new FormData()
+      formData.append('file', file)
+      formData.append('message', 
+        new Blob([JSON.stringify(message)], {type: 'application/json'})
+      )
+      this._subscriptions.push(
+        this._messageService.sendImgMessage(formData, this._conversation.id).subscribe(
+          {
+            next : ()=>{
+              this.sendNotification("image")
+            },
+            error : (err)=>{
+              const erreur = new Erreur(err.error.httpStatus ?? err.error.code,err.error.message)
+              this._erreurService.onErreursEvent(erreur)
+            }
+          }
+        )
+      )
+      this.onHideDialogImgSend()
+    }
+  }
 }

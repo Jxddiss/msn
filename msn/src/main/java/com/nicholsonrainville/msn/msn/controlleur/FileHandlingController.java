@@ -13,7 +13,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
-import static com.nicholsonrainville.msn.msn.constant.FileConstant.USER_FOLDER;
+import static com.nicholsonrainville.msn.msn.constant.FileConstant.*;
 
 @RestController
 public class FileHandlingController {
@@ -26,6 +26,11 @@ public class FileHandlingController {
     @GetMapping("/media/image/utilisateur/banniere/{image}")
     public ResponseEntity<FileSystemResource> getImageBanniere(@PathVariable("image") String fileName, HttpServletResponse response) throws IOException {
         return readFile(fileName, USER_FOLDER);
+    }
+
+    @GetMapping("/media/chat/{image}")
+    public ResponseEntity<FileSystemResource> getImageChat(@PathVariable("image") String fileName, HttpServletResponse response) throws IOException {
+        return readFile(fileName, MEDIA_CHAT_BASE_FOLDER);
     }
 
     private ResponseEntity<FileSystemResource> readFile(String fileName, String baseFolder) throws IOException {

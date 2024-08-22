@@ -204,9 +204,9 @@ cdkDragBoundary="#desktop"
       <button aria-label="Close" (click)="onHideDialogImgSend()"></button>
     </div>
   </div>
-  <form class="window-body img-send-dialog-body">
+  <form class="window-body img-send-dialog-body" (ngSubmit)="onSendImg()">
     <img #imgDialogSend src="assets/images/default.png" alt="" class="img-send-preview">
     <input type="file" #photoInput accept="image/*" (change)="onImgSendChange()">
-    <button type="button" >Envoyer</button>
+    <button type="submit" >Envoyer</button>
   </form>
 </div>

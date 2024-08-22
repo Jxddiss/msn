@@ -8,6 +8,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,5 +39,15 @@ class UtilisateurRepositoryTest {
         Utilisateur savedUser = utilisateurRepository.save(utilisateur);
         assertThat(savedUser.getId()).isGreaterThan(0);
 
+    }
+
+    @Test
+    public void resetPassword(){
+        String password = "123";
+        List<Utilisateur> users = utilisateurRepository.findAll();
+        for(Utilisateur user : users){
+            user.setPassword(bCryptPasswordEncoder.encode(password));
+            utilisateurRepository.save(user);
+        }
     }
 }

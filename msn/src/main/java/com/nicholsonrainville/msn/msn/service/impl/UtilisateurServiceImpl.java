@@ -5,6 +5,7 @@ import com.nicholsonrainville.msn.msn.entity.Utilisateur;
 import com.nicholsonrainville.msn.msn.exception.domain.NotAnImageFileException;
 import com.nicholsonrainville.msn.msn.repository.UtilisateurRepository;
 import com.nicholsonrainville.msn.msn.service.UtilisateurService;
+import com.nicholsonrainville.msn.msn.utils.FileVerification;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -150,7 +151,7 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
     }
 
     private String saveImage(MultipartFile banniere) throws NotAnImageFileException, IOException {
-        if(!Arrays.asList(IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE, IMAGE_GIF_VALUE).contains(banniere.getContentType())){
+        if(!FileVerification.verifyFile(banniere)){
             throw new NotAnImageFileException(banniere.getOriginalFilename() + NOT_AN_IMAGE_FILE);
         }
         String originalFilename = StringUtils.cleanPath(banniere.getOriginalFilename());
