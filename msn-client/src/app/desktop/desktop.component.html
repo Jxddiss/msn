@@ -6,7 +6,11 @@
     <a  class="ie-icon icon-desk" cdkDrag 
     #draggable="cdkDrag" data-label="Internet"
     [class.pointer-events-none]="draggable._dragRef.isDragging()"
-    onclick="window.open('https://www.google.ca','_unfencedTop ','width=700,height=700,top=500,left=500')">
+    (click)="onOpenApp('ie', 'https://www.google.com/webhp?igu=1','Internet Explorer',true)">
+    </a>
+    <a class="icon-desk tetris-icon" cdkDrag #draggable="cdkDrag" data-label="Tetris" 
+    [class.pointer-events-none]="draggable._dragRef.isDragging()"
+    (click)="onOpenApp('tetris', 'https://freehtml5games.org/games/tetris-cube/index.html','Tetris')">
     </a>
     <ng-template #windowContainer>
         <ng-container></ng-container>

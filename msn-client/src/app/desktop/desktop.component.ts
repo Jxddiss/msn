@@ -10,6 +10,7 @@ import gsap from 'gsap';
 import { WinksService } from '../service/winks.service';
 import { NotificationService } from '../service/notification.service';
 import { Notification } from '../model/notification.model';
+import { BasicWindowComponent } from '../basic-window/basic-window.component';
 
 @Component({
   selector: 'app-desktop',
@@ -57,11 +58,10 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   ngAfterViewInit(){
     this.onBackgroundChange()
     this.openMsn()
-    
   }
 
   openMsn(){
-    this.entry?.clear()
+    this.onCloseWindow()
     const componentRef = this.entry?.createComponent(MsnApp);
     if(componentRef?.instance.close){
       this._subscriptions.push(
@@ -75,10 +75,46 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     this.msnOpened.set(true)
   }
 
+  onOpenApp(type : string, iframeUrl : string, titre : string, canBeFullScreen : boolean = false){
+    if(this.entry === undefined) return
+    const componentRef = this.entry.createComponent(BasicWindowComponent)
+    componentRef.instance.iframeUrl = iframeUrl
+    componentRef.instance.titre = titre
+    componentRef.instance.canBeFullScreen = canBeFullScreen
+    const index = this.entry?.indexOf(componentRef.hostView)
+    type = type + '-' + index
+    componentRef.instance.windowType = type
+    this.componentsRefs[type] = componentRef
+
+    console.log(index)
+    if(componentRef){
+      this._subscriptions.push(
+        componentRef.instance.close.subscribe(()=>{
+          this.onCloseBasicWindow(type)
+        })
+      )
+    }
+  }
+
   onCloseWindow(){
     this.msnOpened.set(false)
-    this.entry?.clear()
+    const componentRef = this.componentsRefs['msn']
+    if(!componentRef) return
+    const indexUpToDate = this.entry?.indexOf(componentRef.hostView)
+    this.entry?.remove(indexUpToDate)
     delete this.componentsRefs['msn']
+  }
+
+  onCloseBasicWindow(type : string){
+    const componentRef = this.componentsRefs[type]
+    if(!componentRef) return
+    const instance = componentRef.instance
+    const indexUpToDate = this.entry?.indexOf(componentRef.hostView)
+    instance.disparition()
+    setTimeout(()=>{
+      this.entry?.remove(indexUpToDate)
+    }, 500)
+    delete this.componentsRefs[type]
   }
 
   onClickWindow(type : string){

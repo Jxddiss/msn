@@ -27,6 +27,8 @@ import { AmisEditComponent } from './msn-app/amis-edit/amis-edit.component';
 import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptorInterceptor } from './interceptor/auth-interceptor.interceptor';
 import { StatutPipe } from './pipe/statut.pipe';
+import { BasicWindowComponent } from './basic-window/basic-window.component';
+import { SafePipe } from './pipe/safe.pipe';
 
 registerLocaleData(localeFr)
 
@@ -51,6 +53,8 @@ registerLocaleData(localeFr)
     TextEditComponent,
     AmisEditComponent,
     StatutPipe,
+    BasicWindowComponent,
+    SafePipe
   ],
   imports: [
     BrowserModule,

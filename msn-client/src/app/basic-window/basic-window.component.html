@@ -1,0 +1,17 @@
+<div class="window active glass first-window {{windowType}}" #window cdkDrag [cdkDragFreeDragPosition]="dragPosition" cdkDragBoundary="#desktop">
+    <div class="title-bar" cdkDragHandle>
+      <div class="title-bar-text"> {{titre}} </div>
+      <div class="title-bar-controls">
+        <button aria-label="Minimize" (click)="minimizeOrResume()"></button>
+        <button aria-label="Maximize" [disabled]="!canBeFullScreen" (click)="onFullScreen()"></button>
+        <button aria-label="Close" (click)="onQuitWindow()"></button>
+      </div>
+    </div>
+    <div class="window-body">
+        <div class="content-container">
+            <div class="content-card">
+                <iframe [src]="iframeUrl | safe" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

@@ -44,6 +44,11 @@
   background-image: url(https://pngimg.com/d/ie_logo_PNG4.png);
 }
 
+.tetris-icon{
+  margin-top: 180px;
+  background-image: url(https://freehtml5games.org/icons/tetris-cube.png);
+}
+
 .icon-desk:after {
   display: block;
   position: absolute;
