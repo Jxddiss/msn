@@ -28,9 +28,14 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   @ViewChild('winkImg') winkImg !: ElementRef 
   private _winkIsPlaying = false
   msnOpened  = signal(false)
+  iEOpened  = signal(false)
+  tetrisOpened  = signal(false)
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
   private _subscriptions : Subscription[] = []
+  private _nbIeOpen = 0
+  private _nbTetrisOpen = 0
+  private _nbBasicWindowOpen = 0
   
   
   constructor(
@@ -76,12 +81,15 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   }
 
   onOpenApp(type : string, iframeUrl : string, titre : string, canBeFullScreen : boolean = false){
+    if(this._nbBasicWindowOpen >= 2) return
     if(this.entry === undefined) return
+    this._nbBasicWindowOpen++
     const componentRef = this.entry.createComponent(BasicWindowComponent)
     componentRef.instance.iframeUrl = iframeUrl
     componentRef.instance.titre = titre
     componentRef.instance.canBeFullScreen = canBeFullScreen
     const index = this.entry?.indexOf(componentRef.hostView)
+    
     type = type + '-' + index
     componentRef.instance.windowType = type
     this.componentsRefs[type] = componentRef
@@ -93,6 +101,16 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
           this.onCloseBasicWindow(type)
         })
       )
+    }
+
+    if(type.includes('ie')){
+      this.iEOpened.set(true)
+      this._nbIeOpen++
+    }
+
+    if(type.includes('tetris')){
+      this.tetrisOpened.set(true)
+      this._nbTetrisOpen++
     }
   }
 
@@ -115,6 +133,20 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
       this.entry?.remove(indexUpToDate)
     }, 500)
     delete this.componentsRefs[type]
+    if (type.includes('ie')){
+      this._nbIeOpen--
+      if(this._nbIeOpen == 0){
+        this.iEOpened.set(false)
+      }
+    }
+
+    if(type.includes('tetris')){
+      this._nbTetrisOpen--
+      if(this._nbTetrisOpen == 0){
+        this.tetrisOpened.set(false)
+      }
+    }
+    this._nbBasicWindowOpen--
   }
 
   onClickWindow(type : string){
@@ -188,6 +220,52 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
       this.winkImg.nativeElement.src = ''
       this._winkIsPlaying = false
     }, wink.duration*1000 + 800)
+  }
+
+  onIEOpenEvent(){
+    if(this.iEOpened()) {
+      for (let index = 1; index <= this._nbBasicWindowOpen; index++) {
+        const componentRef = this.componentsRefs['ie-'+index]
+        if(componentRef){
+          const instance = componentRef.instance
+          instance.minimizeOrResume()
+        }
+      }
+    }else{
+      this.onOpenApp('ie', 'https://www.google.com/webhp?igu=1','Internet Explorer',true)
+    }
+  }
+
+  onIECloseEvent(){
+    if(this.iEOpened()) {
+      this.closeBasicWindowEvent('ie-')
+    }
+  }
+
+  onTetrisOpenEvent(){
+    if(this.tetrisOpened()) {
+      for (let index = 0; index <= this._nbBasicWindowOpen; index++) {
+        const componentRef = this.componentsRefs['tetris-'+index]
+        if(componentRef){
+          const instance = componentRef.instance
+          instance.minimizeOrResume()
+        }
+      }
+    }else{
+      this.onOpenApp('tetris', 'https://freehtml5games.org/games/tetris-cube/index.html','Tetris')
+    }
+  }
+
+  onTetrisCloseEvent(){
+    if(this.tetrisOpened()) {
+      this.closeBasicWindowEvent('tetris-')
+    }
+  }
+
+  closeBasicWindowEvent(genType : string){
+    for (let index = 1; index <= this._nbBasicWindowOpen; index++) {
+      this.onCloseBasicWindow(genType+index)
+    }
   }
 
   ngOnDestroy(): void {

@@ -12,6 +12,8 @@ import { verifyFile } from '../../utils/input-verification.utils';
 })
 export class TaskbarComponent implements AfterViewInit, OnDestroy{
   @Input() msnOpened = false
+  @Input() iEOpened = false
+  @Input() tetrisOpened = false
   @Output() msnOpenEvent = new EventEmitter()
   @ViewChild('startMenu') startMenu : ElementRef | undefined
   @ViewChild('startIcon') startIcon : ElementRef | undefined
@@ -27,6 +29,10 @@ export class TaskbarComponent implements AfterViewInit, OnDestroy{
   chatMinimized = false
   private _subcriptions : Subscription[] = []
   @Output() backgroundChangeEvent = new EventEmitter()
+  @Output() iEOpenEvent = new EventEmitter()
+  @Output() iECloseEvent = new EventEmitter()
+  @Output() tetrisOpenEvent = new EventEmitter()
+  @Output() tetrisCloseEvent = new EventEmitter()
   
   constructor(
     private _windowInfoService : WindowInfoService,
@@ -44,6 +50,22 @@ export class TaskbarComponent implements AfterViewInit, OnDestroy{
 
   onMsnOpen(){
     this.msnOpenEvent.emit(null)
+  }
+
+  onIEOpen(){
+    this.iEOpenEvent.emit(null)
+  }
+
+  onIEClose(){
+    this.iECloseEvent.emit(null)
+  }
+
+  onTetrisOpen(){
+    this.tetrisOpenEvent.emit(null)
+  }
+
+  onTetrisClose(){
+    this.tetrisCloseEvent.emit(null)
   }
 
   onChatWinowOpen(){

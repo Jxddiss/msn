@@ -13,7 +13,7 @@ cdkDragBoundary="#desktop"
     </div>
     <div class="window-body" *ngIf="!isLoading">
         <ul role="menubar">
-          <li tabindex="0" role="menuitem" > 
+          <li tabindex="0" role="menuitem" (click)="onPhotoSelection()"> 
             <img src="assets/images/pictures.png" alt="">
             <span>Photos</span>
           </li>
@@ -21,7 +21,7 @@ cdkDragBoundary="#desktop"
             <img src="assets/images/webcam.png" alt="">
             <span>Vidéo</span> 
           </li>
-          <li tabindex="0" role="menuitem" title="Commencer un appel audio">
+          <li tabindex="0" role="menuitem" (click)="onAppelStarted()" title="Commencer un appel audio">
             <img src="assets/images/phone.png" alt="">
             <span>Audio</span> 
           </li>

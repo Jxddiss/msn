@@ -3,7 +3,7 @@
       <div class="title-bar-text"> {{titre}} </div>
       <div class="title-bar-controls">
         <button aria-label="Minimize" (click)="minimizeOrResume()"></button>
-        <button aria-label="Maximize" [disabled]="!canBeFullScreen" (click)="onFullScreen()"></button>
+        <button [ariaLabel]="isFullScreen ? 'Restore' : 'Maximize'" [disabled]="!canBeFullScreen" (click)="onFullScreen()"></button>
         <button aria-label="Close" (click)="onQuitWindow()"></button>
       </div>
     </div>

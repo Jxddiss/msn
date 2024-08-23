@@ -4,14 +4,14 @@
     </div>
     <div id="startmenu" #startMenu>
       <ul id="programs">
-          <li (click)="onMsnOpen()">
+          <li (dblclick)="onMsnOpen()">
             <div class="start-icon"><img src="assets/images/buddy.png" alt="">MSN</div>
           </li>
           <li>
-            <a class="start-icon" onclick="window.open('https://www.google.ca','_unfencedTop ','width=700,height=700,top=500,left=500')">
+            <div class="start-icon" (dblclick)="onIEOpen()" >
               <img src="https://pngimg.com/d/ie_logo_PNG4.png" alt="">
               Internet Explorer
-            </a>
+            </div>
           </li>
       </ul>
       <ul id="links">
@@ -48,7 +48,7 @@
         </div>
       </div>
       <div *ngIf="chatOpened" class="taskbar-icon">
-        <div (click)="onChatWinowOpen()" class="pined-icon" data-window="msn-chat" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
+        <div (dblclick)="onChatWinowOpen()" class="pined-icon" data-window="msn-chat" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
           <img src="assets/images/buddy.png" alt="">
         </div>
         <div class="window-preview window active glass">
@@ -63,9 +63,34 @@
           </div>
         </div>
       </div>
-      <a class="pined-icon" onclick="window.open('https://www.google.ca','_unfencedTop ','width=700,height=700,top=500,left=500')">
+      <div class="pined-icon" (click)="onIEOpen()" [ngClass]="iEOpened ? 'active-bar-icon' : ''">
         <img src="https://pngimg.com/d/ie_logo_PNG4.png" alt="">
-      </a>
+      </div>
+      <div *ngIf="iEOpened" class="window-preview window active glass preview-ie">
+        <div class="preview-header title-bar">
+          <span class="title-bar-text">Internet Explorer</span> 
+          <div class="title-bar-controls">
+            <button aria-label="Close" (click)="onIEClose()"></button>
+          </div>
+        </div>
+        <div class="preview-body window-body has-space">
+          <img src="https://pngimg.com/d/ie_logo_PNG4.png" alt="">
+        </div>
+      </div>
+      <div *ngIf="tetrisOpened" class="pined-icon" (click)="onTetrisOpen()" [ngClass]="tetrisOpened ? 'active-bar-icon' : ''">
+        <img src="https://freehtml5games.org/icons/tetris-cube.png" alt="">
+      </div>
+      <div *ngIf="tetrisOpened" class="window-preview window active glass preview-tetris">
+        <div class="preview-header title-bar">
+          <span class="title-bar-text">Tetris</span> 
+          <div class="title-bar-controls">
+            <button aria-label="Close" (click)="onTetrisClose()"></button>
+          </div>
+        </div>
+        <div class="preview-body window-body has-space">
+          <img src="https://freehtml5games.org/icons/tetris-cube.png" alt="">
+        </div>
+      </div>
     </div>
     <div id="datetime">
       <span class="time">{{currentDate | date : 'HH:mm:ss a'}}</span>

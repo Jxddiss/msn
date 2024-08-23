@@ -283,6 +283,14 @@
   z-index: 10;
 }
 
+.preview-ie{
+  translate: 25% 0;
+}
+
+.preview-tetris{
+  translate: 50% 0;
+}
+
 .pined-icon:hover + .window-preview, .window-preview:hover{
   pointer-events: auto;
   opacity: 1;
