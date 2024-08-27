@@ -20,6 +20,8 @@ import { BasicWindowComponent } from '../basic-window/basic-window.component';
 export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   @ViewChild('windowContainer',{read: ViewContainerRef})
   entry : ViewContainerRef | undefined;
+  @ViewChild('iframesContainer', {read : ViewContainerRef})
+  iframesContainer : ViewContainerRef | undefined;
   @ViewChild('desktop') desktop : ElementRef | undefined
   @ViewChild('notificationContainer',{read: ViewContainerRef}) 
   notificationContainer : ViewContainerRef | undefined
@@ -82,13 +84,13 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
 
   onOpenApp(type : string, iframeUrl : string, titre : string, canBeFullScreen : boolean = false){
     if(this._nbBasicWindowOpen >= 2) return
-    if(this.entry === undefined) return
+    if(this.iframesContainer === undefined) return
     this._nbBasicWindowOpen++
-    const componentRef = this.entry.createComponent(BasicWindowComponent)
+    const componentRef = this.iframesContainer.createComponent(BasicWindowComponent)
     componentRef.instance.iframeUrl = iframeUrl
     componentRef.instance.titre = titre
     componentRef.instance.canBeFullScreen = canBeFullScreen
-    const index = this.entry?.indexOf(componentRef.hostView)
+    const index = this.iframesContainer?.indexOf(componentRef.hostView)
     
     type = type + '-' + index
     componentRef.instance.windowType = type
@@ -121,16 +123,17 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     const indexUpToDate = this.entry?.indexOf(componentRef.hostView)
     this.entry?.remove(indexUpToDate)
     delete this.componentsRefs['msn']
+    this.entry?.clear()
   }
 
   onCloseBasicWindow(type : string){
     const componentRef = this.componentsRefs[type]
     if(!componentRef) return
     const instance = componentRef.instance
-    const indexUpToDate = this.entry?.indexOf(componentRef.hostView)
+    const indexUpToDate = this.iframesContainer?.indexOf(componentRef.hostView)
     instance.disparition()
     setTimeout(()=>{
-      this.entry?.remove(indexUpToDate)
+      this.iframesContainer?.remove(indexUpToDate)
     }, 500)
     delete this.componentsRefs[type]
     if (type.includes('ie')){
@@ -146,7 +149,14 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
         this.tetrisOpened.set(false)
       }
     }
+
     this._nbBasicWindowOpen--
+    if(this._nbBasicWindowOpen <= 0){
+      setTimeout(()=>{
+        this.iframesContainer?.clear()
+      },200)
+    }
+    
   }
 
   onClickWindow(type : string){
@@ -254,6 +264,8 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     }else{
       this.onOpenApp('tetris', 'https://freehtml5games.org/games/tetris-cube/index.html','Tetris')
     }
+
+    this._nbBasicWindowOpen ++
   }
 
   onTetrisCloseEvent(){
@@ -263,7 +275,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   }
 
   closeBasicWindowEvent(genType : string){
-    for (let index = 1; index <= this._nbBasicWindowOpen; index++) {
+    for (let index = 0; index <= this._nbBasicWindowOpen +1; index++) {
       this.onCloseBasicWindow(genType+index)
     }
   }

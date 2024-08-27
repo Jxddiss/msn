@@ -15,6 +15,9 @@
     <ng-template #windowContainer>
         <ng-container></ng-container>
     </ng-template>
+    <ng-template #iframesContainer>
+        <ng-container></ng-container>
+    </ng-template>
     <app-taskbar (msnOpenEvent)="onClickWindow('msn')" [msnOpened]="msnOpened()" (backgroundChangeEvent)="onBackgroundChange()"
     (iEOpenEvent)="onIEOpenEvent()" [iEOpened]="iEOpened()" (iECloseEvent)="onIECloseEvent()"
     (tetrisOpenEvent)="onTetrisOpenEvent()" [tetrisOpened]="tetrisOpened()" (tetrisCloseEvent)="onTetrisCloseEvent()"></app-taskbar>
