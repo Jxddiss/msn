@@ -16,6 +16,9 @@
           <li (click)="onTetrisOpen()">
             <div class="start-icon"><img src="https://freehtml5games.org/icons/tetris-cube.png" alt="">Tetris</div>
           </li>
+          <li (click)="onVscodeOpen()">
+            <div class="start-icon"><img src="https://cdn.freebiesupply.com/logos/large/2x/visual-studio-code-logo-png-transparent.png" alt="">Visual Studio Code</div>
+          </li>
       </ul>
       <ul id="links">
           <li class="buddy-container glass" >
@@ -92,6 +95,20 @@
         </div>
         <div class="preview-body window-body has-space">
           <img src="https://freehtml5games.org/icons/tetris-cube.png" alt="">
+        </div>
+      </div>
+      <div *ngIf="codeOpened" class="pined-icon" (click)="onVscodeOpen()" [ngClass]="codeOpened ? 'active-bar-icon' : ''">
+        <img src="https://cdn.freebiesupply.com/logos/large/2x/visual-studio-code-logo-png-transparent.png" alt="">
+      </div>
+      <div *ngIf="codeOpened" class="window-preview window active glass preview-tetris">
+        <div class="preview-header title-bar">
+          <span class="title-bar-text">Tetris</span> 
+          <div class="title-bar-controls">
+            <button aria-label="Close" (click)="onVscodeClose()"></button>
+          </div>
+        </div>
+        <div class="preview-body window-body has-space">
+          <img src="https://cdn.freebiesupply.com/logos/large/2x/visual-studio-code-logo-png-transparent.png" alt="">
         </div>
       </div>
     </div>

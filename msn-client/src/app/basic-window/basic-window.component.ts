@@ -33,6 +33,9 @@ export class BasicWindowComponent implements AfterViewInit {
     if(this.isMinimized){
       this.isMinimized = false
       this.apparition('.'+this.windowType)
+      if(this._isFullScreen){
+        setTimeout(()=>this.makeFullScreen(),800)
+      }
     }else{
       this.disparition('.'+this.windowType)
       this.isMinimized = true
@@ -46,7 +49,7 @@ export class BasicWindowComponent implements AfterViewInit {
   apparition(sel : string = '.'+this.windowType) : void{
     const tl = gsap.timeline()
 
-    gsap.to(sel,{display:'block',opacity:1,})
+    gsap.to(sel,{opacity:1,})
     
     tl.from(sel+' .content-container',{
       height: 0,
@@ -76,7 +79,7 @@ export class BasicWindowComponent implements AfterViewInit {
       height: '100px',
     })
 
-    tl.to(sel,{display:'none',opacity:0,})
+    tl.to(sel,{opacity:0,})
     tl.to(sel+" .content-container", {clearProps:true})
 
     tl.duration(0.2)

@@ -14,6 +14,7 @@ export class TaskbarComponent implements AfterViewInit, OnDestroy{
   @Input() msnOpened = false
   @Input() iEOpened = false
   @Input() tetrisOpened = false
+  @Input() codeOpened = false
   @Output() msnOpenEvent = new EventEmitter()
   @ViewChild('startMenu') startMenu : ElementRef | undefined
   @ViewChild('startIcon') startIcon : ElementRef | undefined
@@ -33,6 +34,8 @@ export class TaskbarComponent implements AfterViewInit, OnDestroy{
   @Output() iECloseEvent = new EventEmitter()
   @Output() tetrisOpenEvent = new EventEmitter()
   @Output() tetrisCloseEvent = new EventEmitter()
+  @Output() vscodeOpenEvent = new EventEmitter()
+  @Output() vscodeCloseEvent = new EventEmitter()
   
   constructor(
     private _windowInfoService : WindowInfoService,
@@ -66,6 +69,14 @@ export class TaskbarComponent implements AfterViewInit, OnDestroy{
 
   onTetrisClose(){
     this.tetrisCloseEvent.emit(null)
+  }
+
+  onVscodeOpen(){
+    this.vscodeOpenEvent.emit(null)
+  }
+
+  onVscodeClose(){
+    this.vscodeCloseEvent.emit(null)
   }
 
   onChatWinowOpen(){

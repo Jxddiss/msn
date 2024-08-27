@@ -49,6 +49,11 @@
   background-image: url(https://freehtml5games.org/icons/tetris-cube.png);
 }
 
+.vscode-icon{
+  margin-top: 270px;
+  background-image: url(https://cdn.freebiesupply.com/logos/large/2x/visual-studio-code-logo-png-transparent.png);
+}
+
 .icon-desk:after {
   display: block;
   position: absolute;

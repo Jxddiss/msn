@@ -32,11 +32,13 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   msnOpened  = signal(false)
   iEOpened  = signal(false)
   tetrisOpened  = signal(false)
+  codeOpened  = signal(false)
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
   private _subscriptions : Subscription[] = []
   private _nbIeOpen = 0
   private _nbTetrisOpen = 0
+  private _nbCodeOpen = 0
   private _nbBasicWindowOpen = 0
   
   
@@ -96,7 +98,6 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     componentRef.instance.windowType = type
     this.componentsRefs[type] = componentRef
 
-    console.log(index)
     if(componentRef){
       this._subscriptions.push(
         componentRef.instance.close.subscribe(()=>{
@@ -113,6 +114,11 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     if(type.includes('tetris')){
       this.tetrisOpened.set(true)
       this._nbTetrisOpen++
+    }
+
+    if(type.includes('code')){
+      this.codeOpened.set(true)
+      this._nbCodeOpen++
     }
   }
 
@@ -132,9 +138,6 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     const instance = componentRef.instance
     const indexUpToDate = this.iframesContainer?.indexOf(componentRef.hostView)
     instance.disparition()
-    setTimeout(()=>{
-      this.iframesContainer?.remove(indexUpToDate)
-    }, 500)
     delete this.componentsRefs[type]
     if (type.includes('ie')){
       this._nbIeOpen--
@@ -150,11 +153,20 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
       }
     }
 
+    if(type.includes('code')){
+      this._nbCodeOpen--
+      if(this._nbCodeOpen == 0){
+        this.codeOpened.set(false)
+      }
+    }
+
     this._nbBasicWindowOpen--
     if(this._nbBasicWindowOpen <= 0){
       setTimeout(()=>{
         this.iframesContainer?.clear()
       },200)
+    }else{
+      this.iframesContainer?.remove(indexUpToDate)
     }
     
   }
@@ -234,7 +246,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
 
   onIEOpenEvent(){
     if(this.iEOpened()) {
-      for (let index = 1; index <= this._nbBasicWindowOpen; index++) {
+      for (let index = 0; index <= this._nbBasicWindowOpen; index++) {
         const componentRef = this.componentsRefs['ie-'+index]
         if(componentRef){
           const instance = componentRef.instance
@@ -271,6 +283,26 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   onTetrisCloseEvent(){
     if(this.tetrisOpened()) {
       this.closeBasicWindowEvent('tetris-')
+    }
+  }
+
+  onCodeOpenEvent(){
+    if(this.codeOpened()) {
+      for (let index = 0; index <= this._nbBasicWindowOpen; index++) {
+        const componentRef = this.componentsRefs['code-'+index]
+        if(componentRef){
+          const instance = componentRef.instance
+          instance.minimizeOrResume()
+        }
+      }
+    }else{
+      this.onOpenApp('code', 'https://github1s.com/jxddiss/msn','Visual Studio Code',true)
+    }
+  }
+
+  onCodeCloseEvent(){
+    if(this.codeOpened()) {
+      this.closeBasicWindowEvent('code-')
     }
   }
 

@@ -12,6 +12,10 @@
     [class.pointer-events-none]="draggable._dragRef.isDragging()"
     (dblclick)="onOpenApp('tetris', 'https://freehtml5games.org/games/tetris-cube/index.html','Tetris')">
     </a>
+    <a class="icon-desk vscode-icon" cdkDrag #draggable="cdkDrag" data-label="VSCode" 
+    [class.pointer-events-none]="draggable._dragRef.isDragging()"
+    (dblclick)="onOpenApp('code', 'https://github1s.com/jxddiss/msn','Visual Studio Code',true)">
+    </a>
     <ng-template #windowContainer>
         <ng-container></ng-container>
     </ng-template>
@@ -20,7 +24,8 @@
     </ng-template>
     <app-taskbar (msnOpenEvent)="onClickWindow('msn')" [msnOpened]="msnOpened()" (backgroundChangeEvent)="onBackgroundChange()"
     (iEOpenEvent)="onIEOpenEvent()" [iEOpened]="iEOpened()" (iECloseEvent)="onIECloseEvent()"
-    (tetrisOpenEvent)="onTetrisOpenEvent()" [tetrisOpened]="tetrisOpened()" (tetrisCloseEvent)="onTetrisCloseEvent()"></app-taskbar>
+    (tetrisOpenEvent)="onTetrisOpenEvent()" [tetrisOpened]="tetrisOpened()" (tetrisCloseEvent)="onTetrisCloseEvent()"
+    (vscodeOpenEvent)="onCodeOpenEvent()" [codeOpened]="codeOpened()" (vscodeCloseEvent)="onCodeCloseEvent()"></app-taskbar>
     <svg width="0" height="0">
         <clipPath id="svgClip" clipPathUnits="objectBoundingBox">
             <path d="M.067.067C.1676 0 .8379 0 .9385.067C1.0055.1676 1.0055.8379.9385.9385C.8379 1.0055.1676 1.0055.067.9385C0 .8379 0 .1676.067.067"></path>
