@@ -124,7 +124,7 @@ export class BasicWindowComponent implements AfterViewInit {
 
     tl.to('.'+this.windowType+' .content-container', {
       width: '99dvw',
-      height: '91dvh',
+      height: '92dvh',
     })
     tl.duration(0.2)
   }
