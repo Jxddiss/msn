@@ -54,7 +54,7 @@
         </div>
       </div>
       <div *ngIf="chatOpened" class="taskbar-icon">
-        <div (dblclick)="onChatWinowOpen()" class="pined-icon" data-window="msn-chat" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
+        <div (click)="onChatWinowOpen()" class="pined-icon" data-window="msn-chat" [ngClass]="msnOpened ? 'active-bar-icon' : ''">
           <img src="assets/images/buddy.png" alt="">
         </div>
         <div class="window-preview window active glass">

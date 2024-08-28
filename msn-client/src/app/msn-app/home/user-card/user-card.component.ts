@@ -94,6 +94,8 @@ export class UserCardComponent implements OnInit{
     this._authentificationService.setDisconnected();
     this._windowInfoService.onDisparition();
     this._windowInfoService.onChatWidowMinimizeOrResume();
+    this.loggedInUser.statut = 'disconnected';
+    this.sendStatus();
     setTimeout(()=>{
       this._authentificationService.logout();
       this._router.navigate(['/login'])
