@@ -87,7 +87,6 @@ export class MsnApp implements AfterViewInit, OnDestroy, OnInit{
     )
     this._subscriptions.push(
       this._conversationService.firstConversation$.subscribe(conversation => {
-        console.log("firstConversation"+conversation)
         if(conversation !== null) this.initialiseChatBox(conversation)
       })
     )

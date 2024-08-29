@@ -85,6 +85,7 @@ export class ConversationService {
     this._subscriptions = []
     this._conversationsSubject.next([])
     this._favorisSubject.next([])
+    this._firstConversationSubject.next(null)
     this._conversations = []
   }
 }
