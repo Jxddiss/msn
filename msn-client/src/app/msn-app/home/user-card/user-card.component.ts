@@ -9,6 +9,7 @@ import { WindowInfoService } from '../../../service/window-info.service';
 import { UtilisateurService } from '../../../service/utilisateur.service';
 import { RxStompService } from '../../../service/rx-stomp.service';
 import { NgForm } from '@angular/forms';
+import { ConversationService } from '../../../service/conversation.service';
 
 @Component({
   selector: 'app-user-card',
@@ -32,7 +33,8 @@ export class UserCardComponent implements OnInit{
     private _router : Router,
     private _windowInfoService : WindowInfoService,
     private _utilisateurService : UtilisateurService,
-    private _rxStompService : RxStompService
+    private _rxStompService : RxStompService,
+    private _conversationService : ConversationService
   ) { }
 
   ngOnInit(): void {
@@ -97,6 +99,7 @@ export class UserCardComponent implements OnInit{
     this.loggedInUser.statut = 'disconnected';
     this.sendStatus();
     setTimeout(()=>{
+      this._conversationService.cleanUp();
       this._authentificationService.logout();
       this._router.navigate(['/login'])
     },500)
