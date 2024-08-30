@@ -1,0 +1,9 @@
+<div class="barre-recherche">
+    <div class="btn-navigation">
+      <img src="assets/images/win-arrow/Default-left.png" alt="Back button" 
+      [ngClass]="hasPrevious ? 'btn-back' : 'btn-back disabled'" (click)="onBack()">
+      <img src="assets/images/win-arrow/Default-left.png" alt="Front button" 
+      class="btn-front" (click)="onNext()">
+    </div>
+    <input type="text" [(ngModel)]="url" (keyup.enter)="onUrlChange()">
+</div>

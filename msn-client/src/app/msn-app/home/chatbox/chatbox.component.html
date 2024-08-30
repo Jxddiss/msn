@@ -54,9 +54,15 @@ cdkDragBoundary="#desktop"
                     <img src="assets/images/star.png" alt="">
                   </button>
                 </div>
-                <div class="desc">
-                  Hello, I am John Doe
-                </div>
+                @if (conversation.utilisateurs[0].id == loggedUser.id) {
+                  <div class="desc">
+                    {{conversation.utilisateurs[1].description}}
+                  </div>
+                }@else {
+                  <div class="desc">
+                    {{conversation.utilisateurs[0].description}}
+                  </div>
+                }
               </div>
               <hr>
               <div class="chat-list has-scrollbar" #chatList>

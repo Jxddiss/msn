@@ -89,7 +89,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     if(this.iframesContainer === undefined) return
     this._nbBasicWindowOpen++
     const componentRef = this.iframesContainer.createComponent(BasicWindowComponent)
-    componentRef.instance.iframeUrl = iframeUrl
+    componentRef.instance.iframeUrl.set(iframeUrl)
     componentRef.instance.titre = titre
     componentRef.instance.canBeFullScreen = canBeFullScreen
     const index = this.iframesContainer?.indexOf(componentRef.hostView)
@@ -254,7 +254,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
         }
       }
     }else{
-      this.onOpenApp('ie', 'https://www.google.com/webhp?igu=1','Internet Explorer',true)
+      this.onOpenApp('ie', '','Internet Explorer',true)
     }
   }
 

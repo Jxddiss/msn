@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, } from '@angular/core';
+import { AfterViewInit, Component, effect, ElementRef, EventEmitter, signal, ViewChild, } from '@angular/core';
 import { WindowInfoService } from '../service/window-info.service';
 import gsap from 'gsap';
 
@@ -8,7 +8,9 @@ import gsap from 'gsap';
   styleUrl: './basic-window.component.css'
 })
 export class BasicWindowComponent implements AfterViewInit {
-  iframeUrl : string = "";
+  iframeUrl = signal('');
+  firstLoadDone = false;
+  secondLoadDone = signal(false);
   canBeFullScreen : boolean = false;
   windowType : string = "second";
   titre : string = "";
@@ -23,7 +25,8 @@ export class BasicWindowComponent implements AfterViewInit {
     x: 0,
     y: 0
   }
-  constructor(private _windowInfoService : WindowInfoService ) { }
+  constructor(private _windowInfoService : WindowInfoService ) {
+  }
 
   ngAfterViewInit(): void {
     this.apparition()
@@ -49,7 +52,7 @@ export class BasicWindowComponent implements AfterViewInit {
   apparition(sel : string = '.'+this.windowType) : void{
     const tl = gsap.timeline()
 
-    gsap.to(sel,{opacity:1,})
+    gsap.to(sel,{visibility:'visible'})
     
     tl.from(sel+' .content-container',{
       height: 0,
@@ -59,6 +62,7 @@ export class BasicWindowComponent implements AfterViewInit {
 
     tl.from(sel+' .content-card',{
       opacity:0,
+      pointerEvents:'all',
     }).to(sel+' .content-card',{
       opacity:1,
     })
@@ -79,7 +83,7 @@ export class BasicWindowComponent implements AfterViewInit {
       height: '100px',
     })
 
-    tl.to(sel,{opacity:0,})
+    tl.to(sel,{visibility:'hidden'})
     tl.to(sel+" .content-container", {clearProps:true})
 
     tl.duration(0.2)
@@ -127,6 +131,15 @@ export class BasicWindowComponent implements AfterViewInit {
       height: '92dvh',
     })
     tl.duration(0.2)
+  }
+
+  onUrlChange($event : string){
+    this.iframeUrl.set($event)
+    if(this.firstLoadDone){
+      this.secondLoadDone.set(true)
+    }else{
+      this.firstLoadDone = true
+    }
   }
 
   resetDragPosition() : void{

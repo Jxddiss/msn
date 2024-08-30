@@ -29,6 +29,7 @@ import { authInterceptorInterceptor } from './interceptor/auth-interceptor.inter
 import { StatutPipe } from './pipe/statut.pipe';
 import { BasicWindowComponent } from './basic-window/basic-window.component';
 import { SafePipe } from './pipe/safe.pipe';
+import { InternetSearchBarComponent } from './basic-window/internet-search-bar/internet-search-bar.component';
 
 registerLocaleData(localeFr)
 
@@ -54,7 +55,8 @@ registerLocaleData(localeFr)
     AmisEditComponent,
     StatutPipe,
     BasicWindowComponent,
-    SafePipe
+    SafePipe,
+    InternetSearchBarComponent
   ],
   imports: [
     BrowserModule,
