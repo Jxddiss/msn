@@ -9,7 +9,7 @@
         </div>
       </div>
       <app-internet-search-bar *ngIf="windowType.includes('ie')" 
-      (urlChange)="onUrlChange($event)" [url]="iframeUrl()" [secondLoadDone]="secondLoadDone"></app-internet-search-bar>
+      (urlChange)="onUrlChange($event)" [url]="iframeUrl()"></app-internet-search-bar>
     </div>
     <div class="window-body">
       <div class="content-container">

@@ -7,18 +7,11 @@ import { URL_LIST } from '../../utils/ie-pages-list.util';
   styleUrl: './internet-search-bar.component.css'
 })
 export class InternetSearchBarComponent implements OnInit{
-  hasPrevious : boolean = false
   @Input() url : string = ""
-  @Input() secondLoadDone = signal(false)
   private _lastUrl : string = ""
   @Output() urlChange = new EventEmitter<string>()
 
   constructor() {
-    effect(() => {
-      if(this.secondLoadDone()){
-        this.hasPrevious = true
-      }
-    })
   }
 
   ngOnInit(): void {
@@ -32,24 +25,27 @@ export class InternetSearchBarComponent implements OnInit{
   }
 
   onBack(){
-    if(!this.hasPrevious){
-      return
+    let lastUrlWithoutParams = ""
+    const RandomParams = Math.floor(Math.random() * 100)
+    if(this.url.includes("google")){
+      lastUrlWithoutParams = this._lastUrl.split("&")[0]
+      this.url = lastUrlWithoutParams + "&" + RandomParams
+    }else{
+      lastUrlWithoutParams = this._lastUrl.split("?")[0]
+      this.url = lastUrlWithoutParams + "?" + RandomParams
     }
-    console.log("last url "+this._lastUrl)
-    this.urlChange.emit(this._lastUrl)
-    this.url = this._lastUrl
-    console.log("current url "+this.url)
+    
+    this.urlChange.emit(this.url)
   }
 
   onNext(){
     this.getRandomUrl()
     this.urlChange.emit(this.url)
-    this.hasPrevious = true
   }
 
   getRandomUrl(){
     const randomIndex = Math.floor(Math.random() * URL_LIST.length)
-    const randomNumberUrlForceReload = Math.random() * 100
+    const randomNumberUrlForceReload = Math.floor(Math.random() * 100)
     this.url = URL_LIST[randomIndex]
     if(this.url.includes("?")){
       this._lastUrl =this.url + "&" + randomNumberUrlForceReload

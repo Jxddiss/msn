@@ -9,8 +9,6 @@ import gsap from 'gsap';
 })
 export class BasicWindowComponent implements AfterViewInit {
   iframeUrl = signal('');
-  firstLoadDone = false;
-  secondLoadDone = signal(false);
   canBeFullScreen : boolean = false;
   windowType : string = "second";
   titre : string = "";
@@ -135,11 +133,6 @@ export class BasicWindowComponent implements AfterViewInit {
 
   onUrlChange($event : string){
     this.iframeUrl.set($event)
-    if(this.firstLoadDone){
-      this.secondLoadDone.set(true)
-    }else{
-      this.firstLoadDone = true
-    }
   }
 
   resetDragPosition() : void{
