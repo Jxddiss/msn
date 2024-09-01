@@ -112,6 +112,10 @@ export class BasicWindowComponent implements AfterViewInit {
   }
 
   makeFullScreen() : void{
+    let windowHeight = '92dvh'
+    if(this.windowType.includes('ie')){
+      windowHeight = '89dvh'
+    }
     this.resetDragPosition()
     const tl = gsap.timeline()
     tl.set('.'+this.windowType+' .content-container', {
@@ -126,7 +130,7 @@ export class BasicWindowComponent implements AfterViewInit {
 
     tl.to('.'+this.windowType+' .content-container', {
       width: '99dvw',
-      height: '92dvh',
+      height: windowHeight,
     })
     tl.duration(0.2)
   }
