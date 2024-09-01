@@ -1,4 +1,4 @@
-import { Component, effect, EventEmitter, Input, OnInit, Output, signal } from '@angular/core';
+import { Component, effect, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, signal, ViewChild } from '@angular/core';
 import { URL_LIST } from '../../utils/ie-pages-list.util';
 
 @Component({
@@ -10,6 +10,8 @@ export class InternetSearchBarComponent implements OnInit{
   @Input() url : string = ""
   private _lastUrl : string = ""
   @Output() urlChange = new EventEmitter<string>()
+  favoris : string[] = []
+  @ViewChild('showMenu') showMenu !: ElementRef;
 
   constructor() {
   }
@@ -17,11 +19,22 @@ export class InternetSearchBarComponent implements OnInit{
   ngOnInit(): void {
     this.getRandomUrl()
     this.urlChange.emit(this.url)
+    this.favoris = URL_LIST
   }
 
   onUrlChange(){
     this.urlChange.emit(this.url)
     this._lastUrl = this.url
+  }
+
+  onFavorisClick(url : string){
+    if(!this.url.includes(url)){
+      this.url = url
+      this.urlChange.emit(this.url)
+      this._lastUrl = this.url
+    }else{
+      this.onBack()
+    }
   }
 
   onBack(){
@@ -51,6 +64,14 @@ export class InternetSearchBarComponent implements OnInit{
       this._lastUrl =this.url + "&" + randomNumberUrlForceReload
     }else{
       this._lastUrl =this.url + "?" + randomNumberUrlForceReload
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  showMenuClickOutside(event : Event) {
+    const target = event.target as HTMLElement
+    if(!target.classList.contains('show-menu')) {
+      this.showMenu.nativeElement.checked = false
     }
   }
 }

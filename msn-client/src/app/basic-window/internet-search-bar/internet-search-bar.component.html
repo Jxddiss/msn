@@ -5,5 +5,20 @@
       <img src="assets/images/win-arrow/Default-left.png" alt="Front button" 
       class="btn-front" (click)="onNext()">
     </div>
-    <input type="text" [(ngModel)]="url" (keyup.enter)="onUrlChange()">
+    <div class="input-search">
+      <input type="text" [(ngModel)]="url" (keyup.enter)="onUrlChange()">
+      <div class="refresh">
+        <!-- source : https://visualpharm.com/ -->
+        <img src="assets/images/refresh.png" alt="Refresh button" class="btn-refresh btn-search" (click)="onBack()">
+      </div>
+      <div class="refresh">
+        <img src="assets/images/star.png" alt="Favorites button" class="btn-star btn-search" >
+        <input type="checkbox" name="favorites" class="show-menu" #showMenu>
+        <ul role="menu" class="show-menu">
+          @for (url of favoris; track $index) {
+            <li role="menuitem" tabindex="0" (click)="onFavorisClick(url)" ><a>{{url}}</a></li>
+          }
+        </ul>
+      </div>
+    </div>
 </div>
