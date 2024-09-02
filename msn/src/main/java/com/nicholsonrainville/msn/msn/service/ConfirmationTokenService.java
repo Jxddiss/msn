@@ -1,6 +1,6 @@
-package com.artcorp.artsync.service;
+package com.nicholsonrainville.msn.msn.service;
 
-import com.artcorp.artsync.entity.ConfirmationToken;
+import com.nicholsonrainville.msn.msn.entity.ConfirmationToken;
 
 import java.util.Date;
 

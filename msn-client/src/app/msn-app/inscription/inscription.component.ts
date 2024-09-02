@@ -2,7 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { WindowInfoService } from '../../service/window-info.service';
 import { Erreur } from '../../model/erreur.model';
 import { ErreurService } from '../../service/erreur.service';
-import { verifyFile } from '../../utils/input-verification.utils';
+import { verifyFile, verifyPassword } from '../../utils/input-verification.utils';
 import { Router } from '@angular/router';
 import { AuthentificationService } from '../../service/authentification.service';
 import { NgForm } from '@angular/forms';
@@ -18,6 +18,9 @@ import { NotificationService } from '../../service/notification.service';
 export class InscriptionComponent implements OnInit, OnDestroy {
   @ViewChild('avatarPicker') avatarPicker !: ElementRef
   @ViewChild('avatarImg') avatarImg !: ElementRef
+  @ViewChild('showPassword') showPassword !: ElementRef
+  @ViewChild('password') password !: ElementRef
+  @ViewChild('confirm') confirm !: ElementRef
   canBeFullScreen = false
   formData = {
     email : '',
@@ -106,15 +109,11 @@ export class InscriptionComponent implements OnInit, OnDestroy {
   }
 
   validatePassword(password : string, confirm : string){
-    const result = "Mot de passe invalide"
-    if(password === confirm){
-      const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
-      if(regex.test(password)){
-        return "bon"
-      }
-      return "Mot de passe invalide : 8 caractères, une majuscule, un chiffre et un caractère special sont requis"
+    const result = verifyPassword(password, confirm)
+    if(result === "bon"){
+      return "bon"
     }else{
-      return "Les mots de passe ne sont pas identiques"
+      return result
     }
   }
 
@@ -130,6 +129,16 @@ export class InscriptionComponent implements OnInit, OnDestroy {
       password : '',
       confirm : '',
       avatar : null
+    }
+  }
+
+  onShowPassword(){
+    if(this.showPassword.nativeElement.checked){
+      this.password.nativeElement.type = "text"
+      this.confirm.nativeElement.type = "text"
+    }else{
+      this.password.nativeElement.type = "password"
+      this.confirm.nativeElement.type = "password"
     }
   }
 

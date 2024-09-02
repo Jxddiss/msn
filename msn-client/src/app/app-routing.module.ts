@@ -4,12 +4,26 @@ import { LoginComponent } from './msn-app/login/login.component';
 import { InscriptionComponent } from './msn-app/inscription/inscription.component';
 import { HomeComponent } from './msn-app/home/home.component';
 import { authentificationGuard } from './guard/authentification.guard';
+import { ResetPasswordComponent } from './msn-app/login/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './msn-app/login/change-password/change-password.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {path: 'login',
     children: [
       {path: '', component: LoginComponent, outlet: 'main'},
+    ]
+  },
+  {
+    path: 'reset-password',
+    children: [
+      {path: '', component: ResetPasswordComponent, outlet: 'main'},
+    ]
+  },
+  {
+    path: 'change-password',
+    children: [
+      {path: '', component: ChangePasswordComponent, outlet: 'main'},
     ]
   },
   {path: 'inscription',

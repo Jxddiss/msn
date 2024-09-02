@@ -4,6 +4,10 @@ import { Subscription } from 'rxjs';
 import { AuthentificationService } from '../../service/authentification.service';
 import { DemandeService } from '../../service/demande.service';
 import { NgForm } from '@angular/forms';
+import { ErreurService } from '../../service/erreur.service';
+import { NotificationService } from '../../service/notification.service';
+import { Notification } from '../../model/notification.model';
+import { Erreur } from '../../model/erreur.model';
 
 @Component({
   selector: 'app-amis-edit',
@@ -21,7 +25,9 @@ export class AmisEditComponent implements OnInit, OnDestroy {
   constructor(
     private _windowInfoService : WindowInfoService,
     private _authentificationService : AuthentificationService,
-    private _demandeService : DemandeService
+    private _demandeService : DemandeService,
+    private _erreurService : ErreurService,
+    private _notificationService : NotificationService
   ) {
 
     this._subscriptions.push(
@@ -105,6 +111,27 @@ export class AmisEditComponent implements OnInit, OnDestroy {
 
   onRefuserDemande(demandeId : number) {
     this._demandeService.refuseDemande(demandeId)
+  }
+
+  onInviterAmi(form : NgForm) {
+    const email = form.value.email
+    this.onHideDialogInviter()
+    if (email) {
+      this._subscriptions.push(
+        this._demandeService.inviterAmis(email).subscribe({
+          next: (response) => {
+            form.reset()
+            const message = response.body.message
+            const notification = new Notification(0,"Invitation",message,new Date(),"msn",0,false)
+            this._notificationService.sendInternalNotification(notification)
+          },
+          error: (error) => {
+            const erreur = new Erreur(error.error.httpStatus ?? error.error.code,error.error.message)
+            this._erreurService.onErreursEvent(erreur)
+          }
+        })
+      )
+    }
   }
 
   ngOnDestroy(): void {

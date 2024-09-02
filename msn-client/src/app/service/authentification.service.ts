@@ -99,4 +99,18 @@ export class AuthentificationService {
   inscription(formData : FormData) : Observable<HttpResponse<any>>{
     return this._httpClient.post(this._backend + 'inscription', formData, {observe : 'response'})
   }
+
+  resetPassword(email : string) : Observable<HttpResponse<any>>{
+    const formData = new FormData();
+    formData.append('email', email);
+    return this._httpClient.post(this._backend + 'reset-password', formData, {observe : 'response'})
+  }
+
+  changePassword( token : string, newPassword : string, confirmPassword : string) : Observable<HttpResponse<any>>{
+    const formData = new FormData();
+    formData.append('token', token);
+    formData.append('newPassword', newPassword);
+    formData.append('confirmPassword', confirmPassword);
+    return this._httpClient.put(this._backend + 'change-password', formData, {observe : 'response'})
+  }
 }

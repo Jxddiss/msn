@@ -1,8 +1,11 @@
 package com.nicholsonrainville.msn.msn.service.impl;
 
 import com.nicholsonrainville.msn.msn.domain.UserPrincipal;
+import com.nicholsonrainville.msn.msn.entity.ConfirmationToken;
 import com.nicholsonrainville.msn.msn.entity.Utilisateur;
 import com.nicholsonrainville.msn.msn.exception.domain.NotAnImageFileException;
+import com.nicholsonrainville.msn.msn.exception.domain.TokenNotFound;
+import com.nicholsonrainville.msn.msn.repository.ConfirmationTokenRepository;
 import com.nicholsonrainville.msn.msn.repository.UtilisateurRepository;
 import com.nicholsonrainville.msn.msn.service.UtilisateurService;
 import com.nicholsonrainville.msn.msn.utils.FileVerification;
@@ -22,8 +25,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.UUID;
 
+import static com.nicholsonrainville.msn.msn.constant.EmailConstant.BASE_SITE_ADDRESS;
 import static com.nicholsonrainville.msn.msn.constant.ExceptionConstant.NOT_AN_IMAGE_FILE;
 import static com.nicholsonrainville.msn.msn.constant.FileConstant.*;
 import static org.springframework.http.MediaType.*;
@@ -34,10 +39,14 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
     private final UtilisateurRepository utilisateurRepository;
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ConfirmationTokenRepository confirmationTokenRepository;
 
-    public UtilisateurServiceImpl(UtilisateurRepository utilisateurRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UtilisateurServiceImpl(UtilisateurRepository utilisateurRepository,
+                                  BCryptPasswordEncoder bCryptPasswordEncoder,
+                                  ConfirmationTokenRepository confirmationTokenRepository) {
         this.utilisateurRepository = utilisateurRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.confirmationTokenRepository = confirmationTokenRepository;
     }
 
     @Override
@@ -138,6 +147,37 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
         return false;
     }
 
+    @Override
+    public String generateResetTokenAndLink(String email) {
+        Utilisateur user = findByEmail(email);
+        if (user != null){
+            String token = String.valueOf(UUID.randomUUID());
+            ConfirmationToken confirmationToken = new ConfirmationToken();
+            confirmationToken.setUserId(user.getId());
+            confirmationToken.setToken(token);
+            confirmationToken.setType("PASSWORD_RESET");
+            confirmationToken.setDateExpiration(java.sql.Date.valueOf(java.time.LocalDate.now().plusDays(1)));
+            confirmationTokenRepository.save(confirmationToken);
+            return BASE_SITE_ADDRESS+token;
+        }
+        return "";
+    }
+
+    @Override
+    public boolean changePasswordFromResetToken(String resetPasswordToken, String newPassword, String confirmPassword) throws TokenNotFound {
+        int i = 0;
+        if (newPassword.equals(confirmPassword)){
+            ConfirmationToken confirmationToken = confirmationTokenRepository.findByToken(resetPasswordToken,new Date());
+            if (confirmationToken == null){
+                throw new TokenNotFound("not found");
+            }
+            Long userId = confirmationToken.getUserId();
+            i = utilisateurRepository.changePassword(encodePassword(newPassword),userId);
+            confirmationTokenRepository.delete(confirmationTokenRepository.findByToken(resetPasswordToken,new Date()));
+        }
+        return i == 1;
+    }
+
     private Utilisateur saveAvatar(Utilisateur utilisateur, MultipartFile avatar) throws NotAnImageFileException, IOException {
         String finalName = saveImage(avatar);
         utilisateur.setAvatar(BASE_URL_PROFILE+finalName);
@@ -162,5 +202,9 @@ public class UtilisateurServiceImpl implements UtilisateurService, UserDetailsSe
         banniere.getInputStream().close();
 
         return finalName;
+    }
+
+    private String encodePassword(String password) {
+        return this.bCryptPasswordEncoder.encode(password);
     }
 }

@@ -17,11 +17,20 @@
                 </div>
     
                 <div class="field-row">
-                    <input class="text-input" type="password" [(ngModel)]="formData.password" placeholder="Entrez votre mot de passe" name="password" id="password" [required]="true">
+                    <input class="text-input" type="password" #password
+                    [(ngModel)]="formData.password" placeholder="Entrez votre mot de passe" name="password" id="password" [required]="true">
                 </div>
     
                 <div class="field-row">
-                    <input class="text-input" type="password" [(ngModel)]="formData.confirm" placeholder="Confirmez votre mot de passe" name="confirm" id="confirm" [required]="true">
+                    <input class="text-input" type="password" #confirm
+                    [(ngModel)]="formData.confirm" placeholder="Confirmez votre mot de passe" name="confirm" id="confirm" [required]="true">
+                </div>
+
+                <div class="field-row">
+                    <input type="checkbox" id="show-password" name="show-password" #showPassword (click)="onShowPassword()">
+                    <label for="show-password">
+                        Afficher le mot de passe
+                    </label>
                 </div>
     
                 <div class="button-container">

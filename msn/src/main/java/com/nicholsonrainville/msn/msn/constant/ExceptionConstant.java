@@ -14,4 +14,5 @@ public class ExceptionConstant {
     public static final String USER_NOT_FOUND = "Utilisateur introuvable";
     public static final String EMAIL_EXIST = "Cette addresse courriel est déjà associé à un compte";
     public static final String NOT_AN_IMAGE_FILE = " is not an image file, please upload an image";
+    public static final String TOKEN_NOT_FOUND = "Token non valide, peut être désactiver, ou le lien a expiré";
 }

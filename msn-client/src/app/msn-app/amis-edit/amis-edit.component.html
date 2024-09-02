@@ -34,9 +34,9 @@
     <div class="img-holder">
       <img src="assets/images/buddy.png" alt="">
     </div>
-    <form>
+    <form #inviterAmi="ngForm" (ngSubmit)="onInviterAmi(inviterAmi)">
       <label for="email">Inviter un ami</label>
-      <input class="text-input" type="text" placeholder="Entrez l'email de votre ami" name="email" id="email" required>
+      <input class="text-input" type="text" placeholder="Entrez l'email de votre ami" name="email" id="email" [required]="true" ngModel>
       <button type="submit">Inviter</button>
     </form>
   </div>

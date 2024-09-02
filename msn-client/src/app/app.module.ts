@@ -30,6 +30,8 @@ import { StatutPipe } from './pipe/statut.pipe';
 import { BasicWindowComponent } from './basic-window/basic-window.component';
 import { SafePipe } from './pipe/safe.pipe';
 import { InternetSearchBarComponent } from './basic-window/internet-search-bar/internet-search-bar.component';
+import { ResetPasswordComponent } from './msn-app/login/reset-password/reset-password.component';
+import { ChangePasswordComponent } from './msn-app/login/change-password/change-password.component';
 
 registerLocaleData(localeFr)
 
@@ -56,7 +58,9 @@ registerLocaleData(localeFr)
     StatutPipe,
     BasicWindowComponent,
     SafePipe,
-    InternetSearchBarComponent
+    InternetSearchBarComponent,
+    ResetPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     BrowserModule,

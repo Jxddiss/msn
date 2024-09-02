@@ -1,8 +1,8 @@
-package com.artcorp.artsync.service.impl;
+package com.nicholsonrainville.msn.msn.service.impl;
 
-import com.artcorp.artsync.entity.ConfirmationToken;
-import com.artcorp.artsync.repos.ConfirmationTokenRepos;
-import com.artcorp.artsync.service.ConfirmationTokenService;
+import com.nicholsonrainville.msn.msn.entity.ConfirmationToken;
+import com.nicholsonrainville.msn.msn.repository.ConfirmationTokenRepository;
+import com.nicholsonrainville.msn.msn.service.ConfirmationTokenService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +12,10 @@ import java.util.Date;
 @Service
 @Transactional
 public class ConfirmationTokenServiceImpl implements ConfirmationTokenService {
-    private  final ConfirmationTokenRepos confirmationTokenRepos;
+    private  final ConfirmationTokenRepository confirmationTokenRepos;
 
     @Autowired
-    public ConfirmationTokenServiceImpl(ConfirmationTokenRepos confirmationTokenRepos) {
+    public ConfirmationTokenServiceImpl(ConfirmationTokenRepository confirmationTokenRepos) {
         this.confirmationTokenRepos = confirmationTokenRepos;
     }
     @Override

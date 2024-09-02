@@ -64,4 +64,9 @@ export class LoginComponent implements OnInit{
     this._windowInfoService.onDisparition()
     setTimeout(()=>{this.router.navigate(['/inscription'])},500)
   }
+
+  onGoToResetPassword(){
+    this._windowInfoService.onDisparition()
+    setTimeout(()=>{this.router.navigate(['/reset-password'])},500)
+  }
 }

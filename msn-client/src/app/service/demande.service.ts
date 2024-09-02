@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../constants/environment.constant';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Demande } from '../model/demande.model';
 import { ErreurService } from './erreur.service';
 import { Erreur } from '../model/erreur.model';
@@ -86,6 +86,12 @@ export class DemandeService {
         }
       })
     )
+  }
+
+  public inviterAmis(email : string) : Observable<HttpResponse<any>>{
+    const formData = new FormData()
+    formData.append('email', email)
+    return this._httpClient.post(this.backendUrl + 'invite', formData, {observe : 'response'})
   }
 
   cleanUp() {

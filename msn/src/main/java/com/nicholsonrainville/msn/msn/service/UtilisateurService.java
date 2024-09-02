@@ -2,6 +2,7 @@ package com.nicholsonrainville.msn.msn.service;
 
 import com.nicholsonrainville.msn.msn.entity.Utilisateur;
 import com.nicholsonrainville.msn.msn.exception.domain.NotAnImageFileException;
+import com.nicholsonrainville.msn.msn.exception.domain.TokenNotFound;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,4 +29,6 @@ public interface UtilisateurService {
     void changeStatut(String statut, Long id);
 
     boolean validateUser(String email, Long id);
+    String generateResetTokenAndLink(String email);
+    boolean changePasswordFromResetToken(String resetPasswordToken, String newPassword, String confirmPassword) throws TokenNotFound;
 }

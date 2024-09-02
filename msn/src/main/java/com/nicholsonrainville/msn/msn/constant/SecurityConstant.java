@@ -14,7 +14,9 @@ public class SecurityConstant {
             "/login",
             "/media/**",
             "/ws",
-            "/inscription"
+            "/inscription",
+            "/reset-password",
+            "/change-password"
     };
     //public static final String[] PUBLIC_URLS = {"**"};
 }

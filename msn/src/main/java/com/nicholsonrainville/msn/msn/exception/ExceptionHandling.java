@@ -2,6 +2,7 @@ package com.nicholsonrainville.msn.msn.exception;
 
 import com.nicholsonrainville.msn.msn.domain.HttpResponse;
 import com.nicholsonrainville.msn.msn.exception.domain.EmailExistException;
+import com.nicholsonrainville.msn.msn.exception.domain.TokenNotFound;
 import com.nicholsonrainville.msn.msn.exception.domain.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,12 @@ public class ExceptionHandling {
     public ResponseEntity<HttpResponse> noResourceFoundException(NoResourceFoundException ex) {
         LOGGER.error(ex.getMessage());
         return createHttpResponse(HttpStatus.NOT_FOUND, NOT_FOUND);
+    }
+
+    @ExceptionHandler(TokenNotFound.class)
+    public ResponseEntity<HttpResponse> tokenNotFoundException(TokenNotFound ex) {
+        LOGGER.error(ex.getMessage());
+        return createHttpResponse(BAD_REQUEST, TOKEN_NOT_FOUND);
     }
 
     private ResponseEntity<HttpResponse> createHttpResponse(HttpStatus httpStatus, String message) {
