@@ -54,6 +54,12 @@
   background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/512px-Visual_Studio_Code_1.35_icon.svg.png?20210804221519);
 }
 
+/* source : https://www.pngwing.com/en/free-png-ztkyy*/
+.paint-icon{
+  margin-top: 360px;
+  background-image: url("/assets/images/paint.png");
+}
+
 .icon-desk:after {
   display: block;
   position: absolute;

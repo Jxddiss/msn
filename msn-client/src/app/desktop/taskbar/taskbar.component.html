@@ -19,6 +19,9 @@
           <li (click)="onVscodeOpen()">
             <div class="start-icon"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/512px-Visual_Studio_Code_1.35_icon.svg.png?20210804221519" alt="">Visual Studio Code</div>
           </li>
+          <li (click)="onPaintOpen()">
+            <div class="start-icon"><img src="/assets/images/paint.png" alt="">Paint</div>
+          </li>
       </ul>
       <ul id="links">
           <li class="buddy-container glass" >
@@ -109,6 +112,20 @@
         </div>
         <div class="preview-body window-body has-space">
           <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Visual_Studio_Code_1.35_icon.svg/512px-Visual_Studio_Code_1.35_icon.svg.png?20210804221519" alt="">
+        </div>
+      </div>
+      <div *ngIf="paintOpened" class="pined-icon" (click)="onPaintOpen()" [ngClass]="paintOpened ? 'active-bar-icon' : ''">
+        <img src="/assets/images/paint.png" alt="">
+      </div>
+      <div *ngIf="paintOpened" class="window-preview window active glass preview-paint">
+        <div class="preview-header title-bar">
+          <span class="title-bar-text">Paint</span> 
+          <div class="title-bar-controls">
+            <button aria-label="Close" (click)="onPaintClose()"></button>
+          </div>
+        </div>
+        <div class="preview-body window-body has-space">
+          <img src="/assets/images/paint.png" alt="">
         </div>
       </div>
     </div>

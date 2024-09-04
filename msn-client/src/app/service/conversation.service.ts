@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subscription, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, of } from 'rxjs';
 import { Conversation } from '../model/conversation.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { environment } from '../constants/environment.constant';
 import { Erreur } from '../model/erreur.model';
 import { ErreurService } from './erreur.service';
@@ -22,7 +22,7 @@ export class ConversationService {
 
   constructor(private _httpClient: HttpClient, private _erreurService: ErreurService) { }
 
-  public getConversations(utilisateurId: number) {
+  getConversations(utilisateurId: number) {
     this._subscriptions.push(
       this._httpClient.get<Conversation[]>(this.backendUrl + 'conversations/' + utilisateurId, {observe: 'response'}).subscribe({
         next: (response) => {
@@ -39,7 +39,7 @@ export class ConversationService {
     )
   }
   
-  public getFirstConversation() {
+  getFirstConversation() {
     const conversation = this._conversations[0]
     if(conversation) {
       this._firstConversationSubject.next(conversation)
@@ -49,43 +49,43 @@ export class ConversationService {
     }
   }
 
-  public getFavoris(utilisateurId: number) {
+  getFavoris(utilisateurId: number) {
     const favoris = localStorage.getItem('favoris_' + utilisateurId.toString()) ? JSON.parse(localStorage.getItem('favoris_' + utilisateurId.toString())!) : []
     const filteredConversations = this._conversations.filter(conversation => favoris.includes(conversation.id));
     this._favorisSubject.next(filteredConversations)
   }
 
-  public addToFavoris(utilisateurId: number, conversationId: number) {
+  addToFavoris(utilisateurId: number, conversationId: number) {
     const favoris = localStorage.getItem('favoris_' + utilisateurId.toString()) ? JSON.parse(localStorage.getItem('favoris_' + utilisateurId.toString())!) : []
     favoris.push(conversationId)
     localStorage.setItem('favoris_' + utilisateurId.toString(), JSON.stringify(favoris))
     this.updateFavoris(utilisateurId)
   }
 
-  public removeFromFavoris(utilisateurId: number, conversationId: number) {
+  removeFromFavoris(utilisateurId: number, conversationId: number) {
     const favoris = localStorage.getItem('favoris_' + utilisateurId.toString()) ? JSON.parse(localStorage.getItem('favoris_' + utilisateurId.toString())!) : []
     favoris.splice(favoris.indexOf(conversationId), 1)
     localStorage.setItem('favoris_' + utilisateurId.toString(), JSON.stringify(favoris))
     this.updateFavoris(utilisateurId)
   }
 
-  private updateFavoris(utilisateurId: number): void {
-    const favoris = localStorage.getItem('favoris_' + utilisateurId.toString()) ? JSON.parse(localStorage.getItem('favoris_' + utilisateurId.toString())!) : [];
-    const filteredConversations = this._conversations.filter(conversation => favoris.includes(conversation.id));
-    this._favorisSubject.next(filteredConversations);
-  }
-
-  public isFavoris(utilisateurId: number, conversationId: number) : boolean {
+  isFavoris(utilisateurId: number, conversationId: number) : boolean {
     const favoris = localStorage.getItem('favoris_' + utilisateurId.toString()) ? JSON.parse(localStorage.getItem('favoris_' + utilisateurId.toString())!) : []
     return favoris.includes(conversationId)
   }
 
-  public cleanUp() {
+  cleanUp() {
     this._subscriptions.forEach(sub => sub.unsubscribe())
     this._subscriptions = []
     this._conversationsSubject.next([])
     this._favorisSubject.next([])
     this._firstConversationSubject.next(null)
     this._conversations = []
+  }
+
+  private updateFavoris(utilisateurId: number): void {
+    const favoris = localStorage.getItem('favoris_' + utilisateurId.toString()) ? JSON.parse(localStorage.getItem('favoris_' + utilisateurId.toString())!) : [];
+    const filteredConversations = this._conversations.filter(conversation => favoris.includes(conversation.id));
+    this._favorisSubject.next(filteredConversations);
   }
 }

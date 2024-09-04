@@ -1,13 +1,8 @@
 <div class="profiles-pictures-holder">
-  
     <div class="user-pic-holder">
-      <label  for="amioption" role="button">
-        <img src="assets/images/arrow.svg" alt="" class="arrow">
-      </label>
-      <input type="checkbox" name="amioption" id="amioption" hidden>
-      <ul role="menu" >
-          <li role="menuitem" tabindex="0"><img src="assets/images/block.png" alt=""><a>Retirer l'ami</a></li>
-      </ul>
+      <button type="button" (click)="onStartVideoShare()" [title]="!videoShared ? 'Commencer un appel video' : 'Arrêter l\'appel video'">
+        <img src="assets/images/webcam.png" alt="">
+      </button>
       <div class="buddy-container glass remote-holder" [ngClass]="loggedUser?.id == utilisateurs[0].id ? 'buddy-'+utilisateurs[1].statut : 'buddy-'+utilisateurs[0].statut">
         <div class="buddy-body">
           @if (loggedUser?.id == utilisateurs[0].id) {

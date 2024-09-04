@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ComponentRef, ElementRef, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, signal } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, ElementRef, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef, signal } from '@angular/core';
 import { MsnApp } from '../msn-app/msn-app.component';
 import { Subscription } from 'rxjs';
 import { NotificationComponent } from './notification/notification.component';
@@ -33,12 +33,14 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   iEOpened  = signal(false)
   tetrisOpened  = signal(false)
   codeOpened  = signal(false)
+  paintOpened  = signal(false)
   template: TemplateRef<any> | undefined;
   componentsRefs : Record<string, ComponentRef<any> | undefined> = {}
   private _subscriptions : Subscription[] = []
   private _nbIeOpen = 0
   private _nbTetrisOpen = 0
   private _nbCodeOpen = 0
+  private _nbPaintOpen = 0
   private _nbBasicWindowOpen = 0
   
   
@@ -85,7 +87,12 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   }
 
   onOpenApp(type : string, iframeUrl : string, titre : string, canBeFullScreen : boolean = false){
-    if(this._nbBasicWindowOpen >= 2) return
+    if(this._nbBasicWindowOpen >= 2){
+      const erreur = new Erreur('Fermez les programes pour éviter la perte de données', 
+        "La mémoire de l'ordinateur est insuffisante, veuillez fermer au moins une fenêtre avant de lancer un autre programme")
+      this._erreurService.onErreursEvent(erreur)
+      return
+    }
     if(this.iframesContainer === undefined) return
     this._nbBasicWindowOpen++
     const componentRef = this.iframesContainer.createComponent(BasicWindowComponent)
@@ -119,6 +126,11 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
     if(type.includes('code')){
       this.codeOpened.set(true)
       this._nbCodeOpen++
+    }
+
+    if(type.includes('paint')){
+      this.paintOpened.set(true)
+      this._nbPaintOpen++
     }
   }
 
@@ -157,6 +169,13 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
       this._nbCodeOpen--
       if(this._nbCodeOpen == 0){
         this.codeOpened.set(false)
+      }
+    }
+
+    if(type.includes('paint')){
+      this._nbPaintOpen--
+      if(this._nbPaintOpen == 0){
+        this.paintOpened.set(false)
       }
     }
 
@@ -303,6 +322,26 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
   onCodeCloseEvent(){
     if(this.codeOpened()) {
       this.closeBasicWindowEvent('code-')
+    }
+  }
+
+  onPaintOpenEvent(){
+    if(this.paintOpened()) {
+      for (let index = 0; index <= this._nbBasicWindowOpen; index++) {
+        const componentRef = this.componentsRefs['paint-'+index]
+        if(componentRef){
+          const instance = componentRef.instance
+          instance.minimizeOrResume()
+        }
+      }
+    }else{
+      this.onOpenApp('paint', 'https://jspaint.app/','Paint',true)
+    }
+  }
+
+  onPaintCloseEvent(){
+    if(this.paintOpened()) {
+      this.closeBasicWindowEvent('paint-')
     }
   }
 

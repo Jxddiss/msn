@@ -23,7 +23,7 @@ export class BasicWindowComponent implements AfterViewInit {
     x: 0,
     y: 0
   }
-  constructor(private _windowInfoService : WindowInfoService ) {
+  constructor() {
   }
 
   ngAfterViewInit(): void {

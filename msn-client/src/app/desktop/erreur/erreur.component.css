@@ -12,7 +12,8 @@
 .erreur-body{
     display: flex;
     gap: 1.5em;
-    width: 250px;
+    min-width: 250px;
+    max-width: 400px;
     min-height: 100px;
     padding: 1em;
 }

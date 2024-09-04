@@ -291,6 +291,10 @@
   translate: 50% 0;
 }
 
+.preview-paint{
+  translate: 75% 0;
+}
+
 .pined-icon:hover + .window-preview, .window-preview:hover{
   pointer-events: auto;
   opacity: 1;
