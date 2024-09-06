@@ -293,7 +293,7 @@ export class DesktopComponent implements AfterViewInit, OnDestroy, OnInit{
         }
       }
     }else{
-      this.onOpenApp('tetris', 'https://freehtml5games.org/games/tetris-cube/index.html','Tetris')
+      this.onOpenApp('tetris', 'https://cdn.htmlgames.com/TetrisFun/','Tetris')
     }
 
     this._nbBasicWindowOpen ++
