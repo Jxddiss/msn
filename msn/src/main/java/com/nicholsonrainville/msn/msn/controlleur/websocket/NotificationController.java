@@ -3,17 +3,17 @@ package com.nicholsonrainville.msn.msn.controlleur.websocket;
 import com.nicholsonrainville.msn.msn.entity.Notification;
 import com.nicholsonrainville.msn.msn.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import java.util.List;
 
 @RestController
 public class NotificationController {
@@ -26,13 +26,9 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
 
-    @PostMapping("/notification/set-lu")
-    public ResponseEntity<Boolean> setNotificationLu(@Param("id") Long id, HttpMethod httpMethod) throws NoResourceFoundException {
-        Notification notification = notificationService.markAsRead(id);
-        if(notification == null){
-            throw new NoResourceFoundException(httpMethod,"La notification n'existe pas id : "+id);
-        }
-        return new ResponseEntity<>(true, HttpStatus.OK);
+    @MessageMapping("/notification/set-lu/{id}")
+    public void setNotificationLu(@DestinationVariable("id") Long id) {
+        notificationService.markAsRead(id);
     }
 
     @MessageMapping("/notification/{userId}")
@@ -41,5 +37,10 @@ public class NotificationController {
         notif.setLu(false);
         notif.setReceveurId(userId);
         return notificationService.save(notif);
+    }
+
+    @GetMapping("/notification/{userId}")
+    public ResponseEntity<List<Notification>> getNotificationByReceveurId(@PathVariable("userId") Long userId) {
+        return new ResponseEntity<>(notificationService.getNotificationByReceveurId(userId), HttpStatus.OK);
     }
 }
