@@ -1,24 +1,22 @@
 <div id="desktop" #desktop>
-    <div  class="msn-icon icon-desk" data-label="MSN" cdkDrag (dblclick)="onClickWindow('msn')"
-    #draggable="cdkDrag"
-    [class.pointer-events-none]="draggable._dragRef.isDragging()">
+    <div class="msn-icon icon-desk" data-label="MSN" cdkDrag (dblclick)="onClickWindow('msn')" #draggable="cdkDrag"
+        [class.pointer-events-none]="draggable._dragRef.isDragging()">
     </div>
-    <a  class="ie-icon icon-desk" cdkDrag 
-    #draggable="cdkDrag" data-label="Internet"
-    [class.pointer-events-none]="draggable._dragRef.isDragging()"
-    (dblclick)="onOpenApp('ie', 'https://www.google.com/webhp?igu=1','Internet Explorer',true)">
+    <a class="ie-icon icon-desk" cdkDrag #draggable="cdkDrag" data-label="Internet"
+        [class.pointer-events-none]="draggable._dragRef.isDragging()"
+        (dblclick)="onOpenApp('ie', 'https://www.google.com/webhp?igu=1','Internet Explorer',true)">
     </a>
-    <a class="icon-desk tetris-icon" cdkDrag #draggable="cdkDrag" data-label="Tetris" 
-    [class.pointer-events-none]="draggable._dragRef.isDragging()"
-    (dblclick)="onOpenApp('tetris', 'https://cdn.htmlgames.com/TetrisFun/','Tetris')">
+    <a class="icon-desk tetris-icon" cdkDrag #draggable="cdkDrag" data-label="Tetris"
+        [class.pointer-events-none]="draggable._dragRef.isDragging()"
+        (dblclick)="onOpenApp('tetris', 'https://cdn.htmlgames.com/TetrisFun/','Tetris')">
     </a>
-    <a class="icon-desk vscode-icon" cdkDrag #draggable="cdkDrag" data-label="VSCode" 
-    [class.pointer-events-none]="draggable._dragRef.isDragging()"
-    (dblclick)="onOpenApp('code', 'https://github1s.com/jxddiss/msn','Visual Studio Code',true)">
+    <a class="icon-desk vscode-icon" cdkDrag #draggable="cdkDrag" data-label="VSCode"
+        [class.pointer-events-none]="draggable._dragRef.isDragging()"
+        (dblclick)="onOpenApp('code', 'https://github1s.com/jxddiss/msn','Visual Studio Code',true)">
     </a>
-    <a class="icon-desk paint-icon" cdkDrag #draggable="cdkDrag" data-label="Paint" 
-    [class.pointer-events-none]="draggable._dragRef.isDragging()"
-    (dblclick)="onOpenApp('paint', 'https://jspaint.app/','Paint',true)">
+    <a class="icon-desk paint-icon" cdkDrag #draggable="cdkDrag" data-label="Paint"
+        [class.pointer-events-none]="draggable._dragRef.isDragging()"
+        (dblclick)="onOpenApp('paint', 'https://jspaint.app/','Paint',true)">
     </a>
     <ng-template #windowContainer>
         <ng-container></ng-container>
@@ -26,14 +24,17 @@
     <ng-template #iframesContainer>
         <ng-container></ng-container>
     </ng-template>
-    <app-taskbar (msnOpenEvent)="onClickWindow('msn')" [msnOpened]="msnOpened()" (backgroundChangeEvent)="onBackgroundChange()"
-    (iEOpenEvent)="onIEOpenEvent()" [iEOpened]="iEOpened()" (iECloseEvent)="onIECloseEvent()"
-    (tetrisOpenEvent)="onTetrisOpenEvent()" [tetrisOpened]="tetrisOpened()" (tetrisCloseEvent)="onTetrisCloseEvent()"
-    (vscodeOpenEvent)="onCodeOpenEvent()" [codeOpened]="codeOpened()" (vscodeCloseEvent)="onCodeCloseEvent()"
-    (paintOpenEvent)="onPaintOpenEvent()" [paintOpened]="paintOpened()" (paintCloseEvent)="onPaintCloseEvent()"></app-taskbar>
+    <app-taskbar (msnOpenEvent)="onClickWindow('msn')" [msnOpened]="msnOpened()"
+        (backgroundChangeEvent)="onBackgroundChange()" (iEOpenEvent)="onIEOpenEvent()" [iEOpened]="iEOpened()"
+        (iECloseEvent)="onIECloseEvent()" (tetrisOpenEvent)="onTetrisOpenEvent()" [tetrisOpened]="tetrisOpened()"
+        (tetrisCloseEvent)="onTetrisCloseEvent()" (vscodeOpenEvent)="onCodeOpenEvent()" [codeOpened]="codeOpened()"
+        (vscodeCloseEvent)="onCodeCloseEvent()" (paintOpenEvent)="onPaintOpenEvent()" [paintOpened]="paintOpened()"
+        (paintCloseEvent)="onPaintCloseEvent()"></app-taskbar>
     <svg width="0" height="0">
         <clipPath id="svgClip" clipPathUnits="objectBoundingBox">
-            <path d="M.067.067C.1676 0 .8379 0 .9385.067C1.0055.1676 1.0055.8379.9385.9385C.8379 1.0055.1676 1.0055.067.9385C0 .8379 0 .1676.067.067"></path>
+            <path
+                d="M.067.067C.1676 0 .8379 0 .9385.067C1.0055.1676 1.0055.8379.9385.9385C.8379 1.0055.1676 1.0055.067.9385C0 .8379 0 .1676.067.067">
+            </path>
         </clipPath>
     </svg>
     <div class="notification-holder">
@@ -44,7 +45,7 @@
     <ng-template #erreurContainer>
         <ng-container></ng-container>
     </ng-template>
-</div> 
+</div>
 <div class="wink-player">
-    <img src="assets/images/winks/kiss.png" #winkImg alt="">
+    <img src="" #winkImg alt="">
 </div>
