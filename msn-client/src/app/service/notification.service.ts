@@ -95,4 +95,10 @@ export class NotificationService {
       body: '',
     });
   }
+
+  cleanUp() {
+    this._subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
+  }
 }
