@@ -29,6 +29,7 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setLien(lien);
         notification.setImage(image);
         notification.setType(type);
+        notification.setLu(false);
         return notificationRepository.save(notification);
     }
 
