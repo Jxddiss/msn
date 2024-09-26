@@ -31,7 +31,9 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   ) {}
 
   ngOnInit(): void {
-    this._rxStompService.activate();
+    if (!this._rxStompService.connected()) {
+      this._rxStompService.activate();
+    }
 
     if (this._authentificationService.loggedUser)
       this.loggedInUser = this._authentificationService.loggedUser;
