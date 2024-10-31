@@ -25,6 +25,11 @@ export class NotificationService {
     private _demandeService: DemandeService,
     private _httpClient: HttpClient
   ) {
+    this.subscribeToNotifications();
+  }
+
+  subscribeToNotifications() {
+    this.cleanUp();
     this._subscriptions.push(
       this._rxStompService
         .watch(
